@@ -1,4 +1,9 @@
 #pragma once
+#include<memory>
+#include"Model.h"
+#include"WorldTransform.h"
+#include"ViewProjection.h"
+
 class Player
 {
 public:
@@ -18,9 +23,14 @@ public:
 	/// <summary>
 	/// 描画
 	/// </summary>
-	void Draw();
+	void Draw(ViewProjection* viewProjection);
 
 private:
+
+	//モデル
+	std::unique_ptr<Model> model_;
+	//ワールド変換データ
+	WorldTransform worldTransform_;
 
 };
 

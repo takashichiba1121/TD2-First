@@ -9,6 +9,7 @@
 #include "Sprite.h"
 #include "ViewProjection.h"
 #include "WorldTransform.h"
+#include "player.h"
 
 /// <summary>
 /// ゲームシーン
@@ -46,7 +47,9 @@ class GameScene {
 	Input* input_ = nullptr;
 	Audio* audio_ = nullptr;
 	DebugText* debugText_ = nullptr;
-
+	std::unique_ptr<ViewProjection> viewProjection_;
+	std::unique_ptr<Player> player_;
+	
 	/// <summary>
 	/// ゲームシーン用
 	/// </summary>
