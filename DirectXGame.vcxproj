@@ -97,8 +97,13 @@
     <ClCompile Include="base\DirectXCommon.cpp" />
     <ClCompile Include="base\TextureManager.cpp" />
     <ClCompile Include="base\WinApp.cpp" />
+    <ClCompile Include="door.cpp" />
     <ClCompile Include="main.cpp" />
+    <ClCompile Include="player.cpp" />
+    <ClCompile Include="RailCamera.cpp" />
     <ClCompile Include="scene\GameScene.cpp" />
+    <ClCompile Include="sky.cpp" />
+    <ClCompile Include="stage.cpp" />
   </ItemGroup>
   <ItemGroup>
     <ClInclude Include="2d\DebugText.h" />
@@ -121,13 +126,18 @@
     <ClInclude Include="base\SafeDelete.h" />
     <ClInclude Include="base\TextureManager.h" />
     <ClInclude Include="base\WinApp.h" />
+    <ClInclude Include="door.h" />
     <ClInclude Include="input\Input.h" />
     <ClInclude Include="math\MathUtility.h" />
     <ClInclude Include="math\Matrix4.h" />
     <ClInclude Include="math\Vector2.h" />
     <ClInclude Include="math\Vector3.h" />
     <ClInclude Include="math\Vector4.h" />
+    <ClInclude Include="player.h" />
+    <ClInclude Include="RailCamera.h" />
     <ClInclude Include="scene\GameScene.h" />
+    <ClInclude Include="sky.h" />
+    <ClInclude Include="stage.h" />
   </ItemGroup>
   <ItemGroup>
     <None Include="Resources\shaders\Obj.hlsli" />
