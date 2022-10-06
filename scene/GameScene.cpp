@@ -14,6 +14,7 @@ void GameScene::Initialize()
 {
 	player_ = std::make_unique<Player>();
 	viewProjection_ = std::make_unique<ViewProjection>();
+	stage_ = std::make_unique<stage>();
 
 	dxCommon_ = DirectXCommon::GetInstance();
 	input_ = Input::GetInstance();
@@ -21,6 +22,7 @@ void GameScene::Initialize()
 	debugText_ = DebugText::GetInstance();
 	player_->Initialize();
 	viewProjection_->Initialize();
+	stage_->Initialize();
 }
 
 void GameScene::Update()
@@ -56,6 +58,7 @@ void GameScene::Draw()
 	/// ここに3Dオブジェクトの描画処理を追加できる
 	/// </summary>
 	player_->Draw(viewProjection_.get());
+	stage_->Draw(viewProjection_.get());
 	// 3Dオブジェクト描画後処理
 	Model::PostDraw();
 #pragma endregion

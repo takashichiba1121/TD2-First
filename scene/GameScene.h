@@ -10,6 +10,7 @@
 #include "ViewProjection.h"
 #include "WorldTransform.h"
 #include "player.h"
+#include"stage.h"
 
 /// <summary>
 /// ゲームシーン
@@ -49,6 +50,7 @@ class GameScene {
 	DebugText* debugText_ = nullptr;
 	std::unique_ptr<ViewProjection> viewProjection_;
 	std::unique_ptr<Player> player_;
+	std::unique_ptr<stage> stage_;
 	
 	/// <summary>
 	/// ゲームシーン用
