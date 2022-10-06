@@ -64,6 +64,14 @@ void affine::makeMatTrans(Matrix4& matrix, Vector3 trans) {
 	matrix *= matTrams;
 }
 
+void affine::makeAffine(WorldTransform& worldTransform)
+{
+	makeMatIdentity(worldTransform.matWorld_);
+	makeMatScale(worldTransform.matWorld_, worldTransform.scale_);
+	makeMatRot(worldTransform.matWorld_, worldTransform.rotation_);
+	makeMatTrans(worldTransform.matWorld_,worldTransform.translation_);
+}
+
 Vector3 affine::MatVector(Matrix4 matrix, Vector3 vector) {
 	Vector3 matVector = { 0,0,0 };
 	matVector.x = vector.x * matrix.m[0][0] + vector.y * matrix.m[1][0] + vector.z * matrix.m[2][0];

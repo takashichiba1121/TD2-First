@@ -4,6 +4,9 @@
 
 namespace affine
 {
+	//度からラジアンに変換する定数
+	constexpr float Deg2Rad = 3.14159265f / 180.0f;
+
 	//単位行列
 	void makeMatIdentity(Matrix4& matrix);
 
@@ -14,7 +17,9 @@ namespace affine
 	void makeMatRot(Matrix4& matrix, Vector3 rot);
 
 	//アフィン変換平行移動
-	void makeMatTrans(Matrix4& matrix, Vector3 Trans);
+	void makeMatTrans(Matrix4& matrix, Vector3 Trans); 
+
+	void makeAffine(WorldTransform& worldTransform);
 
 	//ベクトルと行列の掛け算
 	Vector3 MatVector(Matrix4 matrix, Vector3 vector);
