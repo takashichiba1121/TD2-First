@@ -36,7 +36,7 @@ private:
 	/// </summary>
 	void Mash();
 
-	std::unique_ptr<Input> input_ = nullptr;
-	std::unique_ptr<DebugText> debugText_ = nullptr;
+	Input* input_ = nullptr;
+	DebugText* debugText_ = nullptr;
 };
 

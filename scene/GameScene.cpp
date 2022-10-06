@@ -16,6 +16,7 @@ void GameScene::Initialize()
 	railCamera_ = std::make_unique<RailCamera>();
 	stage_ = std::make_unique<stage>();
 	modelSkydome_ = std::make_unique<sky>();
+	door_ = std::make_unique<door>();
 
 	dxCommon_ = DirectXCommon::GetInstance();
 	input_ = Input::GetInstance();
@@ -25,12 +26,15 @@ void GameScene::Initialize()
 	railCamera_->Initialize({ 0,0.7f,0.0f }, { 0,0 ,45.0f * affine::Deg2Rad });
 	stage_->Initialize();
 	modelSkydome_->Initialize();
+	door_->Initialize();
 }
 
 void GameScene::Update()
 {
 
 	player_->Update();
+
+	door_->Update();
 
 	Vector3 move = { 0,0,0 };
 	railCamera_->Update(move, move);

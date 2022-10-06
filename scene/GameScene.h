@@ -14,6 +14,7 @@
 #include "RailCamera.h"
 
 #include "sky.h"
+#include "door.h"
 
 /// <summary>
 /// ゲームシーン
@@ -54,9 +55,8 @@ class GameScene {
 	std::unique_ptr<RailCamera> railCamera_;
 	std::unique_ptr<Player> player_;
 	std::unique_ptr<stage> stage_;
-
-	// 天球
 	std::unique_ptr<sky> modelSkydome_;
+	std::unique_ptr<door> door_;
 
 	/// <summary>
 	/// ゲームシーン用
