@@ -29,7 +29,7 @@ void sky::Update()
 {
 }
 
-void sky::Draw(ViewProjection& viewProjection)
+void sky::Draw(ViewProjection* viewProjection)
 {
-	model_->Draw(worldTransform_, viewProjection);
+	model_->Draw(worldTransform_, *viewProjection);
 }

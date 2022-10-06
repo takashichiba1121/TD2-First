@@ -23,7 +23,7 @@ public:
 	/// <summary>
 	/// 描画
 	/// </summary>
-	void Draw(ViewProjection& viewProjection);
+	void Draw(ViewProjection* viewProjection);
 
 private:
 	// ワールド変換データ

@@ -15,6 +15,7 @@ void GameScene::Initialize()
 	player_ = std::make_unique<Player>();
 	viewProjection_ = std::make_unique<ViewProjection>();
 	stage_ = std::make_unique<stage>();
+	modelSkydome_ = std::make_unique<sky>();
 
 	dxCommon_ = DirectXCommon::GetInstance();
 	input_ = Input::GetInstance();
@@ -23,6 +24,7 @@ void GameScene::Initialize()
 	player_->Initialize();
 	viewProjection_->Initialize();
 	stage_->Initialize();
+	modelSkydome_->Initialize();
 }
 
 void GameScene::Update()
@@ -59,6 +61,7 @@ void GameScene::Draw()
 	/// </summary>
 	player_->Draw(viewProjection_.get());
 	stage_->Draw(viewProjection_.get());
+	modelSkydome_->Draw(viewProjection_.get());
 	// 3Dオブジェクト描画後処理
 	Model::PostDraw();
 #pragma endregion

@@ -12,6 +12,8 @@
 #include "player.h"
 #include"stage.h"
 
+#include "sky.h"
+
 /// <summary>
 /// ゲームシーン
 /// </summary>
@@ -52,6 +54,9 @@ class GameScene {
 	std::unique_ptr<Player> player_;
 	std::unique_ptr<stage> stage_;
 	
+	// 天球
+	std::unique_ptr<sky> modelSkydome_;
+
 	/// <summary>
 	/// ゲームシーン用
 	/// </summary>
