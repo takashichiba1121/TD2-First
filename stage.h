@@ -1,4 +1,10 @@
 #pragma once
+#include "DebugText.h"
+#include "Input.h"
+#include "Model.h"
+#include "ViewProjection.h"
+#include "WorldTransform.h"
+
 class stage
 {
 public:
@@ -22,6 +28,14 @@ public:
 
 
 private:
+	//ワールド変換データ
+	WorldTransform worldTransform_;
+	WorldTransform worldTransform2_;
+	//モデル
+	Model* model_ = nullptr;
+	//テクスチャハンドル
+	uint32_t textureHandle_ = 0u;
 
+	DebugText* debugText_ = nullptr;
 };
 
