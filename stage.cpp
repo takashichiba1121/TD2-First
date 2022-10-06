@@ -22,8 +22,8 @@ void stage::Initialize()
 	worldTransform_.scale_ = {10.0f,1.0f,50.0f};
 	worldTransform2_.scale_ = { 50.0f,1.0f,10.0f };
 	
-	worldTransform_.translation_ = {45.0f,-10.0f,0.0f};
-	worldTransform2_.translation_ = {0.0f,-10.0f,45.0f };
+	worldTransform_.translation_ = {0.0f,-10.0f,0.0f};
+	worldTransform2_.translation_ = {45.0f,-10.0f,45.0f };
 
 	affine::makeMatIdentity(worldTransform_.matWorld_);
 	affine::makeMatIdentity(worldTransform2_.matWorld_);
