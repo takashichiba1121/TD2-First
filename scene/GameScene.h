@@ -11,6 +11,7 @@
 #include "WorldTransform.h"
 #include "player.h"
 #include"stage.h"
+#include "RailCamera.h"
 
 #include "sky.h"
 
@@ -50,10 +51,10 @@ class GameScene {
 	Input* input_ = nullptr;
 	Audio* audio_ = nullptr;
 	DebugText* debugText_ = nullptr;
-	std::unique_ptr<ViewProjection> viewProjection_;
+	std::unique_ptr<RailCamera> railCamera_;
 	std::unique_ptr<Player> player_;
 	std::unique_ptr<stage> stage_;
-	
+
 	// 天球
 	std::unique_ptr<sky> modelSkydome_;
 

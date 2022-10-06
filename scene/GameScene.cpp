@@ -13,7 +13,7 @@ GameScene::~GameScene()
 void GameScene::Initialize()
 {
 	player_ = std::make_unique<Player>();
-	viewProjection_ = std::make_unique<ViewProjection>();
+	railCamera_ = std::make_unique<RailCamera>();
 	stage_ = std::make_unique<stage>();
 	modelSkydome_ = std::make_unique<sky>();
 
@@ -22,14 +22,18 @@ void GameScene::Initialize()
 	audio_ = Audio::GetInstance();
 	debugText_ = DebugText::GetInstance();
 	player_->Initialize();
-	viewProjection_->Initialize();
+	railCamera_->Initialize({ 0,0.7f,0.0f }, { 0,0 ,45.0f * affine::Deg2Rad });
 	stage_->Initialize();
 	modelSkydome_->Initialize();
 }
 
 void GameScene::Update()
 {
+
 	player_->Update();
+
+	Vector3 move = { 0,0,0 };
+	railCamera_->Update(move, move);
 }
 
 void GameScene::Draw()
@@ -59,9 +63,9 @@ void GameScene::Draw()
 	/// <summary>
 	/// ここに3Dオブジェクトの描画処理を追加できる
 	/// </summary>
-	player_->Draw(viewProjection_.get());
-	stage_->Draw(viewProjection_.get());
-	modelSkydome_->Draw(viewProjection_.get());
+	player_->Draw(railCamera_->GetViewProjection());
+	stage_->Draw(railCamera_->GetViewProjection());
+	modelSkydome_->Draw(railCamera_->GetViewProjection());
 	// 3Dオブジェクト描画後処理
 	Model::PostDraw();
 #pragma endregion
