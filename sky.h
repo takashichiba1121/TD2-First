@@ -1,4 +1,9 @@
 #pragma once
+
+#include "Model.h"
+#include "WorldTransform.h"
+#include "affine.h"
+
 class sky
 {
 public:
@@ -18,8 +23,12 @@ public:
 	/// <summary>
 	/// 描画
 	/// </summary>
-	void Draw();
+	void Draw(ViewProjection& viewProjection);
 
 private:
+	// ワールド変換データ
+	WorldTransform worldTransform_;
+	// モデル
+	std::unique_ptr<Model> model_ = nullptr;
 };
 
