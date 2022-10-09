@@ -47,9 +47,9 @@ void affine::makeMatRot(Matrix4& matrix, Vector3 rot) {
 	Matrix4 matRot;
 	makeMatIdentity(matRot);
 
+	matRot *= matrotZ;
 	matRot *= matrotX;
 	matRot *= matrotY;
-	matRot *= matrotZ;
 	matrix *= matRot;
 }
 
