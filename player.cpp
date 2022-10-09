@@ -15,7 +15,7 @@ void Player::Initialize(WorldTransform* worldTransform)
 	worldTransform_.parent_ = worldTransform;
 	worldTransform_.Initialize();
 	worldTransform_.rotation_ = { 0.0f, 90.0f * affine::Deg2Rad, 0.0f };
-	worldTransform_.translation_ = { 0.0f, 3.5f, 5.0f };
+	worldTransform_.translation_ = { 0.0f, 4.5f, 6.0f };
 
 }
 
