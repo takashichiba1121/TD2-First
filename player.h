@@ -13,7 +13,7 @@ public:
 	/// <summary>
 	/// ‰Šú‰»
 	/// </summary>
-	void Initialize();
+	void Initialize(WorldTransform* worldTransform);
 
 	/// <summary>
 	/// –ˆƒtƒŒ[ƒ€ˆ—
