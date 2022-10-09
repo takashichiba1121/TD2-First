@@ -10,6 +10,8 @@ door::~door()
 
 void door::Initialize()
 {
+	worldTransform_.Initialize();
+	//model_.reset(Model::CreateFromOBJ("   ", true));
 	input_=Input::GetInstance();
 	debugText_ = DebugText::GetInstance();
 }
@@ -37,7 +39,7 @@ void door::Mash()
 
 	// デバック文字
 	debugText_->SetPos(50, 20);
-	debugText_->GetInstance()->Printf("mashNum(%d)",mashNum_);
+	debugText_->GetInstance()->Printf("MashNum(%d)",mashNum_);
 }
 
 void door::Update()
@@ -45,6 +47,7 @@ void door::Update()
 	Mash();
 }
 
-void door::Draw()
+void door::Draw(ViewProjection*viewProjection)
 {
+	model_->Draw(worldTransform_, *viewProjection);
 }
