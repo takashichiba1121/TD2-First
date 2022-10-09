@@ -30,7 +30,7 @@ public:
 private:
 	//ワールド変換データ
 	WorldTransform worldTransform_[50];
-	WorldTransform worldTransform2_;
+	WorldTransform worldTransform2_[50];
 	//モデル
 	Model* model_ = nullptr;
 	//テクスチャハンドル
