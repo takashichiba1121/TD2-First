@@ -22,7 +22,7 @@ void GameScene::Initialize()
 	input_ = Input::GetInstance();
 	audio_ = Audio::GetInstance();
 	debugText_ = DebugText::GetInstance();
-	player_->Initialize();
+	player_->Initialize(railCamera_->GetWorldTransformPtr());
 	railCamera_->Initialize({ 0,0.7f,0.0f }, { 0,0 ,45.0f * affine::Deg2Rad });
 	stage_->Initialize();
 	modelSkydome_->Initialize();

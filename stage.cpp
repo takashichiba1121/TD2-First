@@ -13,29 +13,27 @@ stage::~stage()
 void stage::Initialize()
 {
 	debugText_ = DebugText::GetInstance();
-	model_ = Model::Create();
-	textureHandle_ = TextureManager::Load("uvChecker.png");
+	model_ = Model::CreateFromOBJ("straightRoad", true);
+	/*textureHandle_ = TextureManager::Load("uvChecker.png");*/
 
-	worldTransform_.Initialize();
-	worldTransform2_.Initialize();
+	for (int i = 0; i < 50; i++)
+	{
+		worldTransform_[i].Initialize();
+		worldTransform2_.Initialize();
 
-	worldTransform_.scale_ = {5.0f,1.0f,50.0f};
-	worldTransform2_.scale_ = { 5.0f,1.0f,50.0f };
+		worldTransform2_.rotation_ = { 0.0f,25.0f * affine::Deg2Rad,0.0f };
 
-	worldTransform2_.rotation_ ={0.0f,25.0f * affine::Deg2Rad,0.0f};
-	
-	worldTransform_.translation_ = {0.0f,-3.0f,20.0f};
-	worldTransform2_.translation_ = {20.0f,-3.0f,100.0f };
+		worldTransform_[i].translation_ = { 0.0f,-3.0f,i*15+7.0f };
+		worldTransform2_.translation_ = { 20.0f,-3.0f,100.0f };
 
-	affine::makeMatIdentity(worldTransform_.matWorld_);
-	affine::makeMatIdentity(worldTransform2_.matWorld_);
-	affine::makeMatScale(worldTransform_.matWorld_,worldTransform_.scale_);
-	affine::makeMatScale(worldTransform2_.matWorld_, worldTransform2_.scale_);
-	affine::makeMatRot(worldTransform2_.matWorld_,worldTransform2_.rotation_);
-	affine::makeMatTrans(worldTransform_.matWorld_,worldTransform_.translation_);
-	affine::makeMatTrans(worldTransform2_.matWorld_, worldTransform2_.translation_);
-	worldTransform_.TransferMatrix();
-	worldTransform2_.TransferMatrix();
+		affine::makeMatIdentity(worldTransform_[i].matWorld_);
+		affine::makeMatIdentity(worldTransform2_.matWorld_);
+		affine::makeMatRot(worldTransform2_.matWorld_, worldTransform2_.rotation_);
+		affine::makeMatTrans(worldTransform_[i].matWorld_, worldTransform_[i].translation_);
+		affine::makeMatTrans(worldTransform2_.matWorld_, worldTransform2_.translation_);
+		worldTransform_[i].TransferMatrix();
+		worldTransform2_.TransferMatrix();
+	}
 }
 
 void stage::Update()
@@ -44,6 +42,9 @@ void stage::Update()
 
 void stage::Draw(ViewProjection* viewProjection)
 {
-	model_->Draw(worldTransform_, *viewProjection, textureHandle_);
-	model_->Draw(worldTransform2_, *viewProjection, textureHandle_);
+	for (int i = 0; i < 50; i++)
+	{
+		model_->Draw(worldTransform_[i], *viewProjection);
+	}
+	/*model_->Draw(worldTransform2_, *viewProjection, textureHandle_);*/
 }
