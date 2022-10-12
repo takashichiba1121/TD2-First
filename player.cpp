@@ -29,12 +29,10 @@ void Player::Initialize(WorldTransform* worldTransform)
 
 void Player::Update()
 {
-	worldTransform_.rotation_ += {0.0f, 0.0f, 0.01f};
+	worldTransform_.rotation_ += {0.01f, 0.0f, 0.0f};
 	Rotate();
 
 	Move();
-
-
 
 	affine::makeAffine(worldTransform_);
 	worldTransform_.matWorld_ *= worldTransform_.parent_->matWorld_;
@@ -60,20 +58,20 @@ void Player::Move()
 
 void Player::Rotate()
 {
-	if (Input::GetInstance()->PushKey(DIK_A))
+	if (Input::GetInstance()->PushKey(DIK_A) || Input::GetInstance()->PushKey(DIK_LEFT))
 	{
-		Complement(worldTransform_.rotation_.x, 10.0f * affine::Deg2Rad, 40);//‰¡
+		Complement(worldTransform_.rotation_.z, 10.0f * affine::Deg2Rad, 40);//‰¡
 		Complement(worldTransform_.rotation_.y, -28.0f * affine::Deg2Rad, 40);//‰¡
 
 	}
-	else if (Input::GetInstance()->PushKey(DIK_D))
+	else if (Input::GetInstance()->PushKey(DIK_D) || Input::GetInstance()->PushKey(DIK_RIGHT))
 	{
-		Complement(worldTransform_.rotation_.x, -10.0f * affine::Deg2Rad, 40);//‰¡
+		Complement(worldTransform_.rotation_.z, -10.0f * affine::Deg2Rad, 40);//‰¡
 		Complement(worldTransform_.rotation_.y, 28.0f * affine::Deg2Rad, 40);//‰¡
 	}
 	else
 	{
-		Complement(worldTransform_.rotation_.x, 0.0f, 40);//‰¡
+		Complement(worldTransform_.rotation_.z, 0.0f, 40);//‰¡
 		Complement(worldTransform_.rotation_.y, 0.0f, 40);//‰¡
 	}
 }

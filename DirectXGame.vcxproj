@@ -98,6 +98,8 @@
     <ClCompile Include="base\DirectXCommon.cpp" />
     <ClCompile Include="base\TextureManager.cpp" />
     <ClCompile Include="base\WinApp.cpp" />
+    <ClCompile Include="Object.cpp" />
+    <ClCompile Include="ObjectManager.cpp" />
     <ClCompile Include="Particle.cpp" />
     <ClCompile Include="door.cpp" />
     <ClCompile Include="main.cpp" />
@@ -129,6 +131,8 @@
     <ClInclude Include="base\SafeDelete.h" />
     <ClInclude Include="base\TextureManager.h" />
     <ClInclude Include="base\WinApp.h" />
+    <ClInclude Include="Object.h" />
+    <ClInclude Include="ObjectManager.h" />
     <ClInclude Include="Particle.h" />
     <ClInclude Include="door.h" />
     <ClInclude Include="input\Input.h" />
