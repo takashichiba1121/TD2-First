@@ -23,7 +23,7 @@ void Player::Initialize(WorldTransform* worldTransform)
 	worldTransform_.parent_ = worldTransform;
 	worldTransform_.Initialize();
 	//worldTransform_.rotation_ = { 0.0f, defAngle, 0.0f };
-	worldTransform_.translation_ = { 0.0f, 4.5f, 6.0f };
+	worldTransform_.translation_ = { 0.0f, -2.0f, 10.0f };
 
 }
 

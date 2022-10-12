@@ -17,16 +17,11 @@ void RailCamera::Initialize(const Vector3& position, const Vector3& rotaion)
 	viewProjection_ = std::make_unique<ViewProjection>();
 	//ビュープロジェクションの初期化
 	viewProjection_->Initialize();
-
 }
 
-void RailCamera::Update(Vector3& move, Vector3& rot)
+void RailCamera::Update(WorldTransform worldTransform)
 {
 	using namespace MathUtility;
-
-	//ワールドトランスフォームの数値を加算
-	worldTransform_.translation_ += move;
-	worldTransform_.rotation_ += rot;
 	//ワールドトランスフォームの更新
 	affine::makeAffine(worldTransform_);
 

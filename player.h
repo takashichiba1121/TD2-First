@@ -27,6 +27,9 @@ public:
 	/// </summary>
 	void Draw(ViewProjection* viewProjection);
 
+	WorldTransform GetWorldTransform() { return worldTransform_; };
+
+
 private:
 
 	void Move();

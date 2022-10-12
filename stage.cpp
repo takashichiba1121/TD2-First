@@ -35,7 +35,7 @@ void stage::Initialize()
 		worldTransform2_[i].rotation_ = {0.0f,30.0f * affine::Deg2Rad,0.0f};
 
 		worldTransform_[i].translation_ = { 0.0f,-3.0f,i*15+7.0f };
-		worldTransform2_[i].translation_ = { vector.x*15*i+vector.x*7,-3.0f,vector.x * 15 * i + vector.x * 7+750 };
+		worldTransform2_[i].translation_ = { vector.x*15*i+vector.x*7,-3.0f,vector.z * 15 * i + vector.z * 7+750 };
 
 		affine::makeMatIdentity(worldTransform_[i].matWorld_);
 		affine::makeMatIdentity(worldTransform2_[i].matWorld_);

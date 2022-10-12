@@ -58,6 +58,10 @@ class GameScene {
 	std::unique_ptr<sky> modelSkydome_;
 	std::unique_ptr<door> door_;
 
+	Vector3 vector={0,0,0};
+	Vector3 playerVector={0,0,0};
+	float kyori = 0;
+
 	/// <summary>
 	/// ゲームシーン用
 	/// </summary>

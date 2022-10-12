@@ -20,7 +20,7 @@ public:
 	/// <summary>
 	/// –ˆƒtƒŒ[ƒ€ˆ—
 	/// </summary>
-	void Update(Vector3& move, Vector3& rot);
+	void Update(WorldTransform worldTransform);
 
 	/// <summary>
 	/// •`‰æ
@@ -30,6 +30,9 @@ public:
 	ViewProjection* GetViewProjection();
 
 	WorldTransform* GetWorldTransformPtr();
+
+	void addRot(Vector3 rot) { worldTransform_.rotation_ += rot; };
+	void addtranslation(Vector3 translation) { worldTransform_.translation_ += translation; };
 
 private:
 

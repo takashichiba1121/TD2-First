@@ -13,7 +13,7 @@ void sky::Initialize()
 	// ワールド変換の初期化
 	worldTransform_.Initialize();
 	// スケールを設定
-	worldTransform_.scale_ = { 250.0f,250.0f,250.0f };
+	worldTransform_.scale_ = { 1000.0f,1000.0f,1000.0f };
 	// スケーリング行列
 	affine::makeMatIdentity(worldTransform_.matWorld_);
 	affine::makeMatScale(worldTransform_.matWorld_, worldTransform_.scale_);

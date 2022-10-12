@@ -23,12 +23,12 @@ void affine::makeMatScale(Matrix4& matrix, Vector3 scale) {
 
 //ƒAƒtƒBƒ“•ÏŠ·‰ñ“]
 void affine::makeMatRot(Matrix4& matrix, Vector3 rot) {
-	Matrix4 matrotZ;
-	makeMatIdentity(matrotZ);
-	matrotZ.m[1][1] = cos(rot.z);
-	matrotZ.m[1][2] = sin(rot.z);
-	matrotZ.m[2][1] = -sin(rot.z);
-	matrotZ.m[2][2] = cos(rot.z);
+	Matrix4 matrotX;
+	makeMatIdentity(matrotX);
+	matrotX.m[1][1] = cos(rot.x);
+	matrotX.m[1][2] = sin(rot.x);
+	matrotX.m[2][1] = -sin(rot.x);
+	matrotX.m[2][2] = cos(rot.x);
 
 	Matrix4 matrotY;
 	makeMatIdentity(matrotY);
@@ -37,12 +37,12 @@ void affine::makeMatRot(Matrix4& matrix, Vector3 rot) {
 	matrotY.m[2][0] = sin(rot.y);
 	matrotY.m[2][2] = cos(rot.y);
 
-	Matrix4 matrotX;
-	makeMatIdentity(matrotX);
-	matrotX.m[0][0] = cos(rot.x);
-	matrotX.m[0][1] = sin(rot.x);
-	matrotX.m[1][0] = -sin(rot.x);
-	matrotX.m[1][1] = cos(rot.x);
+	Matrix4 matrotZ;
+	makeMatIdentity(matrotZ);
+	matrotZ.m[0][0] = cos(rot.z);
+	matrotZ.m[0][1] = sin(rot.z);
+	matrotZ.m[1][0] = -sin(rot.z);
+	matrotZ.m[1][1] = cos(rot.z);
 
 	Matrix4 matRot;
 	makeMatIdentity(matRot);
