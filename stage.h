@@ -33,7 +33,7 @@ private:
 	WorldTransform worldTransform2_[50];
 	WorldTransform worldTransform3_[50];
 	WorldTransform worldTransform4_[50];
-	WorldTransform worldTransfor5_[50];
+	WorldTransform worldTransform5_[50];
 	WorldTransform worldTransform6_[50];
 	//ƒ‚ƒfƒ‹
 	Model* model_ = nullptr;
@@ -42,6 +42,6 @@ private:
 
 	DebugText* debugText_ = nullptr;
 
-	Vector3 vector[6] = {};
+	Vector3 vector = {};
 };
 

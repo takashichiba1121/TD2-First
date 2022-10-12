@@ -25,7 +25,7 @@ void GameScene::Initialize()
 	audio_ = Audio::GetInstance();
 	debugText_ = DebugText::GetInstance();
 	player_->Initialize(railCamera_->GetWorldTransformPtr());
-	railCamera_->Initialize(Vector3{ 0.0,0.0f,722.5f }, { 0,30 * 0,0 });
+	railCamera_->Initialize(Vector3{ 0.0,0.0f,0.0f }, { 0,0,0 });
 	stage_->Initialize();
 	modelSkydome_->Initialize();
 	door_->Initialize();
@@ -39,6 +39,13 @@ void GameScene::Initialize()
 		vector /= len;
 	}
 	vector /= 2.0f;
+
+	Rotrange[0] = 750.0;
+	Rotrange[1] = Rotrange[0] +vector.z*750;
+	Rotrange[2] = 750.0;
+	Rotrange[3] = 742.5;
+	Rotrange[4] = 742.5;
+	Rotrange[5] = 742.5;
 
 	/*railCamera_->addtranslation({ -4,0,7 });*/
 }
@@ -54,27 +61,46 @@ void GameScene::Update()
 
 	Vector3 player = affine::GetWorldTrans(player_->GetWorldTransform().matWorld_);
 
-	if (player.z < 742.5f)
+	switch (currentSide)
 	{
-		Vector3 move = { 0,0,0.5f };
-		railCamera_->addtranslation(move);
-	}
-	else if (player.z == 742.5f)
-	{
-		Vector3 Rot = { 0,30 * affine::Deg2Rad,0 };
-		Vector3 move = {0,0,0};
-		move.x = player.x + cosf(Rot.y - affine::PIHalf);
-		move.z = player.z - sinf(Rot.y - affine::PIHalf);
-		move -= railCamera_->GetWorldTransformPtr()->translation_;
-		float len = sqrt(move.x * move.x + move.y * move.y + move.z * move.z);
-		if (len != 0)
+	case side::First:
+		if (player.z < 750.0f)
 		{
-			move /= len;
+			Vector3 move = { 0,0,0.5f };
+			railCamera_->addtranslation(move);
 		}
-		railCamera_->addRot(Rot);
-		railCamera_->addtranslation( { -4,0,7 });
+		else if (player.z == 750.0f)
+		{
+			Vector3 Rot = { 0,30 * affine::Deg2Rad,0 };
+			/*Vector3 move = { 0,0,0 };
+			move.x = player.x + cosf(Rot.y - affine::PIHalf);
+			move.z = player.z - sinf(Rot.y - affine::PIHalf);
+			move -= railCamera_->GetWorldTransformPtr()->translation_;
+			float len = sqrt(move.x * move.x + move.y * move.y + move.z * move.z);
+			if (len != 0)
+			{
+				move /= len;
+			}*/
+			railCamera_->addRot(Rot);
+			railCamera_->addtranslation({ -4,0,3 });
+			currentSide = side::Second;
+			kyori += 0.5;
+		}
+		break;
+	case side::Second:
+		break;
+	case side::Third:
+		break;
+	case side::Fourth:
+		break;
+	case side::Fifth:
+		break;
+	case side::Sixth:
+		break;
+	default:
+		break;
 	}
-	else if (player.z >= 742.5f)
+	if (player.z > 750.0f)
 	{
 		railCamera_->addtranslation({ vector });
 	}
