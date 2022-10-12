@@ -5,8 +5,8 @@
 namespace affine
 {
 	//度からラジアンに変換する定数
-	constexpr float Deg2Rad = 3.14159265f / 180.0f;
-	constexpr float PIHalf = 3.141592654f / 2.0f;
+	constexpr float Deg2Rad = 3.1415926535897931f / 180.0f;
+	constexpr float PIHalf = 3.1415926535897931f / 2.0f;
 
 	//単位行列
 	void makeMatIdentity(Matrix4& matrix);
