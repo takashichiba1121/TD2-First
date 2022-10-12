@@ -37,55 +37,55 @@ void GameScene::Initialize()
 		vector /= len;
 	}
 	vector /= 2.0f;
-
-	/*Vector3 start1 = { 0.0f,0.0f,0.0f };
-	Vector3 gole1 = { 3.0f,0.0f,static_cast<float> (3.0 * sqrt(3)) };
-	playerVector = { gole1.x - start1.x,gole1.y - start1.y,gole1.z - start1.z };
-	float len1 = sqrt(playerVector.x * playerVector.x + playerVector.y * playerVector.y + playerVector.z * playerVector.z);
-	if (len1 != 0)
-	{
-		playerVector /= len1;
-	}*/
-
-	//playerVector *= 3;
-	//railCamera_->addtranslation({ 5, 0,0 });
-	//Vector3 Rot = { 0,30 * affine::Deg2Rad,0 };
-	//railCamera_->addRot(Rot);
 }
 
 void GameScene::Update()
 {
 
+	using namespace MathUtility;
+
 	player_->Update();
 
 	door_->Update();
 
-	kyori += 0.5f;
+	Vector3 player = affine::GetWorldTrans(player_->GetWorldTransform().matWorld_);
 
-	if (kyori < 725)
+	if (player.z < 732.5f)
 	{
 		Vector3 move = { 0,0,0.5f };
 		railCamera_->addtranslation(move);
 	}
-	else if(kyori == 725.5f)
+	else if (player.z == 732.5f)
 	{
-		Vector3 move = { -vector.x*12,vector.y,vector.z*12};
-		Vector3 Rot = { 0,30*affine::Deg2Rad,0 };
+		Vector3 Rot = { 0,30 * affine::Deg2Rad,0 };
+		Vector3 move = { 0,0,0 };
+		move.x = player.x + cosf(Rot.x - affine::PIHalf);
+		move.y = player.y + cosf(Rot.y - affine::PIHalf);
+		move.z = player.z - sinf(Rot.z - affine::PIHalf);
+		move -= railCamera_->GetWorldTransformPtr()->translation_;
+		float len = sqrt(move.x * move.x + move.y * move.y + move.z * move.z);
+		if (len != 0)
+		{
+			move /= len;
+		}
 		railCamera_->addRot(Rot);
-		railCamera_->addtranslation(move);
+		railCamera_->addtranslation({ move.x,move.y,move.z });
 	}
-	else if (kyori > 725.5f)
+	else if (player.z >= 732.5f)
 	{
 		railCamera_->addtranslation({ vector });
 	}
 
 	railCamera_->Update(player_->GetWorldTransform());
+
+	debugText_->SetPos(10, 10);
+	debugText_->Printf(" %f, %f, %f", player.x, player.y, player.z);
 }
 
 void GameScene::Draw()
 {
 
-// コマンドリストの取得
+	// コマンドリストの取得
 	ID3D12GraphicsCommandList* commandList = dxCommon_->GetCommandList();
 
 #pragma region 背景スプライト描画
