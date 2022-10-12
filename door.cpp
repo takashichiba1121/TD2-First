@@ -38,8 +38,8 @@ void door::Mash()
 	}
 
 	// デバック文字
-	debugText_->SetPos(50, 20);
-	debugText_->GetInstance()->Printf("MashNum(%d)",mashNum_);
+	/*debugText_->SetPos(50, 20);
+	debugText_->GetInstance()->Printf("MashNum(%d)",mashNum_);*/
 }
 
 void door::Update()

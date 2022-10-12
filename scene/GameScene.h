@@ -61,7 +61,7 @@ class GameScene {
 	Vector3 vector={0,0,0};
 	Vector3 playerVector={0,0,0};
 	float kyori = 0;
-	float Rotrange[6] = {};
+	float rotRange[6] = {};
 
 	enum class side {
 		First=1,//一番

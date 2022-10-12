@@ -32,7 +32,9 @@ public:
 	WorldTransform* GetWorldTransformPtr();
 
 	void addRot(Vector3 rot) { worldTransform_.rotation_ += rot; };
-	void addtranslation(Vector3 translation) { worldTransform_.translation_ += translation; };
+	void addTranslation(Vector3 translation) { worldTransform_.translation_ += translation; };
+
+	void setTranslation(Vector3 translation) { worldTransform_.translation_ = translation; };
 
 private:
 
