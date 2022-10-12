@@ -38,7 +38,14 @@ private:
 
 	void Complement(float& x1, float x2, float flame);
 
+	void Jump();
+
 	float defAngle = 90.0f * affine::Deg2Rad;
+
+	uint8_t jumpFlag = 0u;
+
+	float gravitySpeed = 0.5;
+	float defGravitySpeed = gravitySpeed;
 
 	//ƒ‚ƒfƒ‹
 	std::unique_ptr<Model> model_;
