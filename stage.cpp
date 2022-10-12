@@ -20,11 +20,11 @@ void stage::Initialize()
 
 	Vector3 start = {0.0f,0.0f,0.0f};
 	Vector3 gole = { 7.5f,0.0f,static_cast<float> (7.5 * sqrt(3))};
-	Vector3 vector = {gole.x - start.x,gole.y- start.y,gole.z - start.z };
-	float len = sqrt(vector.x * vector.x + vector.y * vector.y + vector.z * vector.z);
+	 vector[0] = {gole.x - start.x,gole.y - start.y,gole.z - start.z};
+	float len = sqrt(vector[0].x * vector[0].x + vector[0].y * vector[0].y + vector[0].z * vector[0].z);
 	if (len != 0)
 	{
-		vector /= len;
+		vector[0] /= len;
 	}
 
 	for (int i = 0; i < 50; i++)
@@ -35,7 +35,7 @@ void stage::Initialize()
 		worldTransform2_[i].rotation_ = {0.0f,30.0f * affine::Deg2Rad,0.0f};
 
 		worldTransform_[i].translation_ = { 0.0f,-3.0f,i*15+7.0f };
-		worldTransform2_[i].translation_ = { vector.x*15*i+vector.x*7,-3.0f,float(vector.z * 15 * i + vector.z * 7+745.9) };
+		worldTransform2_[i].translation_ = { vector[0].x * 15 * i + vector[0].x * 7,-3.0f,float(vector[0].z * 15 * i + vector[0].z * 7 + 745.9)};
 
 		affine::makeMatIdentity(worldTransform_[i].matWorld_);
 		affine::makeMatIdentity(worldTransform2_[i].matWorld_);

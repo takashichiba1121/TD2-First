@@ -31,11 +31,17 @@ private:
 	//ワールド変換データ
 	WorldTransform worldTransform_[50];
 	WorldTransform worldTransform2_[50];
+	WorldTransform worldTransform3_[50];
+	WorldTransform worldTransform4_[50];
+	WorldTransform worldTransfor5_[50];
+	WorldTransform worldTransform6_[50];
 	//モデル
 	Model* model_ = nullptr;
 	//テクスチャハンドル
 	uint32_t textureHandle_ = 0u;
 
 	DebugText* debugText_ = nullptr;
+
+	Vector3 vector[6] = {};
 };
 
