@@ -69,14 +69,14 @@ void GameScene::Update()
 	}
 	else if(kyori == 725.5f)
 	{
-		/*Vector3 move = { -vector.x*12,vector.y,vector.z*12};*/
-	/*	Vector3 Rot = { 0,30*affine::Deg2Rad,0 };
-		railCamera_->addRot(Rot);*/
-		/*railCamera_->addtranslation(move);*/
+		Vector3 move = { -vector.x*12,vector.y,vector.z*12};
+		Vector3 Rot = { 0,30*affine::Deg2Rad,0 };
+		railCamera_->addRot(Rot);
+		railCamera_->addtranslation(move);
 	}
 	else if (kyori > 725.5f)
 	{
-		//railCamera_->addtranslation({ 0,0,0.5 });
+		railCamera_->addtranslation({ vector });
 	}
 
 	railCamera_->Update(player_->GetWorldTransform());
