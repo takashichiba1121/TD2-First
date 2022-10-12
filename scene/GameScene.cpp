@@ -12,6 +12,8 @@ GameScene::~GameScene()
 
 void GameScene::Initialize()
 {
+	using namespace MathUtility;
+
 	player_ = std::make_unique<Player>();
 	railCamera_ = std::make_unique<RailCamera>();
 	stage_ = std::make_unique<stage>();
@@ -23,7 +25,7 @@ void GameScene::Initialize()
 	audio_ = Audio::GetInstance();
 	debugText_ = DebugText::GetInstance();
 	player_->Initialize(railCamera_->GetWorldTransformPtr());
-	railCamera_->Initialize({ 0,5.0f,0.0f }, { 0,0 ,0 });
+	railCamera_->Initialize(Vector3{ 0.0,0.0f,722.5f }, { 0,30 * 0,0 });
 	stage_->Initialize();
 	modelSkydome_->Initialize();
 	door_->Initialize();
@@ -37,6 +39,8 @@ void GameScene::Initialize()
 		vector /= len;
 	}
 	vector /= 2.0f;
+
+	/*railCamera_->addtranslation({ -4,0,7 });*/
 }
 
 void GameScene::Update()
@@ -50,18 +54,17 @@ void GameScene::Update()
 
 	Vector3 player = affine::GetWorldTrans(player_->GetWorldTransform().matWorld_);
 
-	if (player.z < 732.5f)
+	if (player.z < 742.5f)
 	{
 		Vector3 move = { 0,0,0.5f };
 		railCamera_->addtranslation(move);
 	}
-	else if (player.z == 732.5f)
+	else if (player.z == 742.5f)
 	{
 		Vector3 Rot = { 0,30 * affine::Deg2Rad,0 };
-		Vector3 move = { 0,0,0 };
-		move.x = player.x + cosf(Rot.x - affine::PIHalf);
-		move.y = player.y + cosf(Rot.y - affine::PIHalf);
-		move.z = player.z - sinf(Rot.z - affine::PIHalf);
+		Vector3 move = {0,0,0};
+		move.x = player.x + cosf(Rot.y - affine::PIHalf);
+		move.z = player.z - sinf(Rot.y - affine::PIHalf);
 		move -= railCamera_->GetWorldTransformPtr()->translation_;
 		float len = sqrt(move.x * move.x + move.y * move.y + move.z * move.z);
 		if (len != 0)
@@ -69,9 +72,9 @@ void GameScene::Update()
 			move /= len;
 		}
 		railCamera_->addRot(Rot);
-		railCamera_->addtranslation({ move.x,move.y,move.z });
+		railCamera_->addtranslation( { -4,0,7 });
 	}
-	else if (player.z >= 732.5f)
+	else if (player.z >= 742.5f)
 	{
 		railCamera_->addtranslation({ vector });
 	}
@@ -79,7 +82,7 @@ void GameScene::Update()
 	railCamera_->Update(player_->GetWorldTransform());
 
 	debugText_->SetPos(10, 10);
-	debugText_->Printf(" %f, %f, %f", player.x, player.y, player.z);
+	debugText_->Printf(" %f, %f, %f", player.x,player.y,player.z);
 }
 
 void GameScene::Draw()
