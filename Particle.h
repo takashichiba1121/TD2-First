@@ -4,6 +4,7 @@
 #include "DebugText.h"
 #include <list>
 #include "TextureManager.h"
+#include "WorldTransform.h"
 
 struct Hexagon
 {
@@ -34,20 +35,27 @@ public:
 	/// </summary>
 	void EyeCatch();
 
+	/// <summary>
+	/// 値の初期化
+	/// </summary>
+	void Reset();
+
 	Vector2 pos;
-	Vector2 oldpos;
+	Vector2 pos2;
+	Vector2 bottom;
+
 	bool flag = false;
 	bool flag2 = false;
 	bool flag3 = false;
 private:
 	// テクスチャハンドル
 	uint32_t textureHandle_ = 0;
+	uint32_t textureBox_ = 0;
 	// スプライト
 	std::list<Hexagon> sprite_;
 	std::list<Hexagon> sprite_2;
+	std::unique_ptr<Sprite> spriteBox_;
 	Input* input_ = nullptr;
 	DebugText* debugText_ = nullptr;
-
-	int a;
 };
 
