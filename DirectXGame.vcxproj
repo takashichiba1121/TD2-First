@@ -105,6 +105,7 @@
     <ClCompile Include="main.cpp" />
     <ClCompile Include="player.cpp" />
     <ClCompile Include="RailCamera.cpp" />
+    <ClCompile Include="ResultCamera.cpp" />
     <ClCompile Include="scene\GameScene.cpp" />
     <ClCompile Include="sky.cpp" />
     <ClCompile Include="stage.cpp" />
@@ -144,6 +145,7 @@
     <ClInclude Include="math\Vector4.h" />
     <ClInclude Include="player.h" />
     <ClInclude Include="RailCamera.h" />
+    <ClInclude Include="ResultCamera.h" />
     <ClInclude Include="scene\GameScene.h" />
     <ClInclude Include="sky.h" />
     <ClInclude Include="stage.h" />
