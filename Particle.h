@@ -18,7 +18,7 @@ public:
 	/// <summary>
 	/// ‰Šú‰»
 	/// </summary>
-	void Initilize();
+	void Initialize();
 
 	/// <summary>
 	/// XV

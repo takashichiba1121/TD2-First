@@ -2,7 +2,7 @@
 
 Hexagon num;
 
-void Particle::Initilize()
+void Particle::Initialize()
 {
 	// ファイル名を指定してテクスチャを読み込む
 	textureHandle_ = TextureManager::Load("Hexagon.png");
@@ -22,7 +22,7 @@ void Particle::Reset()
 	pos2.x = 150;
 	pos2.y = -48;
 
-	bottom.y = -48;
+	bottom.y = -970;
 
 	num.timer = 120;
 }
@@ -72,12 +72,10 @@ void Particle::EyeCatch()
 		Hexagon tmp2;
 		tmp.sprite_.reset(Sprite::Create(textureHandle_, { pos.x,pos.y }));
 		tmp2.sprite_.reset(Sprite::Create(textureHandle_, { pos2.x,pos2.y }));
-		spriteBox_.reset(Sprite::Create(textureHandle_, {640, bottom.y }));
+		spriteBox_.reset(Sprite::Create(textureBox_, {640, 320 }));
 
 		sprite_.push_back(std::move(tmp));
 		sprite_2.push_back(std::move(tmp2));
-
-		spriteBox_->SetSize({ 1280.0f, bottom.y });
 
 		sprite_.remove_if([](Hexagon& hexagon)
 			{
@@ -87,6 +85,11 @@ void Particle::EyeCatch()
 			{
 				return hexagon.timer <= 0;
 			});
+
+		spriteBox_->SetSize({ 1280.0f, 980.0f });
+		bottom.y += 8.5f;
+		spriteBox_->SetPosition(bottom);
+		spriteBox_->Draw();
 
 		for (Hexagon& i : sprite_)
 		{
@@ -102,8 +105,7 @@ void Particle::EyeCatch()
 		pos.x += 300;
 		pos2.x += 300;
 		num.timer++;
-		bottom.y += 10.0f;
-		spriteBox_->SetPosition(bottom);
+
 	}
 	if (num.timer > 330)
 	{

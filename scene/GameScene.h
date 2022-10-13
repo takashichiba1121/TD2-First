@@ -12,6 +12,7 @@
 #include "player.h"
 #include"stage.h"
 #include "RailCamera.h"
+#include "Particle.h"
 
 #include "sky.h"
 #include "door.h"
@@ -57,6 +58,7 @@ class GameScene {
 	std::unique_ptr<stage> stage_;
 	std::unique_ptr<sky> modelSkydome_;
 	std::unique_ptr<door> door_;
+	std::unique_ptr<Particle> particle_;
 
 	Vector3 vector={0,0,0};
 	Vector3 playerVector={0,0,0};

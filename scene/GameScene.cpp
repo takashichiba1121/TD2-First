@@ -19,6 +19,7 @@ void GameScene::Initialize()
 	stage_ = std::make_unique<stage>();
 	modelSkydome_ = std::make_unique<sky>();
 	door_ = std::make_unique<door>();
+	particle_ = std::make_unique<Particle>();
 
 	dxCommon_ = DirectXCommon::GetInstance();
 	input_ = Input::GetInstance();
@@ -29,6 +30,7 @@ void GameScene::Initialize()
 	stage_->Initialize();
 	modelSkydome_->Initialize();
 	door_->Initialize();
+	particle_->Initialize();
 
 	Vector3 start = { 0.0f,0.0f,0.0f };
 	Vector3 gole = { 7.5f,0.0f,static_cast<float> (7.5 * sqrt(3)) };
@@ -281,6 +283,8 @@ void GameScene::Draw()
 	/// <summary>
 	/// ここに前景スプライトの描画処理を追加できる
 	/// </summary>
+	particle_->Draw();
+
 
 	// デバッグテキストの描画
 	debugText_->DrawAll(commandList);
