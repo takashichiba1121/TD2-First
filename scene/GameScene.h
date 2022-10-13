@@ -63,6 +63,8 @@ class GameScene {
 	float kyori = 0;
 	float rotRange[6] = {};
 
+	int spped=1;
+
 	enum class side {
 		First=1,//一番
 		Second,//二番

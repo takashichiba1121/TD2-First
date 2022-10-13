@@ -38,13 +38,12 @@ void GameScene::Initialize()
 	{
 		vector /= len;
 	}
-	vector /= 2.0f;
 
 	rotRange[0] = 750.0f;
-	rotRange[1] = rotRange[0] + vector.z * 750 * 2;
+	rotRange[1] = rotRange[0] + vector.z * 750;
 	rotRange[2] = 750.0f;
 	rotRange[3] = 0.0f;
-	rotRange[4] = rotRange[3] - vector.z * 750 * 2;
+	rotRange[4] = rotRange[3] - vector.z * 750;
 	rotRange[5] = 0.0f;
 
 	/*railCamera_->addtranslation({ -4,0,7 });*/
@@ -55,18 +54,37 @@ void GameScene::Update()
 
 	using namespace MathUtility;
 
-	player_->Update();
-
 	door_->Update();
 
 	Vector3 player = affine::GetWorldTrans(player_->GetWorldTransform().matWorld_);
+
+	if (input_->TriggerKey(DIK_1))
+	{
+		spped = 1;
+	}
+	if (input_->TriggerKey(DIK_2))
+	{
+		spped = 2;
+	}
+	if (input_->TriggerKey(DIK_3))
+	{
+		spped = 3;
+	}
+	if (input_->TriggerKey(DIK_4))
+	{
+		spped = 4;
+	}
+	if (input_->TriggerKey(DIK_5))
+	{
+		spped = 5;
+	}
 
 	switch (currentSide)
 	{
 	case side::First:
 		if (player.z < rotRange[0])
 		{
-			Vector3 move = { 0,0,0.5f };
+			Vector3 move = { 0,0,1.0f*spped };
 			railCamera_->addTranslation(move);
 		}
 		else if (player.z >= rotRange[0])
@@ -82,18 +100,18 @@ void GameScene::Update()
 				move /= len;
 			}*/
 			railCamera_->addRot(Rot);
-			railCamera_->addTranslation({ -4,0,3 });
+			railCamera_->setTranslation({ -vector.x*10,0.0f,-vector.z * 10 + 750 });
 
 			currentSide = side::Second;
 		}
 		break;
 	case side::Second:
-		if (player.z < rotRange[1] - vector.z * 10)
+		if (player.z < rotRange[1]/* - vector.z * 10*/)
 		{
-			Vector3 move = { vector };
+			Vector3 move = { vector* spped };
 			railCamera_->addTranslation({ move });
 		}
-		else if (player.z >= rotRange[1] - vector.z * 10)
+		else if (player.z >= rotRange[1]/* - vector.z * 10*/)
 		{
 			Vector3 Rot = { 0,120 * affine::Deg2Rad,0 };
 			/*Vector3 move = { 0,0,0 };
@@ -106,14 +124,14 @@ void GameScene::Update()
 				move /= len;
 			}*/
 			railCamera_->addRot(Rot);
-			railCamera_->addTranslation({ 3,0,20 });
+			railCamera_->setTranslation({vector.x * 750 -vector.x * 10,0.0f,rotRange[1]+vector.z*10});
 			currentSide = side::Third;
 		}
 		break;
 	case side::Third:
 		if (player.z > rotRange[2])
 		{
-			Vector3 move = { vector.x,vector.y,-vector.z };
+			Vector3 move = { vector.x* spped,vector.y* spped,-vector.z* spped };
 			railCamera_->addTranslation({ move });
 		}
 		else if (player.z <= rotRange[2])
@@ -129,7 +147,7 @@ void GameScene::Update()
 				move /= len;
 			}*/
 			railCamera_->addRot(Rot);
-			railCamera_->setTranslation({ vector.x * 750 * 4,0.0f,750 + 10 });
+			railCamera_->setTranslation({ vector.x * 750 * 2,0.0f,750 + 10 });
 
 			currentSide = side::Fourth;
 		}
@@ -137,7 +155,7 @@ void GameScene::Update()
 	case side::Fourth:
 		if (player.z > rotRange[3])
 		{
-			Vector3 move = { 0,0,-0.5f };
+			Vector3 move = { 0,0,-1.0f* spped };
 			railCamera_->addTranslation(move);
 		}
 		if (player.z <= rotRange[3])
@@ -153,7 +171,7 @@ void GameScene::Update()
 				move /= len;
 			}*/
 			railCamera_->addRot(Rot);
-			railCamera_->addTranslation({ 4,0,-3 });
+			railCamera_->setTranslation({ vector.x*750*2+vector.x*10,0.0f,vector.z*10});
 
 			currentSide = side::Fifth;
 		}
@@ -161,7 +179,7 @@ void GameScene::Update()
 	case side::Fifth:
 		if (player.z > rotRange[4])
 		{
-			Vector3 move = { -vector.x,-vector.y,-vector.z };
+			Vector3 move = { -vector.x* spped,-vector.y* spped,-vector.z* spped };
 			railCamera_->addTranslation({ move });
 		}
 		else if (player.z <= rotRange[4])
@@ -177,7 +195,7 @@ void GameScene::Update()
 				move /= len;
 			}*/
 			railCamera_->addRot(Rot);
-			railCamera_->addTranslation({ 0.75,0,-18 });
+			railCamera_->setTranslation({ vector.x*750+vector.x*10,0,rotRange[4]-vector.z*10});
 
 			currentSide = side::Sixth;
 		}
@@ -185,7 +203,7 @@ void GameScene::Update()
 	case side::Sixth:
 		if (player.z < rotRange[5])
 		{
-			Vector3 move = { -vector.x,vector.y,vector.z };
+			Vector3 move = { -vector.x* spped,vector.y* spped,vector.z* spped };
 			railCamera_->addTranslation({ move });
 		}
 		else if (player.z >= rotRange[5])
@@ -212,10 +230,12 @@ void GameScene::Update()
 
 	railCamera_->Update(player_->GetWorldTransform());
 
+	player_->Update();
+
 	debugText_->SetPos(10, 10);
 	debugText_->Printf(" %f, %f, %f", player.x, player.y, player.z);
 	debugText_->SetPos(10, 30);
-	debugText_->Printf(" %f", kyori);
+	debugText_->Printf(" %d", spped);
 	debugText_->SetPos(10, 50);
 	debugText_->Printf(" %d", currentSide);
 }
