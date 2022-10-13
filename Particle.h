@@ -21,11 +21,6 @@ public:
 	void Initialize();
 
 	/// <summary>
-	/// 更新
-	/// </summary>
-	void Update();
-
-	/// <summary>
 	/// 描画
 	/// </summary>
 	void Draw();
@@ -34,6 +29,16 @@ public:
 	/// アイキャッチ
 	/// </summary>
 	void EyeCatch();
+
+	/// <summary>
+	/// アイキャッチの初期化
+	/// </summary>
+	void EyeCatchInitialize();
+
+	/// <summary>
+	/// アイキャッチの描画
+	/// </summary>
+	void EyeCatchDraw();
 
 	/// <summary>
 	/// 値の初期化
