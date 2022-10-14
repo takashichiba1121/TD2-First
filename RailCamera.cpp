@@ -15,6 +15,7 @@ void RailCamera::Initialize(const Vector3& position, const Vector3& rotaion)
 	worldTransform_.rotation_ = rotaion;
 
 	viewProjection_ = std::make_unique<ViewProjection>();
+	viewProjection_->farZ = 12000.0f;
 	//ビュープロジェクションの初期化
 	viewProjection_->Initialize();
 }

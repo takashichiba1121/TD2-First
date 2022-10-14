@@ -14,6 +14,7 @@
 #include "RailCamera.h"
 #include "Particle.h"
 #include"ResultCamera.h"
+#include"ObjectManager.h"
 
 #include "sky.h"
 #include "door.h"
@@ -61,7 +62,7 @@ class GameScene {
 	std::unique_ptr<sky> modelSkydome_;
 	std::unique_ptr<door> door_;
 	std::unique_ptr<Particle> particle_;
-
+	std::unique_ptr<ObjectManager> objectManager_;
 	Vector3 vector={0,0,0};
 	Vector3 playerVector={0,0,0};
 	float kyori = 0;

@@ -33,7 +33,8 @@ void GameScene::Initialize()
 	door_->Initialize();
 	particle_->Initialize();
 	resultCamera_->Initialize(railCamera_->GetWorldTransformPtr());
-
+	objectManager_ = std::make_unique<ObjectManager>();
+	objectManager_->Initialize(player_.get());
 	Vector3 start = { 0.0f,0.0f,0.0f };
 	Vector3 gole = { 7.5f,0.0f,static_cast<float> (7.5 * sqrt(3)) };
 	vector = { gole.x - start.x,gole.y - start.y,gole.z - start.z };
@@ -51,6 +52,7 @@ void GameScene::Initialize()
 	rotRange[5] = 0.0f;
 
 	/*railCamera_->addtranslation({ -4,0,7 });*/
+	PrimitiveDrawer::GetInstance()->SetViewProjection(railCamera_->GetViewProjection());
 }
 
 void GameScene::Update()
@@ -238,6 +240,8 @@ void GameScene::Update()
 
 	resultCamera_->Update();
 
+	objectManager_->Update();
+
 	debugText_->SetPos(10, 10);
 	debugText_->Printf(" %f, %f, %f", player.x, player.y, player.z);
 	debugText_->SetPos(10, 30);
@@ -274,8 +278,13 @@ void GameScene::Draw()
 	/// ここに3Dオブジェクトの描画処理を追加できる
 	/// </summary>
 	player_->Draw(railCamera_->GetViewProjection());
+	objectManager_->Draw(railCamera_->GetViewProjection());
 	stage_->Draw(railCamera_->GetViewProjection());
 	modelSkydome_->Draw(railCamera_->GetViewProjection());
+
+	player_->GetCollider().DebugDraw();
+
+	objectManager_->DebugDraw();
 	// 3Dオブジェクト描画後処理
 	Model::PostDraw();
 #pragma endregion
