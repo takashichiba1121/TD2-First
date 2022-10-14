@@ -29,6 +29,9 @@ public:
 
 	WorldTransform GetWorldTransform() { return worldTransform_; };
 
+	AABB& GetCollider();
+
+	void OnCollision();
 
 private:
 
@@ -40,12 +43,12 @@ private:
 
 	void Jump();
 
-	float defAngle = 90.0f * affine::Deg2Rad;
-
 	uint8_t jumpFlag = 0u;
 
 	float gravitySpeed = 0.5;
 	float defGravitySpeed = gravitySpeed;
+
+	AABB collider_;
 
 	//ƒ‚ƒfƒ‹
 	std::unique_ptr<Model> model_;

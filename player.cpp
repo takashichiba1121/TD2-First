@@ -17,14 +17,29 @@ Player::~Player()
 {
 }
 
+AABB& Player::GetCollider()
+{
+	return collider_;
+}
+
+void Player::OnCollision()
+{
+
+}
+
 void Player::Initialize(WorldTransform* worldTransform)
 {
 	model_.reset(Model::CreateFromOBJ("tire", true));
 	worldTransform_.parent_ = worldTransform;
-	worldTransform_.Initialize();
-	//worldTransform_.rotation_ = { 0.0f, defAngle, 0.0f };
 	worldTransform_.translation_ = { 0.0f, -2.0f, 10.0f };
+	worldTransform_.Initialize();
 
+	collider_.center = affine::GetWorldTrans(worldTransform_.matWorld_);
+
+	collider_.size = {
+		0.3f * worldTransform_.scale_.x,
+		0.5f * worldTransform_.scale_.y,
+		0.5f * worldTransform_.scale_.z };
 }
 
 void Player::Update()
@@ -39,6 +54,9 @@ void Player::Update()
 
 	affine::makeAffine(worldTransform_);
 	worldTransform_.matWorld_ *= worldTransform_.parent_->matWorld_;
+	
+	collider_.center = affine::GetWorldTrans(worldTransform_.matWorld_);
+	
 	worldTransform_.TransferMatrix();
 }
 
@@ -69,32 +87,19 @@ void Player::Move()
 
 void Player::Rotate()
 {
-	//if (Input::GetInstance()->PushKey(DIK_D) || Input::GetInstance()->PushKey(DIK_RIGHT))
-	//{
-	//	Complement(worldTransform_.rotation_.y, -28.0f * affine::Deg2Rad, 20);//‰¡
-
-	//}
-	//else if (Input::GetInstance()->PushKey(DIK_A) || Input::GetInstance()->PushKey(DIK_LEFT))
-	//{
-	//	Complement(worldTransform_.rotation_.y, 28.0f * affine::Deg2Rad, 20);//‰¡
-	//}
-	//else
-	//{
-	//	Complement(worldTransform_.rotation_.y, 0.0f, 20);//‰¡
-	//}
 
 	if (Input::GetInstance()->PushKey(DIK_A) || Input::GetInstance()->PushKey(DIK_LEFT))
 	{
-		Complement(worldTransform_.rotation_.y, -28.0f * affine::Deg2Rad, 40);//‰¡
+		Complement(worldTransform_.rotation_.y, -40.0f * affine::Deg2Rad, 10);//‰¡
 
 	}
 	else if (Input::GetInstance()->PushKey(DIK_D) || Input::GetInstance()->PushKey(DIK_RIGHT))
 	{
-		Complement(worldTransform_.rotation_.y, 28.0f * affine::Deg2Rad, 40);//‰¡
+		Complement(worldTransform_.rotation_.y, 40.0f * affine::Deg2Rad, 10);//‰¡
 	}
 	else
 	{
-		Complement(worldTransform_.rotation_.y, 0.0f, 40);//‰¡
+		Complement(worldTransform_.rotation_.y, 0.0f, 10);//‰¡
 	}
 }
 

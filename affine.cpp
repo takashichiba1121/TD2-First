@@ -2,7 +2,8 @@
 #include"affine.h"
 
 //単位行列
-void affine::makeMatIdentity(Matrix4& matrix) {
+void affine::makeMatIdentity(Matrix4& matrix)
+{
 	matrix = {
 	   1.0f,0,0,0,
 	   0,1.0f,0,0,
@@ -12,7 +13,8 @@ void affine::makeMatIdentity(Matrix4& matrix) {
 }
 
 //アフィン変換拡縮
-void affine::makeMatScale(Matrix4& matrix, Vector3 scale) {
+void affine::makeMatScale(Matrix4& matrix, Vector3 scale)
+{
 	Matrix4 matScale;
 	makeMatIdentity(matScale);
 	matScale.m[0][0] = scale.x;
@@ -22,7 +24,8 @@ void affine::makeMatScale(Matrix4& matrix, Vector3 scale) {
 }
 
 //アフィン変換回転
-void affine::makeMatRot(Matrix4& matrix, Vector3 rot) {
+void affine::makeMatRot(Matrix4& matrix, Vector3 rot)
+{
 	Matrix4 matrotX;
 	makeMatIdentity(matrotX);
 	matrotX.m[1][1] = cos(rot.x);
@@ -54,7 +57,8 @@ void affine::makeMatRot(Matrix4& matrix, Vector3 rot) {
 }
 
 //アフィン変換平行移動
-void affine::makeMatTrans(Matrix4& matrix, Vector3 trans) {
+void affine::makeMatTrans(Matrix4& matrix, Vector3 trans)
+{
 	Matrix4  matTrams;
 	makeMatIdentity(matTrams);
 	matTrams.m[3][0] = trans.x;
@@ -69,24 +73,27 @@ void affine::makeAffine(WorldTransform& worldTransform)
 	makeMatIdentity(worldTransform.matWorld_);
 	makeMatScale(worldTransform.matWorld_, worldTransform.scale_);
 	makeMatRot(worldTransform.matWorld_, worldTransform.rotation_);
-	makeMatTrans(worldTransform.matWorld_,worldTransform.translation_);
+	makeMatTrans(worldTransform.matWorld_, worldTransform.translation_);
 }
 
-Vector3 affine::MatVector(Matrix4 matrix, Vector3 vector) {
+Vector3 affine::MatVector(Matrix4 matrix, Vector3 vector)
+{
 	Vector3 matVector = { 0,0,0 };
 	matVector.x = vector.x * matrix.m[0][0] + vector.y * matrix.m[1][0] + vector.z * matrix.m[2][0];
 	matVector.y = vector.x * matrix.m[0][1] + vector.y * matrix.m[1][1] + vector.z * matrix.m[2][1];
 	matVector.z = vector.x * matrix.m[0][2] + vector.y * matrix.m[1][2] + vector.z * matrix.m[2][2];
 	return matVector;
 }
-Vector3 affine::Mat3D(Matrix4 matrix, Vector3 vector) {
+Vector3 affine::Mat3D(Matrix4 matrix, Vector3 vector)
+{
 	Vector3 matVector = { 0,0,0 };
 	matVector.x = vector.x * matrix.m[0][0] + vector.y * matrix.m[1][0] + vector.z * matrix.m[2][0] * 1 * matrix.m[3][0];
 	matVector.y = vector.x * matrix.m[0][1] + vector.y * matrix.m[1][1] + vector.z * matrix.m[2][1] * 1 * matrix.m[3][1];
 	matVector.z = vector.x * matrix.m[0][2] + vector.y * matrix.m[1][2] + vector.z * matrix.m[2][2] * 1 * matrix.m[3][2];
 	return matVector;
 }
-Vector3 affine::GetWorldTrans(Matrix4 matrix) {
+Vector3 affine::GetWorldTrans(Matrix4 matrix)
+{
 	Vector3 mattrans;
 	mattrans.x = matrix.m[3][0];
 	mattrans.y = matrix.m[3][1];
@@ -105,4 +112,72 @@ Vector3 affine::wdivision(Matrix4 matrix, Vector3 vector)
 	};
 
 	return result;
+}
+
+void AABB::DebugDraw()
+{
+	Vector4 col = { 1.0f,1.0f,1.0f,1.0f };
+
+	//上
+	PrimitiveDrawer::GetInstance()->DrawLine3d(
+		{ center.x - size.x, center.y + size.y, center.z + size.z }, 
+		{ center.x + size.x, center.y + size.y, center.z + size.z },
+		col);
+
+	PrimitiveDrawer::GetInstance()->DrawLine3d(
+		{ center.x - size.x, center.y + size.y, center.z - size.z },
+		{ center.x + size.x, center.y + size.y, center.z - size.z },
+		col);
+
+	PrimitiveDrawer::GetInstance()->DrawLine3d(
+		{ center.x + size.x, center.y + size.y, center.z + size.z },
+		{ center.x + size.x, center.y + size.y, center.z - size.z },
+		col);
+
+	PrimitiveDrawer::GetInstance()->DrawLine3d(
+		{ center.x - size.x, center.y + size.y, center.z + size.z },
+		{ center.x - size.x, center.y + size.y, center.z - size.z },
+		col);
+
+	//下
+	PrimitiveDrawer::GetInstance()->DrawLine3d(
+		{ center.x - size.x, center.y - size.y, center.z + size.z },
+		{ center.x + size.x, center.y - size.y, center.z + size.z },
+		col);
+
+	PrimitiveDrawer::GetInstance()->DrawLine3d(
+		{ center.x - size.x, center.y - size.y, center.z - size.z },
+		{ center.x + size.x, center.y - size.y, center.z - size.z },
+		col);
+
+	PrimitiveDrawer::GetInstance()->DrawLine3d(
+		{ center.x + size.x, center.y - size.y, center.z + size.z },
+		{ center.x + size.x, center.y - size.y, center.z - size.z },
+		col);
+
+	PrimitiveDrawer::GetInstance()->DrawLine3d(
+		{ center.x - size.x, center.y - size.y, center.z + size.z },
+		{ center.x - size.x, center.y - size.y, center.z - size.z },
+		col);
+
+	//縦
+	PrimitiveDrawer::GetInstance()->DrawLine3d(
+		{ center.x - size.x, center.y + size.y, center.z + size.z },
+		{ center.x - size.x, center.y - size.y, center.z + size.z },
+		col);
+
+	PrimitiveDrawer::GetInstance()->DrawLine3d(
+		{ center.x - size.x, center.y + size.y, center.z - size.z },
+		{ center.x - size.x, center.y - size.y, center.z - size.z },
+		col);
+
+	PrimitiveDrawer::GetInstance()->DrawLine3d(
+		{ center.x + size.x, center.y + size.y, center.z + size.z },
+		{ center.x + size.x, center.y - size.y, center.z + size.z },
+		col);
+
+	PrimitiveDrawer::GetInstance()->DrawLine3d(
+		{ center.x + size.x, center.y + size.y, center.z - size.z },
+		{ center.x + size.x, center.y - size.y, center.z - size.z },
+		col);
 }

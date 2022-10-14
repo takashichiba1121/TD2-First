@@ -1,6 +1,18 @@
 #pragma once
 
 #include "WorldTransform.h"
+#include"PrimitiveDrawer.h"
+
+struct AABB
+{
+	//中心座標
+	Vector3 center;
+
+	//サイズ
+	Vector3 size;
+
+	void DebugDraw();
+};
 
 namespace affine
 {

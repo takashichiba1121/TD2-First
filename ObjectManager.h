@@ -1,6 +1,9 @@
 #pragma once
 #include"Object.h"
 #include"affine.h"
+#include"MathUtility.h"
+#include"player.h"
+
 
 class ObjectManager
 {
@@ -8,7 +11,7 @@ public:
 	/// <summary>
 	/// ‰Šú‰»
 	/// </summary>
-	void Initialize(WorldTransform* playerWorldTransform);
+	void Initialize(Player* player);
 
 	/// <summary>
 	/// –ˆƒtƒŒ[ƒ€ˆ—
@@ -20,9 +23,11 @@ public:
 	/// </summary>
 	void Draw(ViewProjection* ViewProjection);
 
+	void DebugDraw();
+
 private:
 
 	std::list<std::unique_ptr<Object>>objects_;
-	WorldTransform* playerWorldTransform_;
+	Player* player_ = nullptr;
 };
 
