@@ -1,4 +1,5 @@
 #include "ResultCamera.h"
+#include"affine.h"
 
 ResultCamera::ResultCamera()
 {
@@ -8,49 +9,29 @@ ResultCamera::~ResultCamera()
 {
 }
 
-void ResultCamera::Initialize(const Vector3& position, const Vector3& rotaion)
+void ResultCamera::Initialize(WorldTransform* worldTransform)
 {
+
+	using namespace MathUtility;
+
+	worldTransform_.parent_ = worldTransform;
+
 	//ワールドトランスフォームの初期設定
-	worldTransform_.translation_ = position;
-	worldTransform_.rotation_ = rotaion;
+	worldTransform_.translation_ = {1.0f,-2.0f,11.0f};
+	worldTransform_.rotation_ = {0.0,225.0f*affine::Deg2Rad,0.0f};
 
 	viewProjection_ = std::make_unique<ViewProjection>();
 	//ビュープロジェクションの初期化
 	viewProjection_->Initialize();
 }
 
-void ResultCamera::Update(WorldTransform worldTransform)
+void ResultCamera::Update()
 {
 	using namespace MathUtility;
 
-
-	Vector3 move(0, 0, 0);
-	Vector3 front;
-	Vector3 frontVec;
-	Vector3 frontNormVec;
-
-	float rotationSpeed = 0.01f;
-
-	front.x = worldTransform.translation_.x + cosf(worldTransform.rotation_.y - affine::PIHalf);
-	front.y = worldTransform.translation_.y + cosf(worldTransform.rotation_.x - affine::PIHalf);
-	front.z = worldTransform.translation_.z - sinf(worldTransform.rotation_.y - affine::PIHalf);
-
-
-	frontVec = front - worldTransform.translation_;
-	frontNormVec = MathUtility::Vector3Normalize(frontVec);
-	frontVec = frontNormVec;
-
-	float speed_ = 0.01f;
-
-	Vector3 moveSpeed_ = speed_ * frontNormVec;
-
-	//ワールドトランスフォームの数値を加算
-	worldTransform.translation_.x += moveSpeed_.x;
-	worldTransform.translation_.y += moveSpeed_.y;
-	worldTransform.translation_.z += moveSpeed_.z;
-
-	//ワールドトランスフォームの更新
 	affine::makeAffine(worldTransform_);
+
+	worldTransform_.matWorld_*= worldTransform_.parent_->matWorld_;
 
 	viewProjection_->eye = affine::GetWorldTrans(worldTransform_.matWorld_);
 	//ワールド前方ベクトル

@@ -20,6 +20,7 @@ void GameScene::Initialize()
 	modelSkydome_ = std::make_unique<sky>();
 	door_ = std::make_unique<door>();
 	particle_ = std::make_unique<Particle>();
+	resultCamera_ = std::make_unique<ResultCamera>();
 
 	dxCommon_ = DirectXCommon::GetInstance();
 	input_ = Input::GetInstance();
@@ -31,6 +32,7 @@ void GameScene::Initialize()
 	modelSkydome_->Initialize();
 	door_->Initialize();
 	particle_->Initialize();
+	resultCamera_->Initialize(railCamera_->GetWorldTransformPtr());
 
 	Vector3 start = { 0.0f,0.0f,0.0f };
 	Vector3 gole = { 7.5f,0.0f,static_cast<float> (7.5 * sqrt(3)) };
@@ -233,6 +235,8 @@ void GameScene::Update()
 	railCamera_->Update(player_->GetWorldTransform());
 
 	player_->Update();
+
+	resultCamera_->Update();
 
 	debugText_->SetPos(10, 10);
 	debugText_->Printf(" %f, %f, %f", player.x, player.y, player.z);

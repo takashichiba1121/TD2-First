@@ -13,6 +13,7 @@
 #include"stage.h"
 #include "RailCamera.h"
 #include "Particle.h"
+#include"ResultCamera.h"
 
 #include "sky.h"
 #include "door.h"
@@ -54,6 +55,7 @@ class GameScene {
 	Audio* audio_ = nullptr;
 	DebugText* debugText_ = nullptr;
 	std::unique_ptr<RailCamera> railCamera_;
+	std::unique_ptr<ResultCamera> resultCamera_;
 	std::unique_ptr<Player> player_;
 	std::unique_ptr<stage> stage_;
 	std::unique_ptr<sky> modelSkydome_;

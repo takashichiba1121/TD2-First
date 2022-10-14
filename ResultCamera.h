@@ -16,12 +16,12 @@ public:
 	/// <summary>
 	/// ‰Šú‰»
 	/// </summary>
-	void Initialize(const Vector3& position, const Vector3& rotaion);
+	void Initialize(WorldTransform* worldTransform);
 
 	/// <summary>
 	/// –ˆƒtƒŒ[ƒ€ˆ—
 	/// </summary>
-	void Update(WorldTransform worldTransform);
+	void Update();
 
 	/// <summary>
 	/// •`‰æ
