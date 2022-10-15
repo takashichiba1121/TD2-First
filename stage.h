@@ -35,8 +35,11 @@ private:
 	WorldTransform worldTransform4_[50];
 	WorldTransform worldTransform5_[50];
 	WorldTransform worldTransform6_[50];
+
+	WorldTransform worldTransform7_;
 	//モデル
 	Model* model_ = nullptr;
+	Model* stage_ = nullptr;
 	//テクスチャハンドル
 	uint32_t textureHandle_ = 0u;
 
