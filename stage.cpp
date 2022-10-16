@@ -31,14 +31,14 @@ void stage::Initialize()
 
 
 	worldTransform7_.Initialize();
-	worldTransform7_.translation_ = { 54.05f,-3.0f,31.3f };
+	worldTransform7_.translation_ = { 31.25f,-3.0f,31.25f };
 	worldTransform7_.scale_ = { 12.0f,1.0f,12.0f };
 
 	affine::makeMatIdentity(worldTransform7_.matWorld_);
 	affine::makeMatTrans(worldTransform7_.matWorld_, worldTransform7_.translation_);
 	affine::makeMatScale(worldTransform7_.matWorld_, worldTransform7_.scale_);
 
-	/*for (int i = 0; i < 50; i++)
+	for (int i = 0; i < 50; i++)
 	{
 		worldTransform_[i].Initialize();
 		worldTransform2_[i].Initialize();
@@ -57,7 +57,7 @@ void stage::Initialize()
 		worldTransform2_[i].translation_ = { vector.x * 15 * i + vector.x * 7,-3.0f,float(vector.z * 15 * i + vector.z * 7 + 750) };
 		worldTransform3_[i].translation_ = { vector.x * 750 * 2 - vector.x * i * 15 - vector.x * 7,-3.0f,float(vector.z * 15 * i + vector.z * 7 + 750) };
 		worldTransform4_[i].translation_ = { vector.x * 750 * 2,-3.0f,i * 15 + 7.0f };
-		worldTransform5_[i].translation_ = { vector.x * 750 * 2 - vector.x * 15 * i - vector.x * 7,-3.0f,float(-vector.z * 15 * i - vector.z * 7 ) };
+		worldTransform5_[i].translation_ = { vector.x * 750 * 2 - vector.x * 15 * i - vector.x * 7,-3.0f,float(-vector.z * 15 * i - vector.z * 7) };
 		worldTransform6_[i].translation_ = { vector.x * 15 * i + vector.x * 7,-3.0f,float(-vector.z * 15 * i + -vector.z * 7) };
 
 		affine::makeMatIdentity(worldTransform_[i].matWorld_);
@@ -86,7 +86,7 @@ void stage::Initialize()
 		worldTransform4_[i].TransferMatrix();
 		worldTransform5_[i].TransferMatrix();
 		worldTransform6_[i].TransferMatrix();
-	}*/
+	}
 	worldTransform7_.TransferMatrix();
 
 }
@@ -99,13 +99,13 @@ void stage::Draw(ViewProjection* viewProjection)
 {
 	stage_->Draw(worldTransform7_, *viewProjection);
 
-	/*for (int i = 0; i < 50; i++)
-	{
-		model_->Draw(worldTransform_[i], *viewProjection);
-		model_->Draw(worldTransform2_[i], *viewProjection);
-		model_->Draw(worldTransform3_[i], *viewProjection);
-		model_->Draw(worldTransform4_[i], *viewProjection);
-		model_->Draw(worldTransform5_[i], *viewProjection);
-		model_->Draw(worldTransform6_[i], *viewProjection);
-	}*/
+	//for (int i = 0; i < 50; i++)
+	//{
+	//	model_->Draw(worldTransform_[i], *viewProjection);
+	//	model_->Draw(worldTransform2_[i], *viewProjection);
+	//	model_->Draw(worldTransform3_[i], *viewProjection);
+	//	model_->Draw(worldTransform4_[i], *viewProjection);
+	//	model_->Draw(worldTransform5_[i], *viewProjection);
+	//	model_->Draw(worldTransform6_[i], *viewProjection);
+	//}
 }
