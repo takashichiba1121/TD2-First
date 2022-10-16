@@ -31,14 +31,14 @@ void stage::Initialize()
 
 
 	worldTransform7_.Initialize();
-	worldTransform7_.translation_ = { 54.05f,-3.0f,32.5f };
+	worldTransform7_.translation_ = { 54.05f,-3.0f,31.3f };
 	worldTransform7_.scale_ = { 12.0f,1.0f,12.0f };
 
 	affine::makeMatIdentity(worldTransform7_.matWorld_);
 	affine::makeMatTrans(worldTransform7_.matWorld_, worldTransform7_.translation_);
 	affine::makeMatScale(worldTransform7_.matWorld_, worldTransform7_.scale_);
 
-	for (int i = 0; i < 50; i++)
+	/*for (int i = 0; i < 50; i++)
 	{
 		worldTransform_[i].Initialize();
 		worldTransform2_[i].Initialize();
@@ -86,7 +86,7 @@ void stage::Initialize()
 		worldTransform4_[i].TransferMatrix();
 		worldTransform5_[i].TransferMatrix();
 		worldTransform6_[i].TransferMatrix();
-	}
+	}*/
 	worldTransform7_.TransferMatrix();
 
 }
@@ -99,7 +99,7 @@ void stage::Draw(ViewProjection* viewProjection)
 {
 	stage_->Draw(worldTransform7_, *viewProjection);
 
-	for (int i = 0; i < 50; i++)
+	/*for (int i = 0; i < 50; i++)
 	{
 		model_->Draw(worldTransform_[i], *viewProjection);
 		model_->Draw(worldTransform2_[i], *viewProjection);
@@ -107,5 +107,5 @@ void stage::Draw(ViewProjection* viewProjection)
 		model_->Draw(worldTransform4_[i], *viewProjection);
 		model_->Draw(worldTransform5_[i], *viewProjection);
 		model_->Draw(worldTransform6_[i], *viewProjection);
-	}
+	}*/
 }
