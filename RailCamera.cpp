@@ -20,35 +20,26 @@ void RailCamera::Initialize(const Vector3& position, const Vector3& rotaion)
 	viewProjection_->Initialize();
 }
 
-void RailCamera::Update(WorldTransform worldTransform)
+void RailCamera::Update()
+{
+	Move();
+}
+
+void RailCamera::Draw(){}
+
+ViewProjection* RailCamera::GetViewProjection()
+{
+	return viewProjection_.get();
+}
+
+WorldTransform* RailCamera::GetWorldTransformPtr()
+{
+	return &worldTransform_;
+}
+
+void RailCamera::Move()
 {
 	using namespace MathUtility;
-
-
-	Vector3 move(0, 0, 0);
-	Vector3 front;
-	Vector3 frontVec;
-	Vector3 frontNormVec;
-
-	float rotationSpeed = 0.01f;
-
-	front.x = worldTransform.translation_.x + cosf(worldTransform.rotation_.y - affine::PIHalf);
-	front.y = worldTransform.translation_.y + cosf(worldTransform.rotation_.x - affine::PIHalf);
-	front.z = worldTransform.translation_.z - sinf(worldTransform.rotation_.y - affine::PIHalf);
-
-
-	frontVec = front - worldTransform.translation_;
-	frontNormVec = MathUtility::Vector3Normalize(frontVec);
-	frontVec = frontNormVec;
-
-	float speed_ = 0.01f;
-
-	Vector3 moveSpeed_ = speed_ * frontNormVec;
-
-	//ワールドトランスフォームの数値を加算
-	worldTransform.translation_.x += moveSpeed_.x;
-	worldTransform.translation_.y += moveSpeed_.y;
-	worldTransform.translation_.z += moveSpeed_.z;
 
 	//ワールドトランスフォームの更新
 	affine::makeAffine(worldTransform_);
@@ -67,16 +58,4 @@ void RailCamera::Update(WorldTransform worldTransform)
 	//ビュープロジェクションを更新
 	viewProjection_->UpdateMatrix();
 	viewProjection_->TransferMatrix();
-}
-
-void RailCamera::Draw(){}
-
-ViewProjection* RailCamera::GetViewProjection()
-{
-	return viewProjection_.get();
-}
-
-WorldTransform* RailCamera::GetWorldTransformPtr()
-{
-	return &worldTransform_;
 }

@@ -7,7 +7,7 @@ void ObjectManager::Initialize(Player* player)
 	std::unique_ptr<Object> tmp;
 
 	tmp = std::make_unique<Object>();
-	tmp->Initialize({ 0, -1, 400 }, {2,2,2}, Model::Create());
+	tmp->Initialize({ 0, -1.5, 200 }, {2,2,2}, Model::Create());
 
 	objects_.push_back(std::move(tmp));
 }

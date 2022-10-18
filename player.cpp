@@ -1,5 +1,5 @@
 #include"player.h"
-
+#include<DirectXMath.h>
 
 void Player::Complement(float& x1, float x2, float flame)//ˆÚ“®•âŠ®
 {
@@ -24,7 +24,12 @@ AABB& Player::GetCollider()
 
 void Player::OnCollision()
 {
+	crashFlag = true;
+}
 
+bool Player::GetCrashFlag()
+{
+	return crashFlag;
 }
 
 void Player::Initialize(WorldTransform* worldTransform)
@@ -44,19 +49,34 @@ void Player::Initialize(WorldTransform* worldTransform)
 
 void Player::Update()
 {
-	worldTransform_.rotation_ += {0.2f, 0.0f, 0.0f};
+	if (!crashFlag)
+	{
+		worldTransform_.rotation_ += {0.2f, 0.0f, 0.0f};
 
-	Move();
+		Move();
 
-	Jump();
+		Jump();
 
-	Rotate();
+		Rotate();
+	}
+	else
+	{
+		worldTransform_.rotation_ += {0.0f, 0.2f, 0.0f};
+
+		crashTime--;
+
+		if (crashTime == 0)
+		{
+			crashFlag = false;
+			crashTime = 70;
+		}
+	}
 
 	affine::makeAffine(worldTransform_);
 	worldTransform_.matWorld_ *= worldTransform_.parent_->matWorld_;
-	
+
 	collider_.center = affine::GetWorldTrans(worldTransform_.matWorld_);
-	
+
 	worldTransform_.TransferMatrix();
 }
 
@@ -105,7 +125,7 @@ void Player::Rotate()
 
 void Player::Jump()
 {
-	if (Input::GetInstance()->PushKey(DIK_SPACE)&& jumpFlag == 0)
+	if (Input::GetInstance()->PushKey(DIK_SPACE) && jumpFlag == 0)
 	{
 		jumpFlag = 1;
 	}
@@ -113,7 +133,7 @@ void Player::Jump()
 	if (jumpFlag == 1)
 	{
 		worldTransform_.translation_.y += gravitySpeed;
-		gravitySpeed-=0.05f;
+		gravitySpeed -= 0.05f;
 
 		if (gravitySpeed <= 0)
 		{
@@ -125,7 +145,7 @@ void Player::Jump()
 	if (jumpFlag == 2)
 	{
 		worldTransform_.translation_.y -= gravitySpeed;
-		gravitySpeed+= 0.04f;
+		gravitySpeed += 0.04f;
 
 		if (gravitySpeed >= defGravitySpeed)
 		{

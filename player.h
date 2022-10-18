@@ -33,6 +33,8 @@ public:
 
 	void OnCollision();
 
+	bool GetCrashFlag();
+
 private:
 
 	void Move();
@@ -48,6 +50,9 @@ private:
 	float gravitySpeed = 0.5;
 	float defGravitySpeed = gravitySpeed;
 
+	bool crashFlag = false;
+
+	uint32_t crashTime = 70;
 	AABB collider_;
 
 	//ƒ‚ƒfƒ‹

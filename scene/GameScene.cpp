@@ -38,11 +38,7 @@ void GameScene::Initialize()
 	Vector3 start = { 0.0f,0.0f,0.0f };
 	Vector3 gole = { 7.5f,0.0f,static_cast<float> (7.5 * sqrt(3)) };
 	vector = { gole.x - start.x,gole.y - start.y,gole.z - start.z };
-	float len = sqrt(vector.x * vector.x + vector.y * vector.y + vector.z * vector.z);
-	if (len != 0)
-	{
-		vector /= len;
-	}
+	vector = Vector3Normalize(vector);
 
 	rotRange[0] = 750.0f;
 	rotRange[1] = rotRange[0] + vector.z * 750;
@@ -51,7 +47,6 @@ void GameScene::Initialize()
 	rotRange[4] = rotRange[3] - vector.z * 750;
 	rotRange[5] = 0.0f;
 
-	/*railCamera_->addtranslation({ -4,0,7 });*/
 	PrimitiveDrawer::GetInstance()->SetViewProjection(railCamera_->GetViewProjection());
 }
 
@@ -84,157 +79,215 @@ void GameScene::Update()
 	{
 		spped = 5;
 	}
-
-	switch (currentSide)
+	if (!player_->GetCrashFlag())
 	{
-	case side::First:
-		if (player.z < rotRange[0])
-		{
-			Vector3 move = { 0,0,1.0f * spped };
-			railCamera_->addTranslation(move);
-		}
-		else if (player.z >= rotRange[0])
-		{
-			Vector3 Rot = { 0,30 * affine::Deg2Rad,0 };
-			/*Vector3 move = { 0,0,0 };
-			move.x = player.x + cosf(Rot.y - affine::PIHalf);
-			move.z = player.z - sinf(Rot.y - affine::PIHalf);
-			move -= railCamera_->GetWorldTransformPtr()->translation_;
-			float len = sqrt(move.x * move.x + move.y * move.y + move.z * move.z);
-			if (len != 0)
-			{
-				move /= len;
-			}*/
-			railCamera_->addRot(Rot);
-			railCamera_->setTranslation({ -vector.x * 10,0.0f,-vector.z * 10 + 750 });
 
-			currentSide = side::Second;
-		}
-		break;
-	case side::Second:
-		if (player.z < rotRange[1]/* - vector.z * 10*/)
+		switch (currentSide)
 		{
-			Vector3 move = { vector * spped };
-			railCamera_->addTranslation({ move });
-		}
-		else if (player.z >= rotRange[1]/* - vector.z * 10*/)
-		{
-			Vector3 Rot = { 0,120 * affine::Deg2Rad,0 };
-			/*Vector3 move = { 0,0,0 };
-			move.x = player.x + cosf(Rot.y - affine::PIHalf);
-			move.z = player.z - sinf(Rot.y - affine::PIHalf);
-			move -= railCamera_->GetWorldTransformPtr()->translation_;
-			float len = sqrt(move.x * move.x + move.y * move.y + move.z * move.z);
-			if (len != 0)
+		case side::First:
+			if (player.z < rotRange[0])
 			{
-				move /= len;
-			}*/
-			railCamera_->addRot(Rot);
-			railCamera_->setTranslation({ vector.x * 750 - vector.x * 10,0.0f,rotRange[1] + vector.z * 10 });
-			currentSide = side::Third;
-		}
-		break;
-	case side::Third:
-		if (player.z > rotRange[2])
-		{
-			Vector3 move = { vector.x * spped,vector.y * spped,-vector.z * spped };
-			railCamera_->addTranslation({ move });
-		}
-		else if (player.z <= rotRange[2])
-		{
-			Vector3 Rot = { 0,30 * affine::Deg2Rad,0 };
-			/*Vector3 move = { 0,0,0 };
-			move.x = player.x + cosf(Rot.y - affine::PIHalf);
-			move.z = player.z - sinf(Rot.y - affine::PIHalf);
-			move -= railCamera_->GetWorldTransformPtr()->translation_;
-			float len = sqrt(move.x * move.x + move.y * move.y + move.z * move.z);
-			if (len != 0)
+				Vector3 move = { 0,0,1.0f * spped };
+				railCamera_->addTranslation(move);
+			}
+			else if (player.z >= rotRange[0])
 			{
-				move /= len;
-			}*/
-			railCamera_->addRot(Rot);
-			railCamera_->setTranslation({ vector.x * 750 * 2,0.0f,750 + 10 });
+				Vector3 Rot = { 0,30 * affine::Deg2Rad,0 };
 
-			currentSide = side::Fourth;
-		}
-		break;
-	case side::Fourth:
-		if (player.z > rotRange[3])
-		{
-			Vector3 move = { 0,0,-1.0f * spped };
-			railCamera_->addTranslation(move);
-		}
-		if (player.z <= rotRange[3])
-		{
-			Vector3 Rot = { 0,30 * affine::Deg2Rad,0 };
-			/*Vector3 move = { 0,0,0 };
-			move.x = player.x + cosf(Rot.y - affine::PIHalf);
-			move.z = player.z - sinf(Rot.y - affine::PIHalf);
-			move -= railCamera_->GetWorldTransformPtr()->translation_;
-			float len = sqrt(move.x * move.x + move.y * move.y + move.z * move.z);
-			if (len != 0)
-			{
-				move /= len;
-			}*/
-			railCamera_->addRot(Rot);
-			railCamera_->setTranslation({ vector.x * 750 * 2 + vector.x * 10,0.0f,vector.z * 10 });
+				railCamera_->addRot(Rot);
+				railCamera_->setTranslation({ -vector.x * 10,0.0f,-vector.z * 10 + 750 });
 
-			currentSide = side::Fifth;
-		}
-		break;
-	case side::Fifth:
-		if (player.z > rotRange[4])
-		{
-			Vector3 move = { -vector.x * spped,-vector.y * spped,-vector.z * spped };
-			railCamera_->addTranslation({ move });
-		}
-		else if (player.z <= rotRange[4])
-		{
-			Vector3 Rot = { 0,120 * affine::Deg2Rad,0 };
-			/*Vector3 move = { 0,0,0 };
-			move.x = player.x + cosf(Rot.y - affine::PIHalf);
-			move.z = player.z - sinf(Rot.y - affine::PIHalf);
-			move -= railCamera_->GetWorldTransformPtr()->translation_;
-			float len = sqrt(move.x * move.x + move.y * move.y + move.z * move.z);
-			if (len != 0)
+				currentSide = side::Second;
+			}
+			break;
+		case side::Second:
+			if (player.z < rotRange[1])
 			{
-				move /= len;
-			}*/
-			railCamera_->addRot(Rot);
-			railCamera_->setTranslation({ vector.x * 750 + vector.x * 10,0,rotRange[4] - vector.z * 10 });
-
-			currentSide = side::Sixth;
-		}
-		break;
-	case side::Sixth:
-		if (player.z < rotRange[5])
-		{
-			Vector3 move = { -vector.x * spped,vector.y * spped,vector.z * spped };
-			railCamera_->addTranslation({ move });
-		}
-		else if (player.z >= rotRange[5])
-		{
-			Vector3 Rot = { 0,30 * affine::Deg2Rad,0 };
-			/*Vector3 move = { 0,0,0 };
-			move.x = player.x + cosf(Rot.y - affine::PIHalf);
-			move.z = player.z - sinf(Rot.y - affine::PIHalf);
-			move -= railCamera_->GetWorldTransformPtr()->translation_;
-			float len = sqrt(move.x * move.x + move.y * move.y + move.z * move.z);
-			if (len != 0)
+				Vector3 move = { vector * spped };
+				railCamera_->addTranslation({ move });
+			}
+			else if (player.z >= rotRange[1])
 			{
-				move /= len;
-			}*/
-			railCamera_->addRot(Rot);
-			railCamera_->setTranslation({ 0.0,0.0f,-10.0f });
+				Vector3 Rot = { 0,120 * affine::Deg2Rad,0 };
 
-			currentSide = side::First;
+				railCamera_->addRot(Rot);
+				railCamera_->setTranslation({ vector.x * 750 - vector.x * 10,0.0f,rotRange[1] + vector.z * 10 });
+				currentSide = side::Third;
+			}
+			break;
+		case side::Third:
+			if (player.z > rotRange[2])
+			{
+				Vector3 move = { vector.x * spped,vector.y * spped,-vector.z * spped };
+				railCamera_->addTranslation({ move });
+			}
+			else if (player.z <= rotRange[2])
+			{
+				Vector3 Rot = { 0,30 * affine::Deg2Rad,0 };
+
+				railCamera_->addRot(Rot);
+				railCamera_->setTranslation({ vector.x * 750 * 2,0.0f,750 + 10 });
+
+				currentSide = side::Fourth;
+			}
+			break;
+		case side::Fourth:
+			if (player.z > rotRange[3])
+			{
+				Vector3 move = { 0,0,-1.0f * spped };
+				railCamera_->addTranslation(move);
+			}
+			if (player.z <= rotRange[3])
+			{
+				Vector3 Rot = { 0,30 * affine::Deg2Rad,0 };
+
+				railCamera_->addRot(Rot);
+				railCamera_->setTranslation({ vector.x * 750 * 2 + vector.x * 10,0.0f,vector.z * 10 });
+
+				currentSide = side::Fifth;
+			}
+			break;
+		case side::Fifth:
+			if (player.z > rotRange[4])
+			{
+				Vector3 move = { -vector.x * spped,-vector.y * spped,-vector.z * spped };
+				railCamera_->addTranslation({ move });
+			}
+			else if (player.z <= rotRange[4])
+			{
+				Vector3 Rot = { 0,120 * affine::Deg2Rad,0 };
+
+				railCamera_->addRot(Rot);
+				railCamera_->setTranslation({ vector.x * 750 + vector.x * 10,0,rotRange[4] - vector.z * 10 });
+
+				currentSide = side::Sixth;
+			}
+			break;
+		case side::Sixth:
+			if (player.z < rotRange[5])
+			{
+				Vector3 move = { -vector.x * spped,vector.y * spped,vector.z * spped };
+				railCamera_->addTranslation({ move });
+			}
+			else if (player.z >= rotRange[5])
+			{
+				Vector3 Rot = { 0,30 * affine::Deg2Rad,0 };
+
+				railCamera_->addRot(Rot);
+				railCamera_->setTranslation({ 0.0,0.0f,-10.0f });
+
+				currentSide = side::First;
+			}
+			break;
+		default:
+			break;
 		}
-		break;
-	default:
-		break;
+	}
+	else
+	{
+		switch (currentSide)
+		{
+		case side::First:
+			if (player.z < rotRange[0])
+			{
+				Vector3 move = { 0,0,1.0f * (spped * 0.5f) };
+				railCamera_->addTranslation(move);
+			}
+			else if (player.z >= rotRange[0])
+			{
+				Vector3 Rot = { 0,30 * affine::Deg2Rad,0 };
+
+				railCamera_->addRot(Rot);
+				railCamera_->setTranslation({ -vector.x * 10,0.0f,-vector.z * 10 + 750 });
+
+				currentSide = side::Second;
+			}
+			break;
+		case side::Second:
+			if (player.z < rotRange[1])
+			{
+				Vector3 move = { vector * (spped * 0.3f) };
+				railCamera_->addTranslation({ move });
+			}
+			else if (player.z >= rotRange[1])
+			{
+				Vector3 Rot = { 0,120 * affine::Deg2Rad,0 };
+
+				railCamera_->addRot(Rot);
+				railCamera_->setTranslation({ vector.x * 750 - vector.x * 10,0.0f,rotRange[1] + vector.z * 10 });
+				currentSide = side::Third;
+			}
+			break;
+		case side::Third:
+			if (player.z > rotRange[2])
+			{
+				Vector3 move = { vector.x * (spped * 0.3f),vector.y * (spped * 0.3f),-vector.z * (spped * 0.3f) };
+				railCamera_->addTranslation({ move });
+			}
+			else if (player.z <= rotRange[2])
+			{
+				Vector3 Rot = { 0,30 * affine::Deg2Rad,0 };
+
+				railCamera_->addRot(Rot);
+				railCamera_->setTranslation({ vector.x * 750 * 2,0.0f,750 + 10 });
+
+				currentSide = side::Fourth;
+			}
+			break;
+		case side::Fourth:
+			if (player.z > rotRange[3])
+			{
+				Vector3 move = { 0,0,-1.0f * (spped * 0.3f) };
+				railCamera_->addTranslation(move);
+			}
+			if (player.z <= rotRange[3])
+			{
+				Vector3 Rot = { 0,30 * affine::Deg2Rad,0 };
+
+				railCamera_->addRot(Rot);
+				railCamera_->setTranslation({ vector.x * 750 * 2 + vector.x * 10,0.0f,vector.z * 10 });
+
+				currentSide = side::Fifth;
+			}
+			break;
+		case side::Fifth:
+			if (player.z > rotRange[4])
+			{
+				Vector3 move = { -vector.x * (spped * 0.3f),-vector.y * (spped * 0.3f),-vector.z * (spped * 0.3f) };
+				railCamera_->addTranslation({ move });
+			}
+			else if (player.z <= rotRange[4])
+			{
+				Vector3 Rot = { 0,120 * affine::Deg2Rad,0 };
+
+				railCamera_->addRot(Rot);
+				railCamera_->setTranslation({ vector.x * 750 + vector.x * 10,0,rotRange[4] - vector.z * 10 });
+
+				currentSide = side::Sixth;
+			}
+			break;
+		case side::Sixth:
+			if (player.z < rotRange[5])
+			{
+				Vector3 move = { -vector.x * (spped * 0.3f),vector.y * (spped * 0.3f),vector.z * (spped * 0.3f) };
+				railCamera_->addTranslation({ move });
+			}
+			else if (player.z >= rotRange[5])
+			{
+				Vector3 Rot = { 0,30 * affine::Deg2Rad,0 };
+
+				railCamera_->addRot(Rot);
+				railCamera_->setTranslation({ 0.0,0.0f,-10.0f });
+
+				currentSide = side::First;
+			}
+			break;
+		default:
+			break;
+		}
 	}
 
-	railCamera_->Update(player_->GetWorldTransform());
+	railCamera_->Update();
 
 	player_->Update();
 

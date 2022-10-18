@@ -20,7 +20,7 @@ public:
 	/// <summary>
 	/// –ˆƒtƒŒ[ƒ€ˆ—
 	/// </summary>
-	void Update(WorldTransform worldTransform);
+	void Update();
 
 	/// <summary>
 	/// •`‰æ
@@ -39,7 +39,8 @@ public:
 private:
 
 	std::unique_ptr<ViewProjection> viewProjection_;
-
 	WorldTransform worldTransform_;
+
+	void Move();
 };
 
