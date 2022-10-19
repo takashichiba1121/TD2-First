@@ -63,23 +63,6 @@ class GameScene {
 	std::unique_ptr<door> door_;
 	std::unique_ptr<Particle> particle_;
 	std::unique_ptr<ObjectManager> objectManager_;
-	Vector3 vector={0,0,0};
-	Vector3 playerVector={0,0,0};
-	float kyori = 0;
-	float rotRange[6] = {};
-
-	int spped=1;
-
-	enum class side {
-		First=1,//一番
-		Second,//二番
-		Third,//三番
-		Fourth,//四番
-		Fifth,//五番
-		Sixth//六番
-	};
-
-	side currentSide=side::First;
 
 	/// <summary>
 	/// ゲームシーン用

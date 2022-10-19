@@ -20,14 +20,14 @@ void stage::Initialize()
 	stage_ = Model::CreateFromOBJ("stage", true);
 	/*textureHandle_ = TextureManager::Load("uvChecker.png");*/
 
-	Vector3 start = { 0.0f,0.0f,0.0f };
+	/*Vector3 start = { 0.0f,0.0f,0.0f };
 	Vector3 gole = { 7.5f,0.0f,static_cast<float> (7.5 * sqrt(3)) };
 	vector = { gole.x - start.x,gole.y - start.y,gole.z - start.z };
 	float len = sqrt(vector.x * vector.x + vector.y * vector.y + vector.z * vector.z);
 	if (len != 0)
 	{
 		vector /= len;
-	}
+	}*/
 
 
 	worldTransform7_.Initialize();
@@ -38,7 +38,7 @@ void stage::Initialize()
 	affine::makeMatTrans(worldTransform7_.matWorld_, worldTransform7_.translation_);
 	affine::makeMatScale(worldTransform7_.matWorld_, worldTransform7_.scale_);
 
-	for (int i = 0; i < 50; i++)
+	/*for (int i = 0; i < 50; i++)
 	{
 		worldTransform_[i].Initialize();
 		worldTransform2_[i].Initialize();
@@ -86,7 +86,7 @@ void stage::Initialize()
 		worldTransform4_[i].TransferMatrix();
 		worldTransform5_[i].TransferMatrix();
 		worldTransform6_[i].TransferMatrix();
-	}
+	}*/
 	worldTransform7_.TransferMatrix();
 
 }

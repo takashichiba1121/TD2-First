@@ -2,6 +2,7 @@
 #include"ViewProjection.h"
 #include"WorldTransform.h"
 #include"affine.h"
+#include<DebugText.h>
 
 #include<memory>
 
@@ -20,7 +21,7 @@ public:
 	/// <summary>
 	/// 毎フレーム処理
 	/// </summary>
-	void Update();
+	void Update(bool GetCrashFlag);
 
 	/// <summary>
 	/// 描画
@@ -31,6 +32,8 @@ public:
 
 	WorldTransform* GetWorldTransformPtr();
 
+	float GetWorldTransformRot();
+
 	void addRot(Vector3 rot) { worldTransform_.rotation_ += rot; };
 	void addTranslation(Vector3 translation) { worldTransform_.translation_ += translation; };
 
@@ -38,8 +41,28 @@ public:
 
 private:
 
+	DebugText* debugText_ = nullptr;
+
 	std::unique_ptr<ViewProjection> viewProjection_;
 	WorldTransform worldTransform_;
+
+	Vector3 vector = { 0,0,0 };
+	Vector3 playerVector = { 0,0,0 };
+
+	float rotRange[6] = {};
+
+	int speed = 1;
+
+	enum class side {
+		First = 1,//一番
+		Second,//二番
+		Third,//三番
+		Fourth,//四番
+		Fifth,//五番
+		Sixth//六番
+	};
+
+	side currentSide = side::First;
 
 	void Move();
 };
