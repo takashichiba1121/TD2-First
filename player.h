@@ -45,6 +45,8 @@ private:
 
 	void Jump();
 
+	void Squat();
+
 	uint8_t jumpFlag = 0u;
 
 	float gravitySpeed = 0.5;
@@ -55,6 +57,15 @@ private:
 	uint32_t crashTime = 70;
 	AABB collider_;
 
+	//回転運動を止める
+	bool rollStopFlag = false;
+
+	//しゃがみフラグ
+	bool squatFlag = false;
+
+	Vector3 oldRot;
+	uint32_t squatTime = 60.0f * 2.0f;
+	float oldRotY = 0.0f;
 	//モデル
 	std::unique_ptr<Model> model_;
 	//ワールド変換データ

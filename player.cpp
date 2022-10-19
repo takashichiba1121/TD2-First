@@ -25,6 +25,9 @@ AABB& Player::GetCollider()
 void Player::OnCollision()
 {
 	crashFlag = true;
+	crashTime = 70;
+	oldRot.y = worldTransform_.rotation_.y;
+
 }
 
 bool Player::GetCrashFlag()
@@ -41,6 +44,7 @@ void Player::Initialize(WorldTransform* worldTransform)
 
 	collider_.center = affine::GetWorldTrans(worldTransform_.matWorld_);
 
+	//当たり判定の大きさ
 	collider_.size = {
 		0.3f * worldTransform_.scale_.x,
 		0.5f * worldTransform_.scale_.y,
@@ -51,32 +55,40 @@ void Player::Update()
 {
 	if (!crashFlag)
 	{
-		worldTransform_.rotation_ += {0.2f, 0.0f, 0.0f};
+		if (!rollStopFlag)
+		{
+			worldTransform_.rotation_ += {0.2f, 0.0f, 0.0f};
+		}
 
+		//移動
 		Move();
-
+		//ジャンプ
 		Jump();
-
+		//しゃがむ
+		Squat();
+		//旋回
 		Rotate();
 	}
 	else
 	{
-		worldTransform_.rotation_ += {0.0f, 0.2f, 0.0f};
+		worldTransform_.rotation_ += {0.0f, 0.4f, 0.0f};
 
 		crashTime--;
 
 		if (crashTime == 0)
 		{
 			crashFlag = false;
+			worldTransform_.rotation_.y = oldRotY;
 			crashTime = 70;
 		}
 	}
 
+	//ローカル行列計算
 	affine::makeAffine(worldTransform_);
+	//親子関係計算
 	worldTransform_.matWorld_ *= worldTransform_.parent_->matWorld_;
 
 	collider_.center = affine::GetWorldTrans(worldTransform_.matWorld_);
-
 	worldTransform_.TransferMatrix();
 }
 
@@ -125,7 +137,7 @@ void Player::Rotate()
 
 void Player::Jump()
 {
-	if (Input::GetInstance()->PushKey(DIK_SPACE) && jumpFlag == 0)
+	if (Input::GetInstance()->PushKey(DIK_SPACE) && jumpFlag == 0 && !squatFlag)
 	{
 		jumpFlag = 1;
 	}
@@ -153,6 +165,45 @@ void Player::Jump()
 			gravitySpeed = defGravitySpeed;
 			worldTransform_.translation_.y = -2.0f;
 		}
+	}
+}
 
+void Player::Squat()
+{
+	if (Input::GetInstance()->TriggerKey(DIK_DOWN) && !jumpFlag && !squatFlag ||
+		Input::GetInstance()->TriggerKey(DIK_S) && !jumpFlag && !squatFlag)
+	{
+		squatFlag = true;
+		rollStopFlag = true;
+		oldRot = worldTransform_.rotation_;
+		worldTransform_.rotation_ = { 0.0f,0.0f,0.0f };
+		worldTransform_.rotation_.z = 80.0f * affine::Deg2Rad;
+
+		collider_.size = {
+		0.5f * worldTransform_.scale_.x,
+		0.3f * worldTransform_.scale_.y,
+		0.5f * worldTransform_.scale_.z };
+
+	}
+
+	if (squatFlag)
+	{
+		worldTransform_.rotation_.y = -90.0f * affine::Deg2Rad;
+
+		squatTime--;
+
+		if (squatTime == 0)
+		{
+			squatTime = 60 * 2;
+			squatFlag = false;
+			rollStopFlag = false;
+			worldTransform_.rotation_ = oldRot;
+
+			//当たり判定の大きさ
+			collider_.size = {
+				0.3f * worldTransform_.scale_.x,
+				0.5f * worldTransform_.scale_.y,
+				0.5f * worldTransform_.scale_.z };
+		}
 	}
 }
