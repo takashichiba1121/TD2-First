@@ -9,14 +9,14 @@ stage::stage()
 
 stage::~stage()
 {
-	delete model_;
+	//delete model_;
 	delete stage_;
 }
 
 void stage::Initialize()
 {
 	debugText_ = DebugText::GetInstance();
-	model_ = Model::CreateFromOBJ("straightRoad", true);
+	//model_ = Model::CreateFromOBJ("straightRoad", true);
 	stage_ = Model::CreateFromOBJ("stage", true);
 	/*textureHandle_ = TextureManager::Load("uvChecker.png");*/
 
@@ -30,13 +30,14 @@ void stage::Initialize()
 	}*/
 
 
-	worldTransform7_.Initialize();
-	worldTransform7_.translation_ = { 31.25f,-3.0f,31.25f };
-	worldTransform7_.scale_ = { 12.0f,1.0f,12.0f };
+	stageWorldTransform_.Initialize();
+	stageWorldTransform_.translation_ = { 375.25f,-3.0f,375.25f };
+	stageWorldTransform_.scale_ = { 12.0f,1.0f,12.0f };
 
-	affine::makeMatIdentity(worldTransform7_.matWorld_);
-	affine::makeMatTrans(worldTransform7_.matWorld_, worldTransform7_.translation_);
-	affine::makeMatScale(worldTransform7_.matWorld_, worldTransform7_.scale_);
+	affine::makeAffine(stageWorldTransform_);
+	//affine::makeMatIdentity(stageWorldTransform_.matWorld_);
+	//affine::makeMatTrans(stageWorldTransform_.matWorld_, stageWorldTransform_.translation_);
+	//affine::makeMatScale(stageWorldTransform_.matWorld_, stageWorldTransform_.scale_);
 
 	/*for (int i = 0; i < 50; i++)
 	{
@@ -87,7 +88,7 @@ void stage::Initialize()
 		worldTransform5_[i].TransferMatrix();
 		worldTransform6_[i].TransferMatrix();
 	}*/
-	worldTransform7_.TransferMatrix();
+	stageWorldTransform_.TransferMatrix();
 
 }
 
@@ -97,7 +98,7 @@ void stage::Update()
 
 void stage::Draw(ViewProjection* viewProjection)
 {
-	stage_->Draw(worldTransform7_, *viewProjection);
+	stage_->Draw(stageWorldTransform_, *viewProjection);
 
 	//for (int i = 0; i < 50; i++)
 	//{

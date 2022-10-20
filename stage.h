@@ -29,16 +29,16 @@ public:
 
 private:
 	//ワールド変換データ
-	WorldTransform worldTransform_[50];
-	WorldTransform worldTransform2_[50];
-	WorldTransform worldTransform3_[50];
-	WorldTransform worldTransform4_[50];
-	WorldTransform worldTransform5_[50];
-	WorldTransform worldTransform6_[50];
+	//WorldTransform worldTransform_[50];
+	//WorldTransform worldTransform2_[50];
+	//WorldTransform worldTransform3_[50];
+	//WorldTransform worldTransform4_[50];
+	//WorldTransform worldTransform5_[50];
+	//WorldTransform worldTransform6_[50];
 
-	WorldTransform worldTransform7_;
+	WorldTransform stageWorldTransform_;
 	//モデル
-	Model* model_ = nullptr;
+	//Model* model_ = nullptr;
 	Model* stage_ = nullptr;
 	//テクスチャハンドル
 	uint32_t textureHandle_ = 0u;
