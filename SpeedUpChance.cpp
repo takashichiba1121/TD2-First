@@ -9,18 +9,18 @@ void SpeedUpChance::Initialize(RailCamera* railCamera)
 	std::unique_ptr<BranchPoint> branchPoint;
 	branchPoint = std::make_unique<BranchPoint>();
 
-	branchPoint->Initialize({ 0,-3,300 },{ 0,0,0 },{9.5,2.0f,0.01},
+	branchPoint->Initialize({ 0.0f,-3.0f,300.0f },{ 0.0f,0.0f,0.0f },{9.5f,2.0f,0.01f},
 		bodyModel_.get(), correctModel_.get(), wrongModel_.get(),
 		std::bind(&RailCamera::SpeedDown, railCamera), std::bind(&RailCamera::SpeedUp, railCamera));
 
 	branchPoints.push_back(std::move(branchPoint));
 }
 
-void SpeedUpChance::Update(Player* player, RailCamera* railCamera)
+void SpeedUpChance::Update(Player* player)
 {
 	for (std::unique_ptr<BranchPoint>& branchPoint : branchPoints)
 	{
-		branchPoint->Update(player, railCamera);
+		branchPoint->Update(player);
 	}
 }
 

@@ -20,6 +20,7 @@
 #include "door.h"
 #include"TitleScene.h"
 #include"ResultScene.h"
+#include"SpeedUpChance.h"
 
 /// <summary>
 /// ゲームシーン
@@ -69,6 +70,7 @@ class GameScene {
 	std::unique_ptr<ObjectManager> objectManager_;
 	std::unique_ptr<TitleScene> titleScene_;
 	std::unique_ptr<ResultScene> resultScene_;
+	std::unique_ptr<SpeedUpChance>speedUpChance_;
 
 	enum class Scene
 	{

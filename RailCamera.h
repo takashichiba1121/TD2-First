@@ -59,7 +59,7 @@ private:
 
 	float rotRange[6] = {};
 
-	int speed = 1;
+	float speed = 1.0f;
 
 	enum class side {
 		First = 1,//ˆê”Ô

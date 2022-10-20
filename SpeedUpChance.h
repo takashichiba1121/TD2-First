@@ -14,7 +14,7 @@ public:
 	/// <summary>
 	/// –ˆƒtƒŒ[ƒ€ˆ—
 	/// </summary>
-	void Update(Player* player, RailCamera* railCamera);
+	void Update(Player* player);
 
 	/// <summary>
 	/// •`‰æ

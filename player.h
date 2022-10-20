@@ -68,7 +68,7 @@ private:
 	bool squatFlag = false;
 
 	Vector3 oldRot;
-	uint32_t squatTime = 60.0f * 2.0f;
+	uint32_t squatTime = 60 * 2;
 	float oldRotY = 0.0f;
 	//ƒ‚ƒfƒ‹
 	std::unique_ptr<Model> model_;

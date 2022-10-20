@@ -41,7 +41,7 @@ void BranchPoint::Initialize(const Vector3& pos, const Vector3& rot, const Vecto
 	right_ = right;
 }
 
-void BranchPoint::Update(Player* player, RailCamera* railCamera)
+void BranchPoint::Update(Player* player)
 {
 	if (!passingFlag_&&CheckAABB2AABB(player->GetCollider(), collider_))
 	{

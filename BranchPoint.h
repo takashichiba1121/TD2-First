@@ -17,7 +17,7 @@ public:
 	/// <summary>
 	/// 毎フレーム処理
 	/// </summary>
-	void Update(Player* player, RailCamera* railCamera);
+	void Update(Player* player);
 
 	/// <summary>
 	/// 描画
@@ -28,15 +28,15 @@ public:
 
 private:
 	//本体
-	Model* bodyModel_;
+	Model* bodyModel_ = nullptr;
 	std::unique_ptr<WorldTransform> bodyWorldTransform_;
 
 	//正解
-	Model* correctModel_;
+	Model* correctModel_ = nullptr;
 	std::unique_ptr<WorldTransform> correctWorldTransform_;
 
 	//不正解
-	Model* wrongModel_;
+	Model* wrongModel_ = nullptr;
 	std::unique_ptr<WorldTransform> wrongWorldTransform_;
 	AABB collider_;
 

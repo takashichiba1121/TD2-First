@@ -39,8 +39,9 @@ void GameScene::Initialize()
 	objectManager_->Initialize(player_.get());
 	titleScene_->Initialize();
 	resultScene_->Initialize();
-
-	/*PrimitiveDrawer::GetInstance()->SetViewProjection(railCamera_->GetViewProjection());*/
+	speedUpChance_ = std::make_unique<SpeedUpChance>();
+	speedUpChance_->Initialize(railCamera_.get());
+	PrimitiveDrawer::GetInstance()->SetViewProjection(railCamera_->GetViewProjection());
 	viewProjection = resultCamera_->GetViewProjection();
 }
 
@@ -66,6 +67,7 @@ void GameScene::Update()
 		}
 		player_->Update();
 		objectManager_->Update();
+		speedUpChance_->Update(player_.get());
 		if (input_->TriggerKey(DIK_Q)) {
 			viewProjection = resultCamera_->GetViewProjection();
 			scene = Scene::result;
@@ -129,6 +131,7 @@ void GameScene::Draw()
 		break;
 	case GameScene::Scene::game:
 		objectManager_->Draw(viewProjection);
+		speedUpChance_->Draw(viewProjection);
 		break;
 	case GameScene::Scene::door:
 		break;
@@ -141,9 +144,9 @@ void GameScene::Draw()
 	stage_->Draw(viewProjection);
 	modelSkydome_->Draw(viewProjection);
 
-	/*player_->GetCollider().DebugDraw();*/
-
-	/*objectManager_->DebugDraw();*/
+	player_->GetCollider().DebugDraw();
+	objectManager_->DebugDraw();
+	speedUpChance_->DebugDraw();
 	// 3Dオブジェクト描画後処理
 	Model::PostDraw();
 #pragma endregion

@@ -10,5 +10,5 @@ void TitleScene::Update()
 
 void TitleScene::SpriteDraw()
 {
-	sprite_->Draw();
+	//sprite_->Draw();
 }
