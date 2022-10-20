@@ -12,7 +12,7 @@ public:
 	/// <summary>
 	/// ‰Šú‰»
 	/// </summary>
-	void Initialize(const Vector3& pos, const Vector3& rot, const Vector3& size, Model* bodyModel, Model* correctModel, Model* wrongModel, std::function<void(void)>left, std::function<void(void)>right);
+	void Initialize(const Vector3& pos, const Vector3& rot, const Vector3& size, Model* bodyModel, std::function<void(void)>left, std::function<void(void)>right);
 
 	/// <summary>
 	/// –ˆƒtƒŒ[ƒ€ˆ—
@@ -31,13 +31,6 @@ private:
 	Model* bodyModel_ = nullptr;
 	std::unique_ptr<WorldTransform> bodyWorldTransform_;
 
-	//³‰ğ
-	Model* correctModel_ = nullptr;
-	std::unique_ptr<WorldTransform> correctWorldTransform_;
-
-	//•s³‰ğ
-	Model* wrongModel_ = nullptr;
-	std::unique_ptr<WorldTransform> wrongWorldTransform_;
 	AABB collider_;
 
 	std::function<void()>left_;
