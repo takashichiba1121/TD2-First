@@ -110,6 +110,7 @@
     <ClCompile Include="ResultScene.cpp" />
     <ClCompile Include="scene\GameScene.cpp" />
     <ClCompile Include="sky.cpp" />
+    <ClCompile Include="SpeedUpChance.cpp" />
     <ClCompile Include="stage.cpp" />
     <ClCompile Include="TitleScene.cpp" />
   </ItemGroup>
@@ -153,6 +154,7 @@
     <ClInclude Include="ResultScene.h" />
     <ClInclude Include="scene\GameScene.h" />
     <ClInclude Include="sky.h" />
+    <ClInclude Include="SpeedUpChance.h" />
     <ClInclude Include="stage.h" />
     <ClInclude Include="TitleScene.h" />
   </ItemGroup>

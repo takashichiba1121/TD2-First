@@ -1,9 +1,5 @@
 #include "BranchPoint.h"
 
-void BranchPoint::SpeedUpChance(Vector3& pos)
-{
-}
-
 void BranchPoint::Initialize(Vector3& pos, Vector3& rot)
 {
 	bodyWorldTransform_ = std::make_unique<WorldTransform>();

@@ -6,8 +6,6 @@
 class BranchPoint
 {
 public:
-	void SpeedUpChance(Vector3& pos);
-	
 	/// <summary>
 	/// ‰Šú‰»
 	/// </summary>
