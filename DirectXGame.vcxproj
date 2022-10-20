@@ -98,6 +98,7 @@
     <ClCompile Include="base\DirectXCommon.cpp" />
     <ClCompile Include="base\TextureManager.cpp" />
     <ClCompile Include="base\WinApp.cpp" />
+    <ClCompile Include="BranchPoint.cpp" />
     <ClCompile Include="Object.cpp" />
     <ClCompile Include="ObjectManager.cpp" />
     <ClCompile Include="Particle.cpp" />
@@ -106,9 +107,11 @@
     <ClCompile Include="player.cpp" />
     <ClCompile Include="RailCamera.cpp" />
     <ClCompile Include="ResultCamera.cpp" />
+    <ClCompile Include="ResultScene.cpp" />
     <ClCompile Include="scene\GameScene.cpp" />
     <ClCompile Include="sky.cpp" />
     <ClCompile Include="stage.cpp" />
+    <ClCompile Include="TitleScene.cpp" />
   </ItemGroup>
   <ItemGroup>
     <ClInclude Include="2d\DebugText.h" />
@@ -132,6 +135,7 @@
     <ClInclude Include="base\SafeDelete.h" />
     <ClInclude Include="base\TextureManager.h" />
     <ClInclude Include="base\WinApp.h" />
+    <ClInclude Include="BranchPoint.h" />
     <ClInclude Include="Object.h" />
     <ClInclude Include="ObjectManager.h" />
     <ClInclude Include="Particle.h" />
@@ -146,9 +150,11 @@
     <ClInclude Include="player.h" />
     <ClInclude Include="RailCamera.h" />
     <ClInclude Include="ResultCamera.h" />
+    <ClInclude Include="ResultScene.h" />
     <ClInclude Include="scene\GameScene.h" />
     <ClInclude Include="sky.h" />
     <ClInclude Include="stage.h" />
+    <ClInclude Include="TitleScene.h" />
   </ItemGroup>
   <ItemGroup>
     <None Include="Resources\shaders\Obj.hlsli" />
