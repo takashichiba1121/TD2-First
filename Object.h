@@ -39,5 +39,4 @@ private:
 	std::unique_ptr<WorldTransform> worldTransform_;
 };
 
-bool CheckAABB2AABB(AABB& aabb1, AABB& aabb2);
 

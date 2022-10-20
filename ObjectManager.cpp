@@ -4,14 +4,13 @@ void ObjectManager::Initialize(Player* player)
 {
 	player_ = player;
 
-	std::unique_ptr<Object> tmp;
+	std::unique_ptr<Object> object;
 
-	tmp = std::make_unique<Object>();
-	tmp->Initialize({ 0, -1.5, 200 }, {2,2,2}, Model::Create());
+	object = std::make_unique<Object>();
+	object->Initialize({ 0, -1.5, 200 }, {2,2,2}, Model::Create());
 
-	objects_.push_back(std::move(tmp));
+	objects_.push_back(std::move(object));
 }
-
 
 void ObjectManager::Update()
 {

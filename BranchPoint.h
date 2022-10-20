@@ -2,36 +2,47 @@
 #include"MathUtility.h"
 #include"Model.h"
 #include<memory>
-
+#include"affine.h"
+#include"RailCamera.h"
+#include"Player.h"
+#include<functional>
 class BranchPoint
 {
 public:
 	/// <summary>
 	/// 初期化
 	/// </summary>
-	void Initialize(Vector3& pos, Vector3& rot);
+	void Initialize(const Vector3& pos, const Vector3& rot, const Vector3& size, Model* bodyModel, Model* correctModel, Model* wrongModel, std::function<void(void)>left, std::function<void(void)>right);
 
 	/// <summary>
 	/// 毎フレーム処理
 	/// </summary>
-	void Update();
+	void Update(Player* player, RailCamera* railCamera);
 
 	/// <summary>
 	/// 描画
 	/// </summary>
 	void Draw(ViewProjection* viewProjection);
+
+	void DebugDraw();
+
 private:
 	//本体
-	std::unique_ptr<Model> bodyMode_;
+	Model* bodyModel_;
 	std::unique_ptr<WorldTransform> bodyWorldTransform_;
 
 	//正解
-	std::unique_ptr<Model> correctMode_;
+	Model* correctModel_;
 	std::unique_ptr<WorldTransform> correctWorldTransform_;
 
 	//不正解
-	std::unique_ptr<Model> wrongMode_;
+	Model* wrongModel_;
 	std::unique_ptr<WorldTransform> wrongWorldTransform_;
+	AABB collider_;
 
+	std::function<void()>left_;
+	std::function<void()>right_;
+
+	bool passingFlag_ = false;
 };
 

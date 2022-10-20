@@ -14,6 +14,9 @@ struct AABB
 	void DebugDraw();
 };
 
+bool CheckAABB2AABB(AABB& aabb1, AABB& aabb2);
+
+
 namespace affine
 {
 	//“x‚©‚çƒ‰ƒWƒAƒ“‚É•ÏŠ·‚·‚é’è”
