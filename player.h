@@ -18,9 +18,13 @@ public:
 	void Initialize(WorldTransform* worldTransform);
 
 	/// <summary>
-	/// 毎フレーム処理
+	/// ゲーム中の毎フレーム処理
 	/// </summary>
 	void Update();
+	/// <summary>
+	/// ゲーム以外の毎フレーム処理
+	/// </summary>
+	void titleUpdate();
 
 	/// <summary>
 	/// 描画

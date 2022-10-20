@@ -31,6 +31,8 @@ public:
 
 	bool GetMashFlag() { return mashFlag_; }
 
+	void ResetMashFlag() { mashFlag_=false; }
+
 	UINT GetMashNum() { return mashNum_; }
 
 private:

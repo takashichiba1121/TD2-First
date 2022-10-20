@@ -92,6 +92,21 @@ void Player::Update()
 	worldTransform_.TransferMatrix();
 }
 
+void Player::titleUpdate(){
+		if (!rollStopFlag)
+		{
+			worldTransform_.rotation_ += {0.2f, 0.0f, 0.0f};
+		}
+
+	//ローカル行列計算
+	affine::makeAffine(worldTransform_);
+	//親子関係計算
+	worldTransform_.matWorld_ *= worldTransform_.parent_->matWorld_;
+
+	collider_.center = affine::GetWorldTrans(worldTransform_.matWorld_);
+	worldTransform_.TransferMatrix();
+}
+
 void Player::Draw(ViewProjection* viewProjection)
 {
 	model_->Draw(worldTransform_, *viewProjection);
@@ -137,7 +152,7 @@ void Player::Rotate()
 
 void Player::Jump()
 {
-	if (Input::GetInstance()->PushKey(DIK_SPACE) && jumpFlag == 0 && !squatFlag)
+	if (Input::GetInstance()->TriggerKey(DIK_SPACE) && jumpFlag == 0 && !squatFlag)
 	{
 		jumpFlag = 1;
 	}

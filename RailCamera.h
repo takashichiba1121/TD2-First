@@ -21,12 +21,21 @@ public:
 	/// <summary>
 	/// 毎フレーム処理
 	/// </summary>
-	void Update(bool GetCrashFlag);
+	bool Update(bool GetCrashFlag);
 
 	/// <summary>
 	/// 描画
 	/// </summary>
 	void Draw();
+
+	/// <summary>
+	/// タイトルからゲームに移行するときにリセットする
+	/// </summary>
+	void reset();
+
+	void SpeedUp();
+
+	void SpeedDown();
 
 	ViewProjection* GetViewProjection();
 
@@ -47,7 +56,6 @@ private:
 	WorldTransform worldTransform_;
 
 	Vector3 vector = { 0,0,0 };
-	Vector3 playerVector = { 0,0,0 };
 
 	float rotRange[6] = {};
 
@@ -63,6 +71,9 @@ private:
 	};
 
 	side currentSide = side::First;
+
+	//もう発動したか？
+	bool isActivationDoor = false;
 
 	void Move();
 };

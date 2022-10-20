@@ -35,11 +35,12 @@ void door::Mash()
 	if (mashNum_ > 10)
 	{
 		mashNum_ = 0;
+		mashFlag_ = true;
 	}
 
 	// デバック文字
-	/*debugText_->SetPos(50, 20);
-	debugText_->GetInstance()->Printf("MashNum(%d)",mashNum_);*/
+	debugText_->SetPos(50, 20);
+	debugText_->GetInstance()->Printf("MashNum(%d)",mashNum_);
 }
 
 void door::Update()

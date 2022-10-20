@@ -16,11 +16,14 @@ void GameScene::Initialize()
 
 	player_ = std::make_unique<Player>();
 	railCamera_ = std::make_unique<RailCamera>();
+	resultCamera_ = std::make_unique<ResultCamera>();
 	stage_ = std::make_unique<stage>();
 	modelSkydome_ = std::make_unique<sky>();
 	door_ = std::make_unique<door>();
 	particle_ = std::make_unique<Particle>();
-	resultCamera_ = std::make_unique<ResultCamera>();
+	objectManager_ = std::make_unique<ObjectManager>();
+	titleScene_ = std::make_unique<TitleScene>();
+	resultScene_ = std::make_unique<ResultScene>();
 
 	dxCommon_ = DirectXCommon::GetInstance();
 	input_ = Input::GetInstance();
@@ -28,38 +31,69 @@ void GameScene::Initialize()
 	debugText_ = DebugText::GetInstance();
 	player_->Initialize(railCamera_->GetWorldTransformPtr());
 	railCamera_->Initialize(Vector3{ 0.0,0.0f,-10.0f }, { 0,0,0 });
+	resultCamera_->Initialize(railCamera_->GetWorldTransformPtr());
 	stage_->Initialize();
 	modelSkydome_->Initialize();
 	door_->Initialize();
 	particle_->Initialize();
-	resultCamera_->Initialize(railCamera_->GetWorldTransformPtr());
-	objectManager_ = std::make_unique<ObjectManager>();
 	objectManager_->Initialize(player_.get());
+	titleScene_->Initialize();
+	resultScene_->Initialize();
 
 	/*PrimitiveDrawer::GetInstance()->SetViewProjection(railCamera_->GetViewProjection());*/
+	viewProjection = resultCamera_->GetViewProjection();
 }
 
 void GameScene::Update()
 {
+	switch (scene)
+	{
+	case Scene::title:
+		railCamera_->Update(player_->GetCrashFlag());
+		resultCamera_->Update();
+		player_->titleUpdate();
+		titleScene_->Update();
+		if (input_->TriggerKey(DIK_Q)) {
+			scene = Scene::game;
+			viewProjection = railCamera_->GetViewProjection();
+			railCamera_->reset();
+		}
+		break;
+	case Scene::game:
+		if (railCamera_->Update(player_->GetCrashFlag()))
+		{
+			scene = Scene::door;
+		}
+		player_->Update();
+		objectManager_->Update();
+		if (input_->TriggerKey(DIK_Q)) {
+			viewProjection = resultCamera_->GetViewProjection();
+			scene = Scene::result;
+		}
+		break;
+	case Scene::door:
+		door_->Update();
+		/*player_->titleUpdate();*/
+		if (door_->GetMashFlag()) {
+			scene = Scene::game;
+			door_->ResetMashFlag();
+		}
+		break;
+	case Scene::result:
+		railCamera_->Update(player_->GetCrashFlag());
+		player_->titleUpdate();
+		resultCamera_->Update();
+		resultScene_->Update();
+		if (input_->TriggerKey(DIK_Q)) {
+			scene = Scene::title;
+		}
+		break;
+	default:
+		break;
+	}
 
-	using namespace MathUtility;
-
-	door_->Update();
-
-	railCamera_->Update(player_->GetCrashFlag());
-
-	player_->Update();
-
-	resultCamera_->Update();
-
-	objectManager_->Update();
-
-	/*debugText_->SetPos(10, 10);
-	debugText_->Printf(" %f, %f, %f", player.x, player.y, player.z);
-	debugText_->SetPos(10, 30);
-	debugText_->Printf(" %d", spped);
-	debugText_->SetPos(10, 50);
-	debugText_->Printf(" %d", currentSide);*/
+	debugText_->SetPos(10, 100);
+	debugText_->Printf(" %d",scene );
 }
 
 void GameScene::Draw()
@@ -89,10 +123,23 @@ void GameScene::Draw()
 	/// <summary>
 	/// ここに3Dオブジェクトの描画処理を追加できる
 	/// </summary>
-	player_->Draw(railCamera_->GetViewProjection());
-	objectManager_->Draw(railCamera_->GetViewProjection());
-	stage_->Draw(railCamera_->GetViewProjection());
-	modelSkydome_->Draw(railCamera_->GetViewProjection());
+	switch (scene)
+	{
+	case GameScene::Scene::title:
+		break;
+	case GameScene::Scene::game:
+		objectManager_->Draw(viewProjection);
+		break;
+	case GameScene::Scene::door:
+		break;
+	case GameScene::Scene::result:
+		break;
+	default:
+		break;
+	}
+	player_->Draw(viewProjection);
+	stage_->Draw(viewProjection);
+	modelSkydome_->Draw(viewProjection);
 
 	/*player_->GetCollider().DebugDraw();*/
 
@@ -107,6 +154,21 @@ void GameScene::Draw()
 
 	/// <summary>
 	/// ここに前景スプライトの描画処理を追加できる
+	switch (scene)
+	{
+	case GameScene::Scene::title:
+		titleScene_->SpriteDraw();
+		break;
+	case GameScene::Scene::game:
+		break;
+	case GameScene::Scene::door:
+		break;
+	case GameScene::Scene::result:
+		resultScene_->SpriteDraw();
+		break;
+	default:
+		break;
+	}
 	/// </summary>
 	particle_->Draw();
 

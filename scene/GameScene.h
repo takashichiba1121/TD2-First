@@ -18,6 +18,8 @@
 
 #include "sky.h"
 #include "door.h"
+#include"TitleScene.h"
+#include"ResultScene.h"
 
 /// <summary>
 /// ゲームシーン
@@ -51,6 +53,8 @@ class GameScene {
 	void Draw();
 
   private: // メンバ変数
+	  ViewProjection* viewProjection= nullptr;
+
 	DirectXCommon* dxCommon_ = nullptr;
 	Input* input_ = nullptr;
 	Audio* audio_ = nullptr;
@@ -63,7 +67,21 @@ class GameScene {
 	std::unique_ptr<door> door_;
 	std::unique_ptr<Particle> particle_;
 	std::unique_ptr<ObjectManager> objectManager_;
+	std::unique_ptr<TitleScene> titleScene_;
+	std::unique_ptr<ResultScene> resultScene_;
 
+	enum class Scene
+	{
+		title,
+		game,
+		door,
+		result
+	};
+
+	Scene scene=Scene::title;
+
+	
+	
 	/// <summary>
 	/// ゲームシーン用
 	/// </summary>

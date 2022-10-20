@@ -35,7 +35,7 @@ void RailCamera::Initialize(const Vector3& position, const Vector3& rotaion)
 	rotRange[5] = 0.0f;
 }
 
-void RailCamera::Update(bool GetCrashFlag)
+bool RailCamera::Update(bool GetCrashFlag)
 {
 	using namespace MathUtility;
 
@@ -230,6 +230,8 @@ void RailCamera::Update(bool GetCrashFlag)
 
 					worldTransform_.rotation_.y = 0.0f;
 
+					isActivationDoor = false;
+
 					currentSide = side::First;
 				}
 				else
@@ -365,6 +367,14 @@ void RailCamera::Update(bool GetCrashFlag)
 	debugText_->Printf(" %f", worldTransform_.rotation_.y/affine::Deg2Rad);
 	debugText_->SetPos(10, 50);
 	debugText_->Printf(" %d", currentSide);
+
+	//六角形が四辺目でプレイヤーのZが半分超えていてこの周に一回もドアを使ってない時のみ
+	if (currentSide==side::Fourth&&playerz<=375.0f&&isActivationDoor==false) {
+		isActivationDoor = true;
+		return true;
+	}
+
+	return false;
 }
 
 void RailCamera::Draw(){}
@@ -404,4 +414,23 @@ void RailCamera::Move()
 float RailCamera::GetWorldTransformRot()
 {
 	return worldTransform_.rotation_.z;
+}
+void RailCamera::reset(){
+	worldTransform_.translation_ = Vector3(0.0f,0.0f,-10.0f);
+	worldTransform_.rotation_ = Vector3(0,0,0);
+
+	speed = 1;
+	currentSide = side::First;
+
+	isActivationDoor = false;
+}
+
+void RailCamera::SpeedUp()
+{
+	speed++;
+}
+
+void RailCamera::SpeedDown()
+{
+	speed--;
 }
