@@ -62,15 +62,23 @@ void Player::Update()
 
 		//移動
 		Move();
-		//ジャンプ
-		Jump();
 		//しゃがむ
 		Squat();
 		//旋回
 		Rotate();
+
+		if (Input::GetInstance()->TriggerKey(DIK_SPACE) && jumpFlag == 0 && !squatFlag)
+		{
+			jumpFlag = 1;
+		}
 	}
 	else
 	{
+		if (jumpFlag ==1)
+		{
+			jumpFlag = 2;
+		}
+
 		worldTransform_.rotation_ += {0.0f, 0.4f, 0.0f};
 
 		crashTime--;
@@ -82,6 +90,9 @@ void Player::Update()
 			crashTime = 70;
 		}
 	}
+
+	//ジャンプ
+	Jump();
 
 	//ローカル行列計算
 	affine::makeAffine(worldTransform_);
@@ -152,11 +163,6 @@ void Player::Rotate()
 
 void Player::Jump()
 {
-	if (Input::GetInstance()->TriggerKey(DIK_SPACE) && jumpFlag == 0 && !squatFlag)
-	{
-		jumpFlag = 1;
-	}
-
 	if (jumpFlag == 1)
 	{
 		worldTransform_.translation_.y += gravitySpeed;
