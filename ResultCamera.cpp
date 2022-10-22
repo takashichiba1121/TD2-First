@@ -17,10 +17,11 @@ void ResultCamera::Initialize(WorldTransform* worldTransform)
 	worldTransform_.parent_ = worldTransform;
 
 	//ワールドトランスフォームの初期設定
-	worldTransform_.translation_ = {1.0f,-2.0f,11.0f};
-	worldTransform_.rotation_ = {0.0,225.0f*affine::Deg2Rad,0.0f};
+	worldTransform_.translation_ = {1.0f,-2.0f,11.3f};
+	worldTransform_.rotation_ = {0.0,245.0f*affine::Deg2Rad,0.0f};
 
 	viewProjection_ = std::make_unique<ViewProjection>();
+	viewProjection_->farZ = 12000;
 	//ビュープロジェクションの初期化
 	viewProjection_->Initialize();
 }
