@@ -33,6 +33,11 @@ public:
 	/// </summary>
 	void reset();
 
+	/// <summary>
+	/// 一周するごとにリセットするモノをまとめる
+	/// </summary>
+	void lapReset();
+
 	void SpeedUp();
 
 	void SpeedDown();
@@ -71,6 +76,8 @@ private:
 	};
 
 	side currentSide = side::First;
+
+	int lap=0;
 
 	//もう発動したか？
 	bool isActivationDoor = false;

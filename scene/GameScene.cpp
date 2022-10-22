@@ -95,7 +95,7 @@ void GameScene::Update()
 	}
 
 	debugText_->SetPos(10, 100);
-	debugText_->Printf(" %d",scene );
+	debugText_->Printf(" %f",affine::GetWorldTrans(player_->GetWorldTransform().matWorld_).x);
 }
 
 void GameScene::Draw()
@@ -132,8 +132,10 @@ void GameScene::Draw()
 	case GameScene::Scene::game:
 		objectManager_->Draw(viewProjection);
 		speedUpChance_->Draw(viewProjection);
+		door_->Draw(viewProjection);
 		break;
 	case GameScene::Scene::door:
+		door_->Draw(viewProjection);
 		break;
 	case GameScene::Scene::result:
 		break;

@@ -222,7 +222,6 @@ bool RailCamera::Update(bool GetCrashFlag)
 			else
 			{
 				Vector3 move = { -vector.x * speed,vector.y * speed,vector.z * speed };
-				Vector3 Rot = { 0,3 * affine::Deg2Rad,0 };
 
 				if (worldTransform_.rotation_.y >= 360.0f * affine::Deg2Rad)
 				{
@@ -236,8 +235,12 @@ bool RailCamera::Update(bool GetCrashFlag)
 				}
 				else
 				{
+					Vector3 Rot = { 0,3 * affine::Deg2Rad,0 };
+
 					worldTransform_.rotation_ += (Rot);
 					worldTransform_.translation_ += move;
+
+					lapReset();
 				}
 				if (worldTransform_.rotation_.y > 360.0f * affine::Deg2Rad)
 				{
@@ -351,6 +354,8 @@ bool RailCamera::Update(bool GetCrashFlag)
 				worldTransform_.rotation_ += (Rot);
 				worldTransform_.translation_ ={ 0.0,0.0f,-10.0f };
 
+				lapReset();
+
 				currentSide = side::First;
 			}
 			break;
@@ -422,6 +427,11 @@ void RailCamera::reset(){
 	speed = 1;
 	currentSide = side::First;
 
+	isActivationDoor = false;
+}
+
+void RailCamera::lapReset()
+{
 	isActivationDoor = false;
 }
 
