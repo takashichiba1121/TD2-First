@@ -240,7 +240,7 @@ bool RailCamera::Update(bool GetCrashFlag)
 					worldTransform_.rotation_ += (Rot);
 					worldTransform_.translation_ += move;
 
-					lapReset();
+					IsLapReset = true;
 				}
 				if (worldTransform_.rotation_.y > 360.0f * affine::Deg2Rad)
 				{
@@ -354,7 +354,7 @@ bool RailCamera::Update(bool GetCrashFlag)
 				worldTransform_.rotation_ += (Rot);
 				worldTransform_.translation_ ={ 0.0,0.0f,-10.0f };
 
-				lapReset();
+				IsLapReset = true;
 
 				currentSide = side::First;
 			}
@@ -433,6 +433,7 @@ void RailCamera::reset(){
 void RailCamera::lapReset()
 {
 	isActivationDoor = false;
+	IsLapReset = false;
 }
 
 void RailCamera::SpeedUp()

@@ -39,6 +39,8 @@ public:
 
 	bool GetCrashFlag();
 
+	void SetTransform(Vector3 translation) { worldTransform_.translation_=translation; }
+
 private:
 
 	void Move();

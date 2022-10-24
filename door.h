@@ -31,7 +31,7 @@ public:
 
 	bool GetMashFlag() { return mashFlag_; }
 
-	void ResetMashFlag() { mashFlag_=false; }
+	void Reset();
 
 	UINT GetMashNum() { return mashNum_; }
 
@@ -43,8 +43,12 @@ private:
 	bool mashFlag_ = false;
 	UINT mashNum_ = 0;
 
-	WorldTransform worldTransform_;
-	std::unique_ptr<Model> model_;
+	WorldTransform door2worldTransform_;
+	WorldTransform door3worldTransform_;
+
+	std::unique_ptr<Model> door2model_;
+	std::unique_ptr<Model> door3model_;
+
 	Input* input_ = nullptr;
 	DebugText* debugText_ = nullptr;
 };

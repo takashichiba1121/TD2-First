@@ -63,6 +63,8 @@ void GameScene::Update()
 	case Scene::game:
 		if (railCamera_->Update(player_->GetCrashFlag()))
 		{
+			player_->SetTransform({ 0.0f, -2.0f, 10.0f });
+
 			scene = Scene::door;
 		}
 		player_->Update();
@@ -72,13 +74,16 @@ void GameScene::Update()
 			viewProjection = resultCamera_->GetViewProjection();
 			scene = Scene::result;
 		}
+		if (railCamera_->GetIsRapReset()) 
+		{
+			railCamera_->lapReset();
+			door_->Reset();
+		}
 		break;
 	case Scene::door:
 		door_->Update();
-		/*player_->titleUpdate();*/
 		if (door_->GetMashFlag()) {
 			scene = Scene::game;
-			door_->ResetMashFlag();
 		}
 		break;
 	case Scene::result:

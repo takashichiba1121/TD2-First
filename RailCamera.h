@@ -48,10 +48,9 @@ public:
 
 	float GetWorldTransformRot();
 
-	void addRot(Vector3 rot) { worldTransform_.rotation_ += rot; };
-	void addTranslation(Vector3 translation) { worldTransform_.translation_ += translation; };
-
 	void setTranslation(Vector3 translation) { worldTransform_.translation_ = translation; };
+
+	bool GetIsRapReset() { return IsLapReset; }
 
 private:
 
@@ -77,10 +76,12 @@ private:
 
 	side currentSide = side::First;
 
-	int lap=0;
+	int lap = 0;
 
 	//Ç‡Ç§î≠ìÆÇµÇΩÇ©ÅH
 	bool isActivationDoor = false;
+
+	bool IsLapReset = false;
 
 	void Move();
 };
