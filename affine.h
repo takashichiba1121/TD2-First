@@ -16,6 +16,16 @@ struct AABB
 
 bool CheckAABB2AABB(AABB& aabb1, AABB& aabb2);
 
+struct SPHERE
+{
+	//中心座標
+	Vector3 center;
+
+	//半径
+	float radius;
+};
+
+bool CheckAABB2SPHERE(AABB& aabb1, SPHERE& sphere);
 
 namespace affine
 {
@@ -42,7 +52,7 @@ namespace affine
 
 	Vector3 Mat3D(Matrix4 matrix, Vector3 vector);
 	//ワールド座標を返す
-	Vector3 GetWorldTrans(Matrix4 matrix);
+	Vector3& GetWorldTrans(Matrix4 matrix);
 
 	Vector3 wdivision(Matrix4 matrix, Vector3 vector);
 }

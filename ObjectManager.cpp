@@ -7,7 +7,7 @@ void ObjectManager::Initialize(Player* player)
 	std::unique_ptr<Object> object;
 
 	object = std::make_unique<Object>();
-	object->Initialize({ 0, -1.5, 200 }, {2,2,2}, Model::Create());
+	object->Initialize({ 0, -1.5, 200 }, 1.0f, Model::Create());
 
 	objects_.push_back(std::move(object));
 }
@@ -23,7 +23,7 @@ void ObjectManager::Update()
 	{
 		object->Update(affine::GetWorldTrans(player_->GetWorldTransform().matWorld_));
 	
-		if (CheckAABB2AABB(player_->GetCollider(),object->GetCollider()))
+		if (CheckAABB2SPHERE(player_->GetCollider(),object->GetCollider()))
 		{
 			object->OnCollision();
 			player_->OnCollision();
@@ -44,6 +44,6 @@ void ObjectManager::DebugDraw()
 {
 	for (std::unique_ptr<Object>& object : objects_)
 	{
-		object->GetCollider().DebugDraw();
+		//object->GetCollider().DebugDraw();
 	}
 }

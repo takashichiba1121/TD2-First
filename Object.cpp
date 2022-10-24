@@ -1,6 +1,6 @@
 #include "Object.h"
 
-void Object::Initialize(Vector3 pos, Vector3 size, Model* model)
+void Object::Initialize(const Vector3& pos, float radius, Model* model)
 {
 	worldTransform_ = std::make_unique<WorldTransform>();
 
@@ -13,13 +13,10 @@ void Object::Initialize(Vector3 pos, Vector3 size, Model* model)
 	model_ = model;
 
 	collider_.center = worldTransform_->translation_;
-	collider_.size = {
-		1.0f * worldTransform_->scale_.x,
-		1.0f * worldTransform_->scale_.y,
-		1.0f * worldTransform_->scale_.z };
+	collider_.radius = 1.0f;
 }
 
-void Object::Update(Vector3 playerPos)
+void Object::Update(Vector3& playerPos)
 {
 	affine::makeAffine(*worldTransform_);
 
@@ -31,12 +28,10 @@ void Object::Draw(ViewProjection* viewProjection)
 	model_->Draw(*worldTransform_, *viewProjection);
 }
 
-AABB& Object::GetCollider()
+SPHERE& Object::GetCollider()
 {
 	return collider_;
 }
-
-
 
 bool Object::GetIsDeath()
 {

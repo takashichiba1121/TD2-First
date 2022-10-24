@@ -92,7 +92,7 @@ Vector3 affine::Mat3D(Matrix4 matrix, Vector3 vector)
 	matVector.z = vector.x * matrix.m[0][2] + vector.y * matrix.m[1][2] + vector.z * matrix.m[2][2] * 1 * matrix.m[3][2];
 	return matVector;
 }
-Vector3 affine::GetWorldTrans(Matrix4 matrix)
+Vector3& affine::GetWorldTrans(Matrix4 matrix)
 {
 	Vector3 mattrans;
 	mattrans.x = matrix.m[3][0];
@@ -120,7 +120,7 @@ void AABB::DebugDraw()
 
 	//ã
 	PrimitiveDrawer::GetInstance()->DrawLine3d(
-		{ center.x - size.x, center.y + size.y, center.z + size.z }, 
+		{ center.x - size.x, center.y + size.y, center.z + size.z },
 		{ center.x + size.x, center.y + size.y, center.z + size.z },
 		col);
 
@@ -199,4 +199,32 @@ bool CheckAABB2AABB(AABB& aabb1, AABB& aabb2)
 	}
 
 	return true;
+}
+
+bool CheckAABB2SPHERE(AABB& aabb1, SPHERE& sphere)
+{
+	std::array<Vector3, 8> vex;
+
+	vex[0] = { aabb1.center.x - aabb1.size.x, aabb1.center.y - aabb1.size.y ,aabb1.center.z - aabb1.size.z };
+	vex[1] = { aabb1.center.x - aabb1.size.x, aabb1.center.y - aabb1.size.y ,aabb1.center.z + aabb1.size.z };
+	vex[2] = { aabb1.center.x + aabb1.size.x, aabb1.center.y - aabb1.size.y ,aabb1.center.z - aabb1.size.z };
+	vex[3] = { aabb1.center.x + aabb1.size.x, aabb1.center.y - aabb1.size.y ,aabb1.center.z + aabb1.size.z };
+
+	vex[4] = { aabb1.center.x - aabb1.size.x, aabb1.center.y + aabb1.size.y ,aabb1.center.z - aabb1.size.z };
+	vex[5] = { aabb1.center.x - aabb1.size.x, aabb1.center.y + aabb1.size.y ,aabb1.center.z + aabb1.size.z };
+	vex[6] = { aabb1.center.x + aabb1.size.x, aabb1.center.y + aabb1.size.y ,aabb1.center.z - aabb1.size.z };
+	vex[7] = { aabb1.center.x + aabb1.size.x, aabb1.center.y + aabb1.size.y ,aabb1.center.z + aabb1.size.z };
+
+	for (Vector3 v : vex)
+	{
+		float ren = (v.x - sphere.center.x) * 2 + (v.y - sphere.center.y) * 2 + (v.z - sphere.center.z) * 2;
+
+		if (fabs(ren) < sphere.radius * 2)
+		{
+			return true;
+		}
+
+	}
+
+	return false;
 }

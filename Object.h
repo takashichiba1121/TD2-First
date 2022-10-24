@@ -5,18 +5,19 @@
 #include"WorldTransform.h"
 #include"ViewProjection.h"
 #include"affine.h"
+
 class Object
 {
 public:
 	/// <summary>
 	/// 初期化
 	/// </summary>
-	void Initialize(Vector3 pos,Vector3 size, Model* model);
+	void Initialize(const Vector3& pos, float radius, Model* model);
 
 	/// <summary>
 	/// 毎フレーム処理
 	/// </summary>
-	void Update(Vector3 playerPos);
+	void Update(Vector3& playerPos);
 
 	/// <summary>
 	/// 描画
@@ -24,7 +25,7 @@ public:
 	void Draw(ViewProjection* viewProjection);
 
 	//コライダー所得
-	AABB& GetCollider();
+	SPHERE& GetCollider();
 
 	//当たった時の関数
 	void OnCollision();
@@ -34,7 +35,7 @@ public:
 
 private:
 	bool IsDeath;
-	AABB collider_;
+	SPHERE collider_;
 	Model* model_;
 	std::unique_ptr<WorldTransform> worldTransform_;
 };
