@@ -4,16 +4,13 @@
 #include "Input.h"
 #include "DebugText.h"
 #include "WorldTransform.h"
+#include "TextureManager.h"
+#include "Sprite.h"
 #include "Model.h"
 
 class door
 {
 public:
-
-	door();
-
-	~door();
-
 	// <summary>
 	/// 初期化
 	/// </summary>
@@ -29,6 +26,11 @@ public:
 	/// </summary>
 	void Draw(ViewProjection* viewProjection);
 
+	/// <summary>
+	/// スプライト用描画
+	/// </summary>
+	void SpriteDraw();
+
 	bool GetMashFlag() { return mashFlag_; }
 
 	void Reset();
@@ -43,9 +45,15 @@ private:
 	bool mashFlag_ = false;
 	UINT mashNum_ = 0;
 
+	uint32_t textureHandle_ = 0;
+
+	std::unique_ptr<Sprite> sprite_;
+
+	WorldTransform door1worldTransform_;
 	WorldTransform door2worldTransform_;
 	WorldTransform door3worldTransform_;
 
+	std::unique_ptr<Model> door1model_;
 	std::unique_ptr<Model> door2model_;
 	std::unique_ptr<Model> door3model_;
 

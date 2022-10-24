@@ -53,7 +53,6 @@ void GameScene::Update()
 		railCamera_->Update(player_->GetCrashFlag());
 		resultCamera_->Update();
 		player_->titleUpdate();
-		titleScene_->Update();
 		if (input_->TriggerKey(DIK_Q)) {
 			scene = Scene::game;
 			viewProjection = railCamera_->GetViewProjection();
@@ -172,6 +171,7 @@ void GameScene::Draw()
 	case GameScene::Scene::game:
 		break;
 	case GameScene::Scene::door:
+		door_->SpriteDraw();
 		break;
 	case GameScene::Scene::result:
 		resultScene_->SpriteDraw();
