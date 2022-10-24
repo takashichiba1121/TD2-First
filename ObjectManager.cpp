@@ -21,7 +21,7 @@ void ObjectManager::Update()
 
 	for (std::unique_ptr<Object>& object : objects_)
 	{
-		object->Update(affine::GetWorldTrans(player_->GetWorldTransform().matWorld_));
+		object->Update();
 	
 		if (CheckAABB2SPHERE(player_->GetCollider(),object->GetCollider()))
 		{

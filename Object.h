@@ -17,7 +17,7 @@ public:
 	/// <summary>
 	/// –ˆƒtƒŒ[ƒ€ˆ—
 	/// </summary>
-	void Update(Vector3& playerPos);
+	void Update();
 
 	/// <summary>
 	/// •`‰æ

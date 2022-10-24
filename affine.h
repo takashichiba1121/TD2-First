@@ -52,7 +52,7 @@ namespace affine
 
 	Vector3 Mat3D(Matrix4 matrix, Vector3 vector);
 	//ƒ[ƒ‹ƒhÀ•W‚ğ•Ô‚·
-	Vector3& GetWorldTrans(Matrix4 matrix);
+	Vector3 GetWorldTrans(Matrix4 matrix);
 
 	Vector3 wdivision(Matrix4 matrix, Vector3 vector);
 }

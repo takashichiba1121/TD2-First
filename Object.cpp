@@ -16,7 +16,7 @@ void Object::Initialize(const Vector3& pos, float radius, Model* model)
 	collider_.radius = 1.0f;
 }
 
-void Object::Update(Vector3& playerPos)
+void Object::Update()
 {
 	affine::makeAffine(*worldTransform_);
 
