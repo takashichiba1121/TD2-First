@@ -8,8 +8,8 @@ void TitleScene::Initialize()
 
 void TitleScene::Update()
 {
-	sprite_.reset(Sprite::Create(textureHandle_, { 700,120 }));
-	spriteSpace_.reset(Sprite::Create(pushSpaceHandle_, { 490,550 }));
+	sprite_.reset(Sprite::Create(textureHandle_, { 700,130 }));
+	spriteSpace_.reset(Sprite::Create(pushSpaceHandle_, { 490,580 }));
 }
 
 void TitleScene::SpriteDraw()
