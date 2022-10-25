@@ -1,19 +1,19 @@
 #include "Object.h"
 
-void Object::Initialize(const Vector3& pos, float radius, Model* model)
+void Object::Initialize(const Vector3& pos, const Vector3& rot, float radius, Model* model)
 {
 	worldTransform_ = std::make_unique<WorldTransform>();
 
 	worldTransform_->translation_ = pos;
 	worldTransform_->scale_ = { 1.0f,1.0f,1.0f };
-	worldTransform_->rotation_ = { 0.0f,0.0f,0.0f };
+	worldTransform_->rotation_ = rot;
 
 	worldTransform_->Initialize();
 
 	model_ = model;
 
 	collider_.center = worldTransform_->translation_;
-	collider_.radius = 1.0f;
+	collider_.radius = radius;
 }
 
 void Object::Update()

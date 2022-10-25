@@ -12,7 +12,7 @@ public:
 	/// <summary>
 	/// ‰Šú‰»
 	/// </summary>
-	void Initialize(const Vector3& pos, float radius, Model* model);
+	void Initialize(const Vector3& pos, const Vector3& rot, float radius, Model* model);
 
 	/// <summary>
 	/// –ˆƒtƒŒ[ƒ€ˆ—

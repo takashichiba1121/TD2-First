@@ -217,7 +217,7 @@ bool CheckAABB2SPHERE(AABB& aabb1, SPHERE& sphere)
 
 	for (Vector3 v : vex)
 	{
-		float ren = (v.x - sphere.center.x) * 2 + (v.y - sphere.center.y) * 2 + (v.z - sphere.center.z) * 2;
+		float ren = (fabs(v.x - sphere.center.x)) * 2 + (fabs(v.y - sphere.center.y)) * 2 + (fabs(v.z - sphere.center.z)) * 2;
 
 		if (fabs(ren) < sphere.radius * 2)
 		{

@@ -25,6 +25,8 @@ public:
 
 	void DebugDraw();
 
+	void  Reset();
+
 private:
 
 	std::list<std::unique_ptr<Object>>objects_;
