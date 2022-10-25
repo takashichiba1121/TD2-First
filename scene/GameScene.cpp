@@ -1,6 +1,7 @@
 ﻿#include "GameScene.h"
 #include "TextureManager.h"
 #include <cassert>
+#include<time.h>
 
 GameScene::GameScene()
 {
@@ -57,6 +58,7 @@ void GameScene::Update()
 			scene = Scene::game;
 			viewProjection = railCamera_->GetViewProjection();
 			railCamera_->reset();
+			stateTime = time(NULL);
 		}
 		break;
 	case Scene::game:
@@ -71,6 +73,9 @@ void GameScene::Update()
 		speedUpChance_->Update(player_.get());
 		if (input_->TriggerKey(DIK_Q)) {
 			viewProjection = resultCamera_->GetViewProjection();
+
+			endTime = nowTime;
+
 			scene = Scene::result;
 		}
 		if (railCamera_->GetIsRapReset()) 
@@ -78,12 +83,15 @@ void GameScene::Update()
 			railCamera_->lapReset();
 			door_->Reset();
 		}
+
+		nowTime = time(NULL)-stateTime;
 		break;
 	case Scene::door:
 		door_->Update();
 		if (door_->GetMashFlag()) {
 			scene = Scene::game;
 		}
+		nowTime = time(NULL) - stateTime;
 		break;
 	case Scene::result:
 		railCamera_->Update(player_->GetCrashFlag());
@@ -100,6 +108,9 @@ void GameScene::Update()
 
 	debugText_->SetPos(10, 100);
 	debugText_->Printf(" %f",affine::GetWorldTrans(player_->GetWorldTransform().matWorld_).x);
+
+	debugText_->SetPos(10, 120);
+	debugText_->Printf("time::%d,%d", nowTime / 60, nowTime % 60);
 }
 
 void GameScene::Draw()

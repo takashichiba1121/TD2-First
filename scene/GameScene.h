@@ -82,7 +82,11 @@ class GameScene {
 
 	Scene scene=Scene::title;
 
-	
+	int stateTime=0;
+
+	int nowTime = 0;
+
+	int endTime = 0;
 	
 	/// <summary>
 	/// ゲームシーン用

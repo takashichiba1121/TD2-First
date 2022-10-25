@@ -231,6 +231,8 @@ bool RailCamera::Update(bool GetCrashFlag)
 
 					isActivationDoor = false;
 
+					lap++;
+
 					currentSide = side::First;
 				}
 				else
@@ -356,6 +358,8 @@ bool RailCamera::Update(bool GetCrashFlag)
 
 				IsLapReset = true;
 
+				lap++;
+
 				currentSide = side::First;
 			}
 			break;
@@ -367,13 +371,15 @@ bool RailCamera::Update(bool GetCrashFlag)
 	Move();
 
 	debugText_->SetPos(10, 10);
-	debugText_->Printf(" %f", playerz);
+	debugText_->Printf(" PlayerZ:%f", playerz);
 	debugText_->SetPos(10, 30);
-	debugText_->Printf(" %f", worldTransform_.rotation_.y/affine::Deg2Rad);
+	debugText_->Printf(" RailCamera.RotY:%f", worldTransform_.rotation_.y/affine::Deg2Rad);
 	debugText_->SetPos(10, 50);
 	debugText_->Printf(" %d", currentSide);
+	debugText_->SetPos(10, 70);
+	debugText_->Printf(" lap:%d", lap);
 
-	//六角形が四辺目でプレイヤーのZが半分超えていてこの周に一回もドアを使ってない時のみ
+	//六角形が四辺目でプレイヤーのZが半分下回ってなくこの周に一回もドアを使ってない時のみ
 	if (currentSide==side::Fourth&&playerz<=375.0f&&isActivationDoor==false) {
 		isActivationDoor = true;
 		return true;
