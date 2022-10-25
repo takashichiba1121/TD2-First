@@ -24,7 +24,9 @@ void GameScene::Initialize()
 	objectManager_ = std::make_unique<ObjectManager>();
 	titleScene_ = std::make_unique<TitleScene>();
 	resultScene_ = std::make_unique<ResultScene>();
+	speedUpChance_ = std::make_unique<SpeedUpChance>();
 	doorManager_ = std::make_unique<DoorManager>();
+	goalModel_ = std::make_unique<Goal>();
 
 	dxCommon_ = DirectXCommon::GetInstance();
 	input_ = Input::GetInstance();
@@ -40,8 +42,9 @@ void GameScene::Initialize()
 	doorManager_->Initialize(railCamera_->GetVector());
 	titleScene_->Initialize();
 	resultScene_->Initialize();
-	speedUpChance_ = std::make_unique<SpeedUpChance>();
 	speedUpChance_->Initialize(railCamera_.get());
+	goalModel_->Initialize();
+
 	PrimitiveDrawer::GetInstance()->SetViewProjection(railCamera_->GetViewProjection());
 	viewProjection = resultCamera_->GetViewProjection();
 }
@@ -149,14 +152,16 @@ void GameScene::Draw()
 		break;
 	case GameScene::Scene::game:
 		objectManager_->Draw(viewProjection);
-		speedUpChance_->Draw(viewProjection);
-		doorManager_->Draw(viewProjection);
+		goalModel_->Draw(viewProjection);
 		break;
 	case GameScene::Scene::result:
 		break;
 	default:
 		break;
 	}
+
+	speedUpChance_->Draw(viewProjection);
+	doorManager_->Draw(viewProjection);
 	player_->Draw(viewProjection);
 	stage_->Draw(viewProjection);
 	modelSkydome_->Draw(viewProjection);

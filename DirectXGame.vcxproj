@@ -103,6 +103,7 @@
     <ClCompile Include="base\WinApp.cpp" />
     <ClCompile Include="BranchPoint.cpp" />
     <ClCompile Include="DoorManager.cpp" />
+    <ClCompile Include="Goal.cpp" />
     <ClCompile Include="Object.cpp" />
     <ClCompile Include="ObjectManager.cpp" />
     <ClCompile Include="Particle.cpp" />
@@ -142,6 +143,7 @@
     <ClInclude Include="base\WinApp.h" />
     <ClInclude Include="BranchPoint.h" />
     <ClInclude Include="DoorManager.h" />
+    <ClInclude Include="Goal.h" />
     <ClInclude Include="Object.h" />
     <ClInclude Include="ObjectManager.h" />
     <ClInclude Include="Particle.h" />

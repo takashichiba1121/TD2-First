@@ -22,6 +22,7 @@
 #include"ResultScene.h"
 #include"SpeedUpChance.h"
 #include"DoorManager.h"
+#include"Goal.h"
 
 /// <summary>
 /// ゲームシーン
@@ -61,6 +62,7 @@ class GameScene {
 	Input* input_ = nullptr;
 	Audio* audio_ = nullptr;
 	DebugText* debugText_ = nullptr;
+
 	std::unique_ptr<RailCamera> railCamera_;
 	std::unique_ptr<ResultCamera> resultCamera_;
 	std::unique_ptr<Player> player_;
@@ -72,6 +74,7 @@ class GameScene {
 	std::unique_ptr<ResultScene> resultScene_;
 	std::unique_ptr<SpeedUpChance>speedUpChance_;
 	std::unique_ptr<DoorManager> doorManager_;
+	std::unique_ptr<Goal> goalModel_;
 
 	enum class Scene
 	{
