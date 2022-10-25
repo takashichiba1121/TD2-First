@@ -15,6 +15,7 @@
 #include "Particle.h"
 #include"ResultCamera.h"
 #include"ObjectManager.h"
+#include "TextureManager.h"
 
 #include "sky.h"
 #include "door.h"
@@ -56,13 +57,15 @@ class GameScene {
 	void Draw();
 
   private: // メンバ変数
-	  ViewProjection* viewProjection= nullptr;
+	ViewProjection* viewProjection= nullptr;
 
 	DirectXCommon* dxCommon_ = nullptr;
 	Input* input_ = nullptr;
 	Audio* audio_ = nullptr;
 	DebugText* debugText_ = nullptr;
+	uint32_t textureHandle_ = 0;
 
+	std::unique_ptr<Sprite> sprite_;
 	std::unique_ptr<RailCamera> railCamera_;
 	std::unique_ptr<ResultCamera> resultCamera_;
 	std::unique_ptr<Player> player_;

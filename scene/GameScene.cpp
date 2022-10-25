@@ -15,6 +15,10 @@ void GameScene::Initialize()
 {
 	using namespace MathUtility;
 
+	sprite_ = std::make_unique<Sprite>();
+	textureHandle_ = TextureManager::Load("gamescene.png");
+	sprite_.reset(Sprite::Create(textureHandle_, { 0,0 }));
+
 	player_ = std::make_unique<Player>();
 	railCamera_ = std::make_unique<RailCamera>();
 	resultCamera_ = std::make_unique<ResultCamera>();
@@ -230,6 +234,7 @@ void GameScene::Draw()
 		{
 			doorManager_->SpriteDraw();
 		}
+		sprite_->Draw();
 		break;
 	case GameScene::Scene::result:
 		resultScene_->SpriteDraw();
