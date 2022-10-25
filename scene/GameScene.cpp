@@ -84,6 +84,7 @@ void GameScene::Update()
 			{
 				railCamera_->lapReset();
 				doorManager_->Reset();
+				frequencyInvocationDoor = 0;
 			}
 		}
 		else

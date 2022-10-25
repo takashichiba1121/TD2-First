@@ -3,6 +3,8 @@
 
 void DoorManager::Initialize(Vector3 vector)
 {
+	using namespace MathUtility;
+
 	vector_ = vector;
 
 	door_[0] = std::make_unique<door>();
@@ -24,19 +26,19 @@ void DoorManager::Update(int frequencyInvocationDoor)
 {
 	if (frequencyInvocationDoor == 1)
 	{
-		door_[frequencyInvocationDoor-1]->Update();
+		door_[frequencyInvocationDoor-1]->Update(Vector3(vector_.z,0.0f,-vector_.x));
 	}
 	if (frequencyInvocationDoor == 2)
 	{
-		door_[frequencyInvocationDoor-1]->Update();
+		door_[frequencyInvocationDoor-1]->Update(Vector3(vector_.z, 0.0f, vector_.x));
 	}
 	if (frequencyInvocationDoor == 3)
 	{
-		door_[frequencyInvocationDoor-1]->Update();
+		door_[frequencyInvocationDoor-1]->Update(Vector3(vector_.z, 0.0f, vector_.x));
 	}
 	if (frequencyInvocationDoor == 4)
 	{
-		door_[frequencyInvocationDoor-1]->Update();
+		door_[frequencyInvocationDoor-1]->Update(Vector3(vector_.z, 0.0f, vector_.x));
 	}
 }
 
@@ -55,6 +57,9 @@ void DoorManager::SpriteDraw()
 void DoorManager::Reset()
 {
 	door_[0]->Reset(Vector3(375 * vector_.x, 4.0f, 750 + 375 * vector_.z));
+	door_[1]->Reset(Vector3(600 * vector_.x, 4.0f, 600 * -vector_.z));
+	door_[2]->Reset(Vector3(450 * vector_.x, 4.0f, 450 * -vector_.z));
+	door_[3]->Reset(Vector3(300 * vector_.x, 4.0f, 300 * -vector_.z));
 }
 
 bool DoorManager::GetMashFlag(int frequencyInvocationDoor)

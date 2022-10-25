@@ -33,6 +33,8 @@ private:
 	
 	Vector3 vector_;
 
+	Vector3 moveVector_;
+
 	uint32_t textureHandle_ = 0;
 	std::unique_ptr<Sprite> sprite_;
 };

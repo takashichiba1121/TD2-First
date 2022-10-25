@@ -19,7 +19,7 @@ public:
 	/// <summary>
 	/// –ˆƒtƒŒ[ƒ€ˆ—
 	/// </summary>
-	void Update();
+	void Update(Vector3 vector);
 
 	/// <summary>
 	/// •`‰æ
@@ -35,7 +35,7 @@ public:
 private:
 
 	//˜A‘Åˆ—
-	void Mash();
+	void Mash(Vector3 vector);
 
 	bool mashFlag_ = false;
 	UINT mashNum_ = 0;

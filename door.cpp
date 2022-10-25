@@ -34,13 +34,13 @@ void door::Initialize(Vector3 trans, Vector3 Rot)
 	door3worldTransform_.TransferMatrix();
 }
 
-void door::Mash()
+void door::Mash(Vector3 vector)
 {
 	if (input_->TriggerKey(DIK_SPACE))
 	{
 		mashNum_++;
-		door2worldTransform_.translation_.x--;
-		door3worldTransform_.translation_.x++;
+		door2worldTransform_.translation_-=vector;
+		door3worldTransform_.translation_+=vector;
 	}
 	if (mashNum_ > 10)
 	{
@@ -53,9 +53,9 @@ void door::Mash()
 	debugText_->GetInstance()->Printf("MashNum(%d)", mashNum_);
 }
 
-void door::Update()
+void door::Update(Vector3 vector)
 {
-	Mash();
+	Mash(vector);
 
 	affine::makeAffine(door1worldTransform_);
 	affine::makeAffine(door2worldTransform_);
