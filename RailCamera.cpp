@@ -373,17 +373,6 @@ bool RailCamera::Update(bool GetCrashFlag,int frequencyInvocationDoor)
 
 	Move();
 
-	debugText_->SetPos(10, 10);
-	debugText_->Printf(" PlayerZ:%f", playerz);
-	debugText_->SetPos(10, 30);
-	debugText_->Printf(" RailCamera.RotY:%f", worldTransform_.rotation_.y/affine::Deg2Rad);
-	debugText_->SetPos(10, 50);
-	debugText_->Printf(" %d", currentSide);
-	debugText_->SetPos(10, 70);
-	debugText_->Printf(" lap:%d", lap);
-	debugText_->SetPos(10, 90);
-	debugText_->Printf(" speed:%f", speed);
-
 	
 	if (currentSide==side::Second&&playerz>= invocationTrnsDoor[0]&& frequencyInvocationDoor==0) {
 		return true;

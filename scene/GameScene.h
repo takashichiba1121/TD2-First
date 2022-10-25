@@ -102,6 +102,8 @@ class GameScene {
 	bool resultParticleFrg = false;
 
 	bool startGameFrg = false;
+
+	bool endGameFrg = false;
 	
 	/// <summary>
 	/// ゲームシーン用

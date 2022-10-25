@@ -71,7 +71,7 @@ void GameScene::Update()
 		}
 		break;
 	case Scene::game:
-		if (startGameFrg)
+		if (startGameFrg&& endGameFrg == false)
 		{
 			if (isActivationDoor == false)
 			{
@@ -84,17 +84,9 @@ void GameScene::Update()
 				player_->Update();
 				objectManager_->Update();
 				speedUpChance_->Update(player_.get());
-				if (input_->TriggerKey(DIK_Q)) {
-					ParticleFrg = true;
-					particle_->state();
-				}
-				if (particle_->GetNumTimer() >= 225)
-				{
-					viewProjection = resultCamera_->GetViewProjection();
-
+				if (railCamera_->GetLap()>=1) {
+					endGameFrg = true;
 					endTime = nowTime;
-
-					scene = Scene::result;
 				}
 				if (railCamera_->GetIsRapReset())
 				{
@@ -112,12 +104,25 @@ void GameScene::Update()
 			}
 			nowTime = time(NULL) - stateTime;
 		}
-		else
+		else if(startGameFrg==false)
 		{
 			if (3 <= time(NULL) - stateTime)
 			{
 				startGameFrg = true;
-				nowTime = time(NULL);
+				stateTime = time(NULL);
+			}
+		}
+		if (endGameFrg)
+		{
+			if (3 <= time(NULL) - endTime)
+			{
+				resultParticleFrg = true;
+				particle_->state();
+			}
+			if (particle_->GetNumTimer() >= 225) {
+				viewProjection = resultCamera_->GetViewProjection();
+
+				scene = Scene::result;
 			}
 		}
 		break;
@@ -139,11 +144,17 @@ void GameScene::Update()
 		break;
 	}
 
-	debugText_->SetPos(10, 100);
+	debugText_->SetPos(10, 10);
 	debugText_->Printf(" %f",affine::GetWorldTrans(player_->GetWorldTransform().matWorld_).x);
 
-	debugText_->SetPos(10, 120);
+	debugText_->SetPos(10, 30);
 	debugText_->Printf("time::%d,%d", nowTime / 60, nowTime % 60);
+
+	debugText_->SetPos(10, 50);
+	debugText_->Printf("endFrg::%d",endGameFrg);
+
+	debugText_->SetPos(10, 70);
+	debugText_->Printf("endtime::%d",endTime);
 }
 
 void GameScene::Draw()

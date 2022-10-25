@@ -48,6 +48,8 @@ public:
 
 	float GetWorldTransformRot();
 
+	int GetLap() {return lap; }
+
 	void setTranslation(Vector3 translation) { worldTransform_.translation_ = translation; };
 
 	bool GetIsRapReset() { return IsLapReset; }
