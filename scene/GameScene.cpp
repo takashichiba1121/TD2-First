@@ -58,11 +58,12 @@ void GameScene::Update()
 		resultCamera_->Update();
 		player_->titleUpdate();
 		if (input_->TriggerKey(DIK_Q)) {
-			ParticleFrg = true;
+			titleParticleFrg = true;
 			particle_->state();
 		}
-		if (particle_->GetNumTimer() >= 225)
+		if (particle_->GetNumTimer() >= 225&& titleParticleFrg == true)
 		{
+			titleParticleFrg = false;
 			scene = Scene::game;
 			viewProjection = railCamera_->GetViewProjection();
 			railCamera_->reset();
@@ -126,11 +127,12 @@ void GameScene::Update()
 		resultCamera_->Update();
 		resultScene_->Update();
 		if (input_->TriggerKey(DIK_Q)) {
-			ParticleFrg = true;
+			resultParticleFrg = true;
 			particle_->state();
 		}
-		if (particle_->GetNumTimer() >= 225) {
+		if (particle_->GetNumTimer() >= 225&& resultParticleFrg == true) {
 			scene = Scene::title;
+			resultParticleFrg = false;
 		}
 		break;
 	default:

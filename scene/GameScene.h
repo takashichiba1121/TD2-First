@@ -97,7 +97,9 @@ class GameScene {
 	//発動中？
 	bool isActivationDoor = false;
 
+	bool titleParticleFrg = false;
 	bool ParticleFrg = false;
+	bool resultParticleFrg = false;
 
 	bool startGameFrg = false;
 	
