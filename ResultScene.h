@@ -1,4 +1,7 @@
 #pragma once
+#include"Sprite.h"
+#include "TextureManager.h"
+#include<memory>
 class ResultScene
 {
 public:
@@ -17,5 +20,9 @@ public:
 	/// •`‰æ
 	/// </summary>
 	void SpriteDraw();
+private:
+	std::unique_ptr<Sprite> spriteSpace_;
+
+	uint32_t pushSpaceHandle_ = 0;
 };
 

@@ -52,6 +52,8 @@ public:
 
 	void setTranslation(Vector3 translation) { worldTransform_.translation_ = translation; };
 
+	void setSpeed(float speed) { this->speed = speed; }
+
 	bool GetIsRapReset() { return IsLapReset; }
 
 	Vector3 GetVector() { return vector; }

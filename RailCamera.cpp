@@ -373,6 +373,9 @@ bool RailCamera::Update(bool GetCrashFlag,int frequencyInvocationDoor)
 
 	Move();
 
+	debugText_->SetPos(10, 90);
+	debugText_->Printf(" speed:%f", speed);
+
 	
 	if (currentSide==side::Second&&playerz>= invocationTrnsDoor[0]&& frequencyInvocationDoor==0) {
 		return true;
@@ -443,10 +446,15 @@ void RailCamera::lapReset()
 
 void RailCamera::SpeedUp()
 {
-	speed++;
+	speed += 0.5f;
 }
 
 void RailCamera::SpeedDown()
 {
-	speed--;
+	speed -= 0.5f;
+
+	if (speed <= 0)
+	{
+		speed = 0.5f;
+	}
 }

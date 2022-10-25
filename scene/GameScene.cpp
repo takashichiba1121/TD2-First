@@ -57,7 +57,7 @@ void GameScene::Update()
 		railCamera_->Update(player_->GetCrashFlag(), frequencyInvocationDoor);
 		resultCamera_->Update();
 		player_->titleUpdate();
-		if (input_->TriggerKey(DIK_Q)) {
+		if (input_->TriggerKey(DIK_SPACE)) {
 			titleParticleFrg = true;
 			particle_->state();
 		}
@@ -67,6 +67,7 @@ void GameScene::Update()
 			scene = Scene::game;
 			viewProjection = railCamera_->GetViewProjection();
 			railCamera_->reset();
+			objectManager_->Reset();
 			stateTime = time(NULL);
 		}
 		break;
@@ -116,13 +117,14 @@ void GameScene::Update()
 		{
 			if (3 <= time(NULL) - endTime)
 			{
-				resultParticleFrg = true;
+				ParticleFrg = true;
 				particle_->state();
 			}
 			if (particle_->GetNumTimer() >= 225) {
 				viewProjection = resultCamera_->GetViewProjection();
 
 				scene = Scene::result;
+				railCamera_->setSpeed(1.0f);
 			}
 		}
 		break;
@@ -131,7 +133,7 @@ void GameScene::Update()
 		player_->titleUpdate();
 		resultCamera_->Update();
 		resultScene_->Update();
-		if (input_->TriggerKey(DIK_Q)) {
+		if (input_->TriggerKey(DIK_SPACE)) {
 			resultParticleFrg = true;
 			particle_->state();
 		}
