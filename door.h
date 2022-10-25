@@ -14,7 +14,7 @@ public:
 	// <summary>
 	/// 初期化
 	/// </summary>
-	void Initialize();
+	void Initialize(Vector3 trans,Vector3 Rot);
 
 	/// <summary>
 	/// 毎フレーム処理
@@ -26,14 +26,9 @@ public:
 	/// </summary>
 	void Draw(ViewProjection* viewProjection);
 
-	/// <summary>
-	/// スプライト用描画
-	/// </summary>
-	void SpriteDraw();
-
 	bool GetMashFlag() { return mashFlag_; }
 
-	void Reset();
+	void Reset(Vector3 trans);
 
 	UINT GetMashNum() { return mashNum_; }
 
@@ -44,10 +39,6 @@ private:
 
 	bool mashFlag_ = false;
 	UINT mashNum_ = 0;
-
-	uint32_t textureHandle_ = 0;
-
-	std::unique_ptr<Sprite> sprite_;
 
 	WorldTransform door1worldTransform_;
 	WorldTransform door2worldTransform_;

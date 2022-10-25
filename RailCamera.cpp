@@ -30,12 +30,17 @@ void RailCamera::Initialize(const Vector3& position, const Vector3& rotaion)
 	rotRange[0] = 750.0f;
 	rotRange[1] = rotRange[0] + vector.z * 750;
 	rotRange[2] = 750.0f;
-	rotRange[3] = 0.0f + speed * 5;
+	rotRange[3] = 0.0f;
 	rotRange[4] = rotRange[3] - vector.z * 750;
 	rotRange[5] = 0.0f;
+
+	invocationTrnsDoor[0] = 750 + 365 * vector.z;
+	invocationTrnsDoor[1] = 610 * -vector.z;
+	invocationTrnsDoor[2] = 460 * -vector.z;
+	invocationTrnsDoor[3] = 310 * -vector.z;
 }
 
-bool RailCamera::Update(bool GetCrashFlag)
+bool RailCamera::Update(bool GetCrashFlag,int frequencyInvocationDoor)
 {
 	using namespace MathUtility;
 
@@ -229,8 +234,6 @@ bool RailCamera::Update(bool GetCrashFlag)
 
 					worldTransform_.rotation_.y = 0.0f;
 
-					isActivationDoor = false;
-
 					lap++;
 
 					currentSide = side::First;
@@ -378,10 +381,20 @@ bool RailCamera::Update(bool GetCrashFlag)
 	debugText_->Printf(" %d", currentSide);
 	debugText_->SetPos(10, 70);
 	debugText_->Printf(" lap:%d", lap);
+	debugText_->SetPos(10, 90);
+	debugText_->Printf(" speed:%f", speed);
 
-	//六角形が四辺目でプレイヤーのZが半分下回ってなくこの周に一回もドアを使ってない時のみ
-	if (currentSide==side::Fourth&&playerz<=375.0f&&isActivationDoor==false) {
-		isActivationDoor = true;
+	
+	if (currentSide==side::Second&&playerz>= invocationTrnsDoor[0]&& frequencyInvocationDoor==0) {
+		return true;
+	}
+	if (currentSide == side::Sixth && playerz >= invocationTrnsDoor[1] && frequencyInvocationDoor == 1) {
+		return true;
+	}
+	if (currentSide == side::Sixth && playerz >= invocationTrnsDoor[2] && frequencyInvocationDoor == 2) {
+		return true;
+	}
+	if (currentSide == side::Sixth && playerz >= invocationTrnsDoor[3] && frequencyInvocationDoor == 3) {
 		return true;
 	}
 
@@ -432,13 +445,10 @@ void RailCamera::reset(){
 
 	speed = 1;
 	currentSide = side::First;
-
-	isActivationDoor = false;
 }
 
 void RailCamera::lapReset()
 {
-	isActivationDoor = false;
 	IsLapReset = false;
 }
 

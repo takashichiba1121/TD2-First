@@ -21,6 +21,7 @@
 #include"TitleScene.h"
 #include"ResultScene.h"
 #include"SpeedUpChance.h"
+#include"DoorManager.h"
 
 /// <summary>
 /// ゲームシーン
@@ -65,12 +66,12 @@ class GameScene {
 	std::unique_ptr<Player> player_;
 	std::unique_ptr<stage> stage_;
 	std::unique_ptr<sky> modelSkydome_;
-	std::unique_ptr<door> door_;
 	std::unique_ptr<Particle> particle_;
 	std::unique_ptr<ObjectManager> objectManager_;
 	std::unique_ptr<TitleScene> titleScene_;
 	std::unique_ptr<ResultScene> resultScene_;
 	std::unique_ptr<SpeedUpChance>speedUpChance_;
+	std::unique_ptr<DoorManager> doorManager_;
 
 	enum class Scene
 	{
@@ -87,6 +88,11 @@ class GameScene {
 	int nowTime = 0;
 
 	int endTime = 0;
+
+	int frequencyInvocationDoor = 0;
+
+	//発動中？
+	bool isActivationDoor = false;
 	
 	/// <summary>
 	/// ゲームシーン用

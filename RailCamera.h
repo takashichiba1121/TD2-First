@@ -21,7 +21,7 @@ public:
 	/// <summary>
 	/// –ˆƒtƒŒ[ƒ€ˆ—
 	/// </summary>
-	bool Update(bool GetCrashFlag);
+	bool Update(bool GetCrashFlag,int frequencyInvocationDoor);
 
 	/// <summary>
 	/// •`‰æ
@@ -52,6 +52,8 @@ public:
 
 	bool GetIsRapReset() { return IsLapReset; }
 
+	Vector3 GetVector() { return vector; }
+
 private:
 
 	DebugText* debugText_ = nullptr;
@@ -78,11 +80,10 @@ private:
 
 	int lap = 0;
 
-	//‚à‚¤”­“®‚µ‚½‚©H
-	bool isActivationDoor = false;
-
 	bool IsLapReset = false;
 
 	void Move();
+
+	float invocationTrnsDoor[4]={};
 };
 

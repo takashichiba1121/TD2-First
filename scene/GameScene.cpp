@@ -20,11 +20,11 @@ void GameScene::Initialize()
 	resultCamera_ = std::make_unique<ResultCamera>();
 	stage_ = std::make_unique<stage>();
 	modelSkydome_ = std::make_unique<sky>();
-	door_ = std::make_unique<door>();
 	particle_ = std::make_unique<Particle>();
 	objectManager_ = std::make_unique<ObjectManager>();
 	titleScene_ = std::make_unique<TitleScene>();
 	resultScene_ = std::make_unique<ResultScene>();
+	doorManager_ = std::make_unique<DoorManager>();
 
 	dxCommon_ = DirectXCommon::GetInstance();
 	input_ = Input::GetInstance();
@@ -35,9 +35,9 @@ void GameScene::Initialize()
 	resultCamera_->Initialize(railCamera_->GetWorldTransformPtr());
 	stage_->Initialize();
 	modelSkydome_->Initialize();
-	door_->Initialize();
 	particle_->Initialize();
 	objectManager_->Initialize(player_.get());
+	doorManager_->Initialize(railCamera_->GetVector());
 	titleScene_->Initialize();
 	resultScene_->Initialize();
 	speedUpChance_ = std::make_unique<SpeedUpChance>();
@@ -51,7 +51,7 @@ void GameScene::Update()
 	switch (scene)
 	{
 	case Scene::title:
-		railCamera_->Update(player_->GetCrashFlag());
+		railCamera_->Update(player_->GetCrashFlag(), frequencyInvocationDoor);
 		resultCamera_->Update();
 		player_->titleUpdate();
 		if (input_->TriggerKey(DIK_Q)) {
@@ -62,39 +62,41 @@ void GameScene::Update()
 		}
 		break;
 	case Scene::game:
-		if (railCamera_->Update(player_->GetCrashFlag()))
+		if (isActivationDoor==false)
 		{
-			player_->SetTransform({ 0.0f, -2.0f, 10.0f });
+			if (railCamera_->Update(player_->GetCrashFlag(), frequencyInvocationDoor))
+			{
+				player_->SetTransform({ 0.0f, -2.0f, 10.0f });
+				isActivationDoor = true;
+				frequencyInvocationDoor++;
+			}
+			player_->Update();
+			objectManager_->Update();
+			speedUpChance_->Update(player_.get());
+			if (input_->TriggerKey(DIK_Q)) {
+				viewProjection = resultCamera_->GetViewProjection();
 
-			scene = Scene::door;
+				endTime = nowTime;
+
+				scene = Scene::result;
+			}
+			if (railCamera_->GetIsRapReset())
+			{
+				railCamera_->lapReset();
+				doorManager_->Reset();
+			}
 		}
-		player_->Update();
-		objectManager_->Update();
-		speedUpChance_->Update(player_.get());
-		if (input_->TriggerKey(DIK_Q)) {
-			viewProjection = resultCamera_->GetViewProjection();
-
-			endTime = nowTime;
-
-			scene = Scene::result;
-		}
-		if (railCamera_->GetIsRapReset()) 
+		else
 		{
-			railCamera_->lapReset();
-			door_->Reset();
-		}
-
-		nowTime = time(NULL)-stateTime;
-		break;
-	case Scene::door:
-		door_->Update();
-		if (door_->GetMashFlag()) {
-			scene = Scene::game;
+			doorManager_->Update(frequencyInvocationDoor);
+			if (doorManager_->GetMashFlag(frequencyInvocationDoor)) {
+				isActivationDoor = false;
+			}
 		}
 		nowTime = time(NULL) - stateTime;
 		break;
 	case Scene::result:
-		railCamera_->Update(player_->GetCrashFlag());
+		railCamera_->Update(player_->GetCrashFlag(), frequencyInvocationDoor);
 		player_->titleUpdate();
 		resultCamera_->Update();
 		resultScene_->Update();
@@ -147,10 +149,7 @@ void GameScene::Draw()
 	case GameScene::Scene::game:
 		objectManager_->Draw(viewProjection);
 		speedUpChance_->Draw(viewProjection);
-		door_->Draw(viewProjection);
-		break;
-	case GameScene::Scene::door:
-		door_->Draw(viewProjection);
+		doorManager_->Draw(viewProjection);
 		break;
 	case GameScene::Scene::result:
 		break;
@@ -180,9 +179,11 @@ void GameScene::Draw()
 		titleScene_->SpriteDraw();
 		break;
 	case GameScene::Scene::game:
-		break;
-	case GameScene::Scene::door:
-		door_->SpriteDraw();
+		
+		if (isActivationDoor)
+		{
+			doorManager_->SpriteDraw();
+		}
 		break;
 	case GameScene::Scene::result:
 		resultScene_->SpriteDraw();
