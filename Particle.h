@@ -25,6 +25,11 @@ public:
 	/// </summary>
 	void Draw();
 
+	///<summary>
+	///パーティクルスタート
+	///<summary>
+	void state();
+	
 	/// <summary>
 	/// アイキャッチ
 	/// </summary>
@@ -44,6 +49,8 @@ public:
 	/// 値の初期化
 	/// </summary>
 	void Reset();
+
+	float GetNumTimer();
 
 	Vector2 pos;
 	Vector2 pos2;

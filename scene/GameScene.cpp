@@ -58,6 +58,11 @@ void GameScene::Update()
 		resultCamera_->Update();
 		player_->titleUpdate();
 		if (input_->TriggerKey(DIK_Q)) {
+			ParticleFrg = true;
+			particle_->state();
+		}
+		if (particle_->GetNumTimer() >= 225)
+		{
 			scene = Scene::game;
 			viewProjection = railCamera_->GetViewProjection();
 			railCamera_->reset();
@@ -65,39 +70,55 @@ void GameScene::Update()
 		}
 		break;
 	case Scene::game:
-		if (isActivationDoor==false)
+		if (startGameFrg)
 		{
-			if (railCamera_->Update(player_->GetCrashFlag(), frequencyInvocationDoor))
+			if (isActivationDoor == false)
 			{
-				player_->SetTransform({ 0.0f, -2.0f, 10.0f });
-				isActivationDoor = true;
-				frequencyInvocationDoor++;
-			}
-			player_->Update();
-			objectManager_->Update();
-			speedUpChance_->Update(player_.get());
-			if (input_->TriggerKey(DIK_Q)) {
-				viewProjection = resultCamera_->GetViewProjection();
+				if (railCamera_->Update(player_->GetCrashFlag(), frequencyInvocationDoor))
+				{
+					player_->SetTransform({ 0.0f, -2.0f, 10.0f });
+					isActivationDoor = true;
+					frequencyInvocationDoor++;
+				}
+				player_->Update();
+				objectManager_->Update();
+				speedUpChance_->Update(player_.get());
+				if (input_->TriggerKey(DIK_Q)) {
+					ParticleFrg = true;
+					particle_->state();
+				}
+				if (particle_->GetNumTimer() >= 225)
+				{
+					viewProjection = resultCamera_->GetViewProjection();
 
-				endTime = nowTime;
+					endTime = nowTime;
 
-				scene = Scene::result;
+					scene = Scene::result;
+				}
+				if (railCamera_->GetIsRapReset())
+				{
+					railCamera_->lapReset();
+					doorManager_->Reset();
+					frequencyInvocationDoor = 0;
+				}
 			}
-			if (railCamera_->GetIsRapReset())
+			else
 			{
-				railCamera_->lapReset();
-				doorManager_->Reset();
-				frequencyInvocationDoor = 0;
+				doorManager_->Update(frequencyInvocationDoor);
+				if (doorManager_->GetMashFlag(frequencyInvocationDoor)) {
+					isActivationDoor = false;
+				}
 			}
+			nowTime = time(NULL) - stateTime;
 		}
 		else
 		{
-			doorManager_->Update(frequencyInvocationDoor);
-			if (doorManager_->GetMashFlag(frequencyInvocationDoor)) {
-				isActivationDoor = false;
+			if (3 <= time(NULL) - stateTime)
+			{
+				startGameFrg = true;
+				nowTime = time(NULL);
 			}
 		}
-		nowTime = time(NULL) - stateTime;
 		break;
 	case Scene::result:
 		railCamera_->Update(player_->GetCrashFlag(), frequencyInvocationDoor);
@@ -105,6 +126,10 @@ void GameScene::Update()
 		resultCamera_->Update();
 		resultScene_->Update();
 		if (input_->TriggerKey(DIK_Q)) {
+			ParticleFrg = true;
+			particle_->state();
+		}
+		if (particle_->GetNumTimer() >= 225) {
 			scene = Scene::title;
 		}
 		break;

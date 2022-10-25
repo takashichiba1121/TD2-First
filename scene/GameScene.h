@@ -96,6 +96,10 @@ class GameScene {
 
 	//発動中？
 	bool isActivationDoor = false;
+
+	bool ParticleFrg = false;
+
+	bool startGameFrg = false;
 	
 	/// <summary>
 	/// ゲームシーン用

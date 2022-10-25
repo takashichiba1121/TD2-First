@@ -62,12 +62,13 @@ void Particle::EyeCatchDraw()
 	}
 }
 
+void Particle::state()
+{
+		flag = true;
+}
+
 void Particle::EyeCatch()
 {
-	if (input_->TriggerKey(DIK_P))
-	{
-		flag = true;
-	}
 
 	// ウィンドウサイズを超えたら一段ずらす
 	if (pos.x > 1400)
@@ -130,4 +131,9 @@ void Particle::EyeCatch()
 void Particle::Draw()
 {
 	EyeCatch();
+}
+
+float Particle::GetNumTimer()
+{
+	return num.timer;
 }
