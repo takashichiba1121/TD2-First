@@ -89,7 +89,7 @@ class GameScene {
 
 	Scene scene=Scene::title;
 
-	int stateTime=0;
+	int startTime=0;
 
 	int nowTime = 0;
 

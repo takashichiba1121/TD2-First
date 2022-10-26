@@ -10,6 +10,10 @@ void Object::Initialize(const Vector3& pos, const Vector3& rot, float radius, Mo
 
 	worldTransform_->Initialize();
 
+	affine::makeAffine(*worldTransform_);
+
+	worldTransform_->TransferMatrix();
+
 	model_ = model;
 
 	collider_.center = worldTransform_->translation_;

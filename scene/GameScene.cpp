@@ -71,8 +71,9 @@ void GameScene::Update()
 			scene = Scene::game;
 			viewProjection = railCamera_->GetViewProjection();
 			railCamera_->reset();
+			player_->Update();
 			objectManager_->Reset();
-			stateTime = time(NULL);
+			startTime = time(NULL);
 		}
 		break;
 	case Scene::game:
@@ -107,14 +108,14 @@ void GameScene::Update()
 					isActivationDoor = false;
 				}
 			}
-			nowTime = time(NULL) - stateTime;
+			nowTime = time(NULL) - startTime;
 		}
 		else if(startGameFrg==false)
 		{
-			if (3 <= time(NULL) - stateTime)
+			if (3 <= time(NULL) - startTime)
 			{
 				startGameFrg = true;
-				stateTime = time(NULL);
+				startTime = time(NULL);
 			}
 		}
 		if (endGameFrg)
@@ -128,6 +129,8 @@ void GameScene::Update()
 				viewProjection = resultCamera_->GetViewProjection();
 
 				scene = Scene::result;
+				endGameFrg = false;
+				startGameFrg = false;
 				railCamera_->setSpeed(1.0f);
 			}
 		}
@@ -151,7 +154,7 @@ void GameScene::Update()
 	}
 
 	debugText_->SetPos(10, 10);
-	debugText_->Printf(" %f",affine::GetWorldTrans(player_->GetWorldTransform().matWorld_).x);
+	debugText_->Printf(" %f",affine::GetWorldTrans(player_->GetWorldTransform().matWorld_).z);
 
 	debugText_->SetPos(10, 30);
 	debugText_->Printf("time::%d,%d", nowTime / 60, nowTime % 60);
@@ -197,15 +200,14 @@ void GameScene::Draw()
 	case GameScene::Scene::game:
 		objectManager_->Draw(viewProjection);
 		goalModel_->Draw(viewProjection);
+		doorManager_->Draw(viewProjection);
+		speedUpChance_->Draw(viewProjection);
 		break;
 	case GameScene::Scene::result:
 		break;
 	default:
 		break;
 	}
-
-	speedUpChance_->Draw(viewProjection);
-	doorManager_->Draw(viewProjection);
 	player_->Draw(viewProjection);
 	stage_->Draw(viewProjection);
 	modelSkydome_->Draw(viewProjection);
