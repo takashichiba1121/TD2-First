@@ -40,7 +40,7 @@ void RailCamera::Initialize(const Vector3& position, const Vector3& rotaion)
 	invocationTrnsDoor[3] = 310 * -vector.z;
 }
 
-bool RailCamera::Update(bool GetCrashFlag,int frequencyInvocationDoor)
+bool RailCamera::Update(bool GetCrashFlag, int frequencyInvocationDoor)
 {
 	using namespace MathUtility;
 
@@ -51,23 +51,23 @@ bool RailCamera::Update(bool GetCrashFlag,int frequencyInvocationDoor)
 		switch (currentSide)
 		{
 		case side::First:
-		
+
 			playerz = worldTransform_.translation_.z + 10.0f;
 			if (playerz < rotRange[0] - (speed * 10))
 			{
 				Vector3 move = { 0,0,1.0f * speed };
 				worldTransform_.translation_ += move;
-				if (playerz  > rotRange[0]- (speed*10))
+				if (playerz > rotRange[0] - (speed * 10))
 				{
-					worldTransform_.translation_ = Vector3{ 0.0f,0.0f,rotRange[0]-speed*10 };
+					worldTransform_.translation_ = Vector3{ 0.0f,0.0f,rotRange[0] - speed * 10 };
 				}
 			}
-			else 
+			else
 			{
 				Vector3 move = { 0,0,1.0f * speed };
 				Vector3 Rot = { 0,3.0f * affine::Deg2Rad,0 };
 
-				if (worldTransform_.rotation_.y>=30.0f*affine::Deg2Rad)
+				if (worldTransform_.rotation_.y >= 30.0f * affine::Deg2Rad)
 				{
 					worldTransform_.translation_ = { -vector.x * 10,0.0f,rotRange[0] - vector.z * 10 };
 
@@ -75,7 +75,7 @@ bool RailCamera::Update(bool GetCrashFlag,int frequencyInvocationDoor)
 				}
 				else
 				{
-					worldTransform_.rotation_+=(Rot);
+					worldTransform_.rotation_ += (Rot);
 					worldTransform_.translation_ += move;
 				}
 				if (worldTransform_.rotation_.y > 30.0f * affine::Deg2Rad)
@@ -85,22 +85,22 @@ bool RailCamera::Update(bool GetCrashFlag,int frequencyInvocationDoor)
 			}
 			break;
 		case side::Second:
-			playerz = worldTransform_.translation_.z + vector.z*10;
-			if (playerz < rotRange[1]-(vector.z* speed * 10))
+			playerz = worldTransform_.translation_.z + vector.z * 10;
+			if (playerz < rotRange[1] - (vector.z * speed * 10))
 			{
 				Vector3 move = { vector * speed };
-				worldTransform_.translation_ +=  move ;
-				if (playerz > rotRange[1] - (vector.z*speed * 10))
+				worldTransform_.translation_ += move;
+				if (playerz > rotRange[1] - (vector.z * speed * 10))
 				{
 					worldTransform_.translation_ = Vector3{ 0.0f,0.0f,rotRange[2] - (vector.z * speed * 10) };
 				}
 			}
-			else 
+			else
 			{
 				Vector3 move = { vector * speed };
 				Vector3 Rot = { 0,12 * affine::Deg2Rad,0 };
 
-				if(worldTransform_.rotation_.y >= 150.0f * affine::Deg2Rad)
+				if (worldTransform_.rotation_.y >= 150.0f * affine::Deg2Rad)
 				{
 					worldTransform_.translation_ = { vector.x * 750 - vector.x * 10,0.0f,rotRange[1] + vector.z * 10 };
 					currentSide = side::Third;
@@ -117,7 +117,7 @@ bool RailCamera::Update(bool GetCrashFlag,int frequencyInvocationDoor)
 			}
 			break;
 		case side::Third:
-			playerz = worldTransform_.translation_.z -vector.z * 10.0f;
+			playerz = worldTransform_.translation_.z - vector.z * 10.0f;
 			if (playerz > rotRange[2] + vector.z * (speed * 10))
 			{
 				Vector3 move = { vector.x * speed,vector.y * speed,-vector.z * speed };
@@ -150,13 +150,13 @@ bool RailCamera::Update(bool GetCrashFlag,int frequencyInvocationDoor)
 			break;
 		case side::Fourth:
 			playerz = worldTransform_.translation_.z - 10.0f;
-			if (playerz > rotRange[3] +speed * 10)
+			if (playerz > rotRange[3] + speed * 10)
 			{
 				Vector3 move = { 0,0,-1.0f * speed };
 				worldTransform_.translation_ += move;
-				if (playerz < rotRange[3] +  speed * 10)
+				if (playerz < rotRange[3] + speed * 10)
 				{
-					worldTransform_.translation_ = Vector3{ 0.0f,0.0f,rotRange[3] + ( speed * 10) };
+					worldTransform_.translation_ = Vector3{ 0.0f,0.0f,rotRange[3] + (speed * 10) };
 				}
 			}
 			else
@@ -181,7 +181,7 @@ bool RailCamera::Update(bool GetCrashFlag,int frequencyInvocationDoor)
 			}
 			break;
 		case side::Fifth:
-			playerz = worldTransform_.translation_.z -vector.z* 10.0f;
+			playerz = worldTransform_.translation_.z - vector.z * 10.0f;
 			if (playerz > rotRange[4] + speed * 10)
 			{
 				Vector3 move = { -vector.x * speed,-vector.y * speed,-vector.z * speed };
@@ -214,7 +214,7 @@ bool RailCamera::Update(bool GetCrashFlag,int frequencyInvocationDoor)
 			}
 			break;
 		case side::Sixth:
-			playerz = worldTransform_.translation_.z +vector.z* 10.0f;
+			playerz = worldTransform_.translation_.z + vector.z * 10.0f;
 			if (playerz < rotRange[5] - speed * 10)
 			{
 				Vector3 move = { -vector.x * speed,vector.y * speed,vector.z * speed };
@@ -259,13 +259,15 @@ bool RailCamera::Update(bool GetCrashFlag,int frequencyInvocationDoor)
 	}
 	else
 	{
+		speed = 0.5f;
+
 		switch (currentSide)
 		{
 		case side::First:
 			playerz = worldTransform_.translation_.z - 10.0f;
 			if (playerz < rotRange[0])
 			{
-				Vector3 move = { 0,0,1.0f * (speed * 0.5f) };
+				Vector3 move = { 0,0,1.0f * speed };
 				worldTransform_.translation_ += move;
 			}
 			else if (playerz >= rotRange[0])
@@ -273,7 +275,7 @@ bool RailCamera::Update(bool GetCrashFlag,int frequencyInvocationDoor)
 				Vector3 Rot = { 0,30 * affine::Deg2Rad,0 };
 
 				worldTransform_.rotation_ += (Rot);
-				worldTransform_.translation_ ={ -vector.x * 10,0.0f,-vector.z * 10 + 750 };
+				worldTransform_.translation_ = { -vector.x * 10,0.0f,-vector.z * 10 + 750 };
 
 				currentSide = side::Second;
 			}
@@ -282,7 +284,7 @@ bool RailCamera::Update(bool GetCrashFlag,int frequencyInvocationDoor)
 			playerz = worldTransform_.translation_.z - vector.z * 10;
 			if (playerz < rotRange[1])
 			{
-				Vector3 move = { vector * (speed * 0.3f) };
+				Vector3 move = { vector * speed };
 				worldTransform_.translation_ += move;
 			}
 			else if (playerz >= rotRange[1])
@@ -290,7 +292,7 @@ bool RailCamera::Update(bool GetCrashFlag,int frequencyInvocationDoor)
 				Vector3 Rot = { 0,120 * affine::Deg2Rad,0 };
 
 				worldTransform_.rotation_ += (Rot);
-				worldTransform_.translation_= { vector.x * 750 - vector.x * 10,0.0f,rotRange[1] + vector.z * 10 };
+				worldTransform_.translation_ = { vector.x * 750 - vector.x * 10,0.0f,rotRange[1] + vector.z * 10 };
 				currentSide = side::Third;
 			}
 			break;
@@ -298,7 +300,7 @@ bool RailCamera::Update(bool GetCrashFlag,int frequencyInvocationDoor)
 			playerz = worldTransform_.translation_.z + vector.z * 10.0f;
 			if (playerz > rotRange[2])
 			{
-				Vector3 move = { vector.x * (speed * 0.3f),vector.y * (speed * 0.3f),-vector.z * (speed * 0.3f) };
+				Vector3 move = { vector.x * speed,vector.y * speed ,-vector.z * speed };
 				worldTransform_.translation_ += move;
 			}
 			else if (playerz <= rotRange[2])
@@ -306,7 +308,7 @@ bool RailCamera::Update(bool GetCrashFlag,int frequencyInvocationDoor)
 				Vector3 Rot = { 0,30 * affine::Deg2Rad,0 };
 
 				worldTransform_.rotation_ += (Rot);
-				worldTransform_.translation_ ={ vector.x * 750 * 2,0.0f,750 + 10 };
+				worldTransform_.translation_ = { vector.x * 750 * 2,0.0f,750 + 10 };
 
 				currentSide = side::Fourth;
 			}
@@ -315,7 +317,7 @@ bool RailCamera::Update(bool GetCrashFlag,int frequencyInvocationDoor)
 			playerz = worldTransform_.translation_.z + 10.0f;
 			if (playerz > rotRange[3])
 			{
-				Vector3 move = { 0,0,-1.0f * (speed * 0.3f) };
+				Vector3 move = { 0,0,-1.0f * speed };
 				worldTransform_.translation_ += move;
 			}
 			if (playerz <= rotRange[3])
@@ -323,7 +325,7 @@ bool RailCamera::Update(bool GetCrashFlag,int frequencyInvocationDoor)
 				Vector3 Rot = { 0,30 * affine::Deg2Rad,0 };
 
 				worldTransform_.rotation_ += (Rot);
-				worldTransform_.translation_ ={ vector.x * 750 * 2 + vector.x * 10,0.0f,vector.z * 10 };
+				worldTransform_.translation_ = { vector.x * 750 * 2 + vector.x * 10,0.0f,vector.z * 10 };
 
 				currentSide = side::Fifth;
 			}
@@ -332,7 +334,7 @@ bool RailCamera::Update(bool GetCrashFlag,int frequencyInvocationDoor)
 			playerz = worldTransform_.translation_.z + vector.z * 10.0f;
 			if (playerz > rotRange[4])
 			{
-				Vector3 move = { -vector.x * (speed * 0.3f),-vector.y * (speed * 0.3f),-vector.z * (speed * 0.3f) };
+				Vector3 move = { -vector.x * speed,-vector.y * speed,-vector.z * speed };
 				worldTransform_.translation_ += move;
 			}
 			else if (playerz <= rotRange[4])
@@ -340,7 +342,7 @@ bool RailCamera::Update(bool GetCrashFlag,int frequencyInvocationDoor)
 				Vector3 Rot = { 0,120 * affine::Deg2Rad,0 };
 
 				worldTransform_.rotation_ += (Rot);
-				worldTransform_.translation_ ={ vector.x * 750 + vector.x * 10,0,rotRange[4] - vector.z * 10 };
+				worldTransform_.translation_ = { vector.x * 750 + vector.x * 10,0,rotRange[4] - vector.z * 10 };
 
 				currentSide = side::Sixth;
 			}
@@ -349,7 +351,7 @@ bool RailCamera::Update(bool GetCrashFlag,int frequencyInvocationDoor)
 			playerz = worldTransform_.translation_.z - vector.z * 10.0f;
 			if (playerz < rotRange[5])
 			{
-				Vector3 move = { -vector.x * (speed * 0.3f),vector.y * (speed * 0.3f),vector.z * (speed * 0.3f) };
+				Vector3 move = { -vector.x * speed ,vector.y * speed ,vector.z * speed };
 				worldTransform_.translation_ += move;
 			}
 			else if (playerz >= rotRange[5])
@@ -357,7 +359,7 @@ bool RailCamera::Update(bool GetCrashFlag,int frequencyInvocationDoor)
 				Vector3 Rot = { 0,30 * affine::Deg2Rad,0 };
 
 				worldTransform_.rotation_ += (Rot);
-				worldTransform_.translation_ ={ 0.0,0.0f,-10.0f };
+				worldTransform_.translation_ = { 0.0,0.0f,-10.0f };
 
 				IsLapReset = true;
 
@@ -376,24 +378,30 @@ bool RailCamera::Update(bool GetCrashFlag,int frequencyInvocationDoor)
 	debugText_->SetPos(10, 90);
 	debugText_->Printf(" speed:%f", speed);
 
-	
-	if (currentSide==side::Second&&playerz>= invocationTrnsDoor[0]&& frequencyInvocationDoor==0) {
+
+	if (currentSide == side::Second && playerz >= invocationTrnsDoor[0] && frequencyInvocationDoor == 0)
+	{
 		return true;
 	}
-	if (currentSide == side::Sixth && playerz >= invocationTrnsDoor[1] && frequencyInvocationDoor == 1) {
+	if (currentSide == side::Sixth && playerz >= invocationTrnsDoor[1] && frequencyInvocationDoor == 1)
+	{
 		return true;
 	}
-	if (currentSide == side::Sixth && playerz >= invocationTrnsDoor[2] && frequencyInvocationDoor == 2) {
+	if (currentSide == side::Sixth && playerz >= invocationTrnsDoor[2] && frequencyInvocationDoor == 2)
+	{
 		return true;
 	}
-	if (currentSide == side::Sixth && playerz >= invocationTrnsDoor[3] && frequencyInvocationDoor == 3) {
+	if (currentSide == side::Sixth && playerz >= invocationTrnsDoor[3] && frequencyInvocationDoor == 3)
+	{
 		return true;
 	}
 
 	return false;
 }
 
-void RailCamera::Draw(){}
+void RailCamera::Draw()
+{
+}
 
 ViewProjection* RailCamera::GetViewProjection()
 {
@@ -431,9 +439,10 @@ float RailCamera::GetWorldTransformRot()
 {
 	return worldTransform_.rotation_.z;
 }
-void RailCamera::reset(){
-	worldTransform_.translation_ = Vector3(0.0f,0.0f,-10.0f);
-	worldTransform_.rotation_ = Vector3(0,0,0);
+void RailCamera::reset()
+{
+	worldTransform_.translation_ = Vector3(0.0f, 0.0f, -10.0f);
+	worldTransform_.rotation_ = Vector3(0, 0, 0);
 
 	speed = 1;
 	currentSide = side::First;
