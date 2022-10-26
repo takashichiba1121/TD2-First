@@ -5,6 +5,7 @@
 #include"ViewProjection.h"
 #include"Input.h"
 #include"affine.h"
+#include"DebugText.h"
 
 class Player
 {
@@ -40,6 +41,10 @@ public:
 	bool GetCrashFlag();
 
 	void SetTransform(Vector3 translation) { worldTransform_.translation_=translation; }
+
+	void EndGameReset();
+
+	void jumpReset();
 
 private:
 
@@ -77,5 +82,6 @@ private:
 	//ワールド変換データ
 	WorldTransform worldTransform_;
 
+	DebugText* debugText_ = nullptr;
 };
 

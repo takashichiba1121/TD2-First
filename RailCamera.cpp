@@ -447,6 +447,8 @@ void RailCamera::reset()
 	speed = 1;
 	currentSide = side::First;
 
+	lap = 0;
+
 	Move();
 }
 

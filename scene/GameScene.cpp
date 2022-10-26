@@ -86,6 +86,7 @@ void GameScene::Update()
 					player_->SetTransform({ 0.0f, -2.0f, 10.0f });
 					isActivationDoor = true;
 					frequencyInvocationDoor++;
+					player_->jumpReset();
 				}
 				player_->Update();
 				objectManager_->Update();
@@ -132,6 +133,7 @@ void GameScene::Update()
 				endGameFrg = false;
 				startGameFrg = false;
 				railCamera_->setSpeed(1.0f);
+				player_->EndGameReset();
 			}
 		}
 		break;

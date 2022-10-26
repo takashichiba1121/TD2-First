@@ -49,6 +49,8 @@ void Player::Initialize(WorldTransform* worldTransform)
 		0.3f * worldTransform_.scale_.x,
 		0.5f * worldTransform_.scale_.y,
 		0.5f * worldTransform_.scale_.z };
+
+	debugText_ = DebugText::GetInstance();
 }
 
 void Player::Update()
@@ -116,6 +118,11 @@ void Player::titleUpdate(){
 
 	collider_.center = affine::GetWorldTrans(worldTransform_.matWorld_);
 	worldTransform_.TransferMatrix();
+
+	debugText_->SetPos(10, 200);
+	debugText_->Printf(" %f,%f,%f",worldTransform_.translation_.x, worldTransform_.translation_.y, worldTransform_.translation_.z);
+	debugText_->SetPos(10, 220);
+	debugText_->Printf(" %f,%f,%f", worldTransform_.rotation_.x, worldTransform_.rotation_.y, worldTransform_.rotation_.z);
 }
 
 void Player::Draw(ViewProjection* viewProjection)
@@ -227,4 +234,29 @@ void Player::Squat()
 				0.5f * worldTransform_.scale_.z };
 		}
 	}
+}
+
+void Player::EndGameReset() 
+{
+	worldTransform_.rotation_ = Vector3(0.0f,0.0f,0.0f);
+
+	worldTransform_.translation_ = Vector3(0.0f, 0.0f, 10.0f);
+
+	jumpFlag = 0;
+	gravitySpeed = defGravitySpeed;
+	worldTransform_.translation_.y = -2.0f;
+
+	//ローカル行列計算
+	affine::makeAffine(worldTransform_);
+	//親子関係計算
+	worldTransform_.matWorld_ *= worldTransform_.parent_->matWorld_;
+
+	worldTransform_.TransferMatrix();
+}
+
+void Player::jumpReset()
+{
+	jumpFlag = 0;
+	gravitySpeed = defGravitySpeed;
+	worldTransform_.translation_.y = -2.0f;
 }
